@@ -1,0 +1,256 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+  padding-top: 60px; /*ヘッダー固定のためにマージンとる*/
+}
+/*------------------ヘッダー領域------------------*/
+/*ヘッダーの背景*/
+header{
+  width:100%;
+  height:50px;
+  background-color:#000000;
+}
+  
+/*ヘッダーの中の３つの要素全てを囲んだdiv*/
+#top{
+  width:1420px;
+  height:50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*タイトルを囲んだdiv*/
+#Htitle{
+  width:550px;
+  height:50px;
+  margin-left: 435px;/*タイトルが中央にくるようこの値を指定*/
+  margin-right: 155px;/*ログインユーザーとログアウトがメインの横幅の右端と位置が揃って右端にくるようにこの値を指定*/
+  float:left;/*divの中のdivを横並びにするには全ての要素にfloat:leftがいる*/
+}
+
+/*ログインユーザー囲んだdiv*/
+#Hlogin{
+  width:180px;
+  height:50px;
+  float:left;/*divの中のdivを横並びにするには全ての要素にfloat:leftがいる*/
+}
+
+  /*ログアウトのリンク囲んだdiv*/ 
+#Hlogout{
+  width:100px;
+  height:50px;
+  float:left;/*divの中のdivを横並びにするには全ての要素にfloat:leftがいる*/
+}
+
+/*タイトルのリンク線消す*/
+#TitleBackLink{
+  text-decoration: none;
+}
+
+/*ヘッダーの中身*/
+h1{
+  height:50px;
+  width:550px;
+  font-size:40px;
+  color:#FFFFFF;
+  margin-left: auto;
+  margin-right: auto;
+  /*-------------------上下左右の中央寄せ------------------------*/
+  display: flex;/*fFlexコンテナ化*/
+    align-items: center;/*f縦方向の位置を中央に*/
+  justify-content: center;/*横方向のアイテム位置を中央に*/
+  /*-------------------上下左右の中央寄せ------------------------*/
+  /* font-family: 'Lora', serif;
+  font-family: 'Noto Sans JP', sans-serif; */
+}
+
+/*○月の表示のスタイル*/
+#TitleMonth{
+  width:100px;
+  background-color:#FFFFFF;
+  color:#000000;
+  margin-left:15px;
+  text-align: center;
+  
+}
+
+/*ログインしたユーザー名のスタイル*/
+#login{
+  width:180px;
+  height:50px;
+  color:#FFFFFF;
+  /*-------------------上下左右の中央寄せ------------------------*/
+  display: flex;/*fFlexコンテナ化*/
+    align-items: center;/*f縦方向の位置を中央に*/
+  justify-content: center;/*横方向のアイテム位置を中央に*/
+  /*-------------------上下左右の中央寄せ------------------------*/
+}
+
+/*ログインしたユーザー名を強調*/
+#username{
+  color:#AEFFBD;
+  font-size:20px;
+  margin-left:2px;
+  margin-right:2px;
+}
+
+#logout{
+  width: 100px;
+  height: 50px;
+  color:#FFFFFF;
+  /*-------------------上下左右の中央寄せ------------------------*/
+  display: flex;/*fFlexコンテナ化*/
+    align-items: center;/*f縦方向の位置を中央に*/
+  justify-content: center;/*横方向のアイテム位置を中央に*/
+  /*-------------------上下左右の中央寄せ------------------------*/
+}
+/*------------------ヘッダー領域(END)------------------*/
+
+/* h2{
+  margin-left: 30%;
+} */
+
+/* table{
+  width: 90%;
+} */
+
+/*------------------編集フォーム------------------*/
+
+/*ポップアップ時に背景を薄暗くする。削除モーダルウィンドウと供用*/
+#popback{
+  position: absolute;
+  top:0%;
+  left:0%;
+  width:100%;
+  height:200%;
+  opacity:0.5;
+  background-color:#000000;
+}
+
+/*全体の枠のdivタグの設定*/
+#Editform{
+  width: 40%;
+  height: 80%;
+  padding-bottom: 20px;
+  border-radius:10px;
+  background-color:#FFFFFF;
+  /* display: none; */
+  position:fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index:100;
+}
+
+/*内側の枠の設定*/
+#editform{
+  width: 95%;
+  height: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top:0px;
+  margin-bottom:20px;
+  background-color:#FFFFFF;
+}
+
+/*タイトルの入力タグ*/
+#pre_title{
+  /* width: 660px; */
+  width: 100%;
+  padding:10px;
+}
+
+/*テキストエリア*/
+#EditPreviwe{
+  /* width: 660px; */
+  width: 100%;
+  height: 250px;
+  font-size:15px;
+  padding:20px;
+  border-color:#0066FF;
+}
+
+/*背景ラジオのチェックを非表示に*/
+#green[type=radio],#yellow[type=radio],#bule[type=radio],#purple[type=radio],#red[type=radio],#orange[type=radio],#white[type=radio]{
+display: none; /* ラジオボタンを非表示にする */
+}
+
+/*背景ラベルのスタイル設定*/
+#green,#yellow,#bule,#purple,#red,#orange,#white{
+display: block; /* ブロックレベル要素化する */
+float: left; /* 要素の左寄せ・回り込を指定する */
+margin: 5px; /* ボックス外側の余白を指定する */
+width: 30px; /* ボックスの横幅を指定する */
+height: 30px; /* ボックスの高さを指定する */
+cursor: pointer; /* マウスカーソルの形（リンクカーソル）を指定する */
+border: 1px solid #000000;/* ボックスの境界線を実線で指定する */
+border-radius: 3px; /* 角丸を指定する */
+}
+
+/*背景ラベルが選択された時のスタイル設定*/
+#EditTdColor input[type="radio"]:checked + label{
+border-radius: 20px;
+}
+
+/*背景カラーパレット*/
+#green{
+  background-color:#66FF66;
+}
+
+#yellow{
+  background-color:#FFFF88;
+}
+
+#bule{
+  background-color:#75A9FF;
+}
+
+#purple{
+  background-color:#C299FF;
+}
+
+#red{
+  background-color:#FF4F50;
+}
+
+#orange{
+  background-color:#FFA500;
+}
+
+#white{
+  background-color:#FFFFFF;
+}
+
+#EdiOut{
+  clear: both;/*ラジオボタンをブロック要素にしてfloat:left;かけてるので改行のためクリアする*/
+  width: 200px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/*この内容で編集する*/
+#EditBtn{
+  cursor: pointer;
+  width: 200px;
+  height: 30px;
+  /* margin-left:80px;
+  margin-left:80px; */
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:20px;
+  font-size:15px;
+  font-weight:bold;
+  color:#FFFFFF;
+  background-color:#0066FF;
+  border:none;
+  border-radius:20px;
+}
+
+footer{
+  width: 100%;
+  height: 70px;
+  background-color:#000000;
+}

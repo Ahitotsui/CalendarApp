@@ -1,0 +1,753 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  background-color:#D3D3D3;
+}
+
+/*------------------ヘッダー領域------------------*/
+/*ヘッダーの背景*/
+header{
+  width:100%;
+  height:50px;
+  background-color:#000000;
+}
+
+/*ヘッダーの中の３つの要素全てを囲んだdiv*/
+#top{
+  width:1420px;
+  height:50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*タイトルを囲んだdiv*/
+#Htitle{
+  width:550px;
+  height:50px;
+  margin-left: 435px;/*タイトルが中央にくるようこの値を指定*/
+  margin-right: 155px;/*ログインユーザーとログアウトがメインの横幅の右端と位置が揃って右端にくるようにこの値を指定*/
+  float:left;/*divの中のdivを横並びにするには全ての要素にfloat:leftがいる*/
+}
+
+/*ログインユーザー囲んだdiv*/
+#Hlogin{
+  width:180px;
+  height:50px;
+  float:left;/*divの中のdivを横並びにするには全ての要素にfloat:leftがいる*/
+}
+
+ /*ログアウトのリンク囲んだdiv*/ 
+#Hlogout{
+  width:100px;
+  height:50px;
+  float:left;/*divの中のdivを横並びにするには全ての要素にfloat:leftがいる*/
+}
+
+/*タイトルのリンク線消す*/
+#TitleBackLink{
+  text-decoration: none;
+}
+
+/*ヘッダーの中身*/
+h1{
+  height:50px;
+  width:550px;
+  font-size:40px;
+  color:#FFFFFF;
+  margin-left: auto;
+  margin-right: auto;
+  /*-------------------上下左右の中央寄せ------------------------*/
+  display: flex;/*fFlexコンテナ化*/
+	align-items: center;/*f縦方向の位置を中央に*/
+  justify-content: center;/*横方向のアイテム位置を中央に*/
+  /*-------------------上下左右の中央寄せ------------------------*/
+  /* font-family: 'Lora', serif;
+  font-family: 'Noto Sans JP', sans-serif; */
+}
+
+/*○月の表示のスタイル*/
+#TitleMonth{
+  width:100px;
+  background-color:#FFFFFF;
+  color:#000000;
+  margin-left:15px;
+  text-align: center;
+  
+}
+
+/*ログインしたユーザー名のスタイル*/
+#login{
+  width:180px;
+  height:50px;
+  color:#FFFFFF;
+  /*-------------------上下左右の中央寄せ------------------------*/
+  display: flex;/*fFlexコンテナ化*/
+	align-items: center;/*f縦方向の位置を中央に*/
+  justify-content: center;/*横方向のアイテム位置を中央に*/
+  /*-------------------上下左右の中央寄せ------------------------*/
+}
+
+/*ログインしたユーザー名を強調*/
+#username{
+  color:#AEFFBD;
+  font-size:20px;
+  margin-left:2px;
+  margin-right:2px;
+}
+
+#logout{
+  width: 100px;
+  height: 50px;
+  color:#FFFFFF;
+  /*-------------------上下左右の中央寄せ------------------------*/
+  display: flex;/*fFlexコンテナ化*/
+	align-items: center;/*f縦方向の位置を中央に*/
+  justify-content: center;/*横方向のアイテム位置を中央に*/
+  /*-------------------上下左右の中央寄せ------------------------*/
+}
+
+
+/*------------------ヘッダー領域(END)------------------*/
+
+
+/*----------------------メインコンテンツ領域---------------------*/
+main{
+  width:1420px;
+  height:830px;
+  background-color:#FFFFFF;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 3px;
+}
+
+table{
+  width:1400px;
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+  border-color:#000000;
+  margin-top: 5px;
+}
+
+#tbhead{
+  width:1400px;
+  
+}
+
+.tdtop{
+  width:200px;
+  height:30px;
+  color:#FFFFFF;
+  background-color:#000000;
+  font-weight:bold;
+  text-align: center;
+  /*border-radius:25px;*/
+  border-color: #FFFFFF;
+}
+
+/*日にちのtdタグ*/
+.tddays{
+  width:200px;
+  height:130px;
+}
+
+/*前月の日にちの空白tdタグ*/
+.tdPreMon{
+  width:200px;
+  height:130px;
+  background-color:#808080;
+}
+
+/*今現在の日付には背景色つける*/
+#tdToday{
+  width:30px;
+  height:30px;
+  color:#FFFFFF;
+  background-color:#0000FF;
+  margin-left:5px;
+  border-radius: 15px;
+  /*-------------------上下左右の中央寄せ------------------------*/
+  display: flex;/*fFlexコンテナ化*/
+	align-items: center;/*f縦方向の位置を中央に*/
+  justify-content: center;/*横方向のアイテム位置を中央に*/
+  /*-------------------上下左右の中央寄せ------------------------*/
+  float: left;
+}
+
+/*今現在ではない日付には背景色つけない*/
+.tdDays{
+  width:30px;
+  height:30px;
+  font-weight:bold;
+  margin-left:5px;
+  float: left;
+}
+
+/*新規登録ボタン*/
+.addbtns{
+  margin-left:138px;
+  width:25px;
+  height:25px;
+  background-color:#FFFFFF;
+  font-size: 25px;
+  color:#008000;
+  border: none;
+  /* border:solid; */
+  border-width:1px;
+  border-radius: 50%;
+  /*-------------------上下左右の中央寄せ-----------------------*/
+  /*line-height: 25px;*/
+  /*display: inline-block;*/
+  /*display: flex;/*fFlexコンテナ化*/
+	/*align-items: center;/*f縦方向の位置を中央に*/
+  /*justify-content: center;/*横方向のアイテム位置を中央に*/
+  /*-------------------上下左右の中央寄せ------------------------*/
+  -webkit-appearance: none;/*スマホでの自動デザイン無効化*/
+  /* border-color:#008000; */
+  cursor: pointer;
+  float: left;
+}
+
+.addbtns:hover{
+  background-color:#008000;
+  color:#FFFFFF;
+}
+
+
+/*メモの領域*/
+.memos{
+  width:190px;
+  height:90px;
+  padding: 0px 5px 0px 5px;
+  font-size: 15px;
+  clear: both;
+  overflow-y: scroll;/*はみ出す場合は縦スクロールで閲覧可能*/
+}
+
+/*タグのスタイル*/
+.tags{
+  width:190px;
+  height:20px;
+  overflow: hidden;
+  margin-bottom:4px;
+  border-radius: 2px;
+}
+
+/* タグのリンクのスタイル */
+.linkSche{
+  color:#000000;
+  text-decoration: none;
+  margin:0px;
+}
+
+/*----------------------メインコンテンツ領域(END)---------------------*/
+
+
+/*----------------------フッター領域---------------------*/
+footer{
+  width:100%;
+  height:50px;
+  background-color:#000000;
+}
+
+/*ページネーションパーツを全て格納したdiv*/
+#monthSelectBtn{
+  width:1420px;
+  height:90px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*前年のページネーションButtonタグ*/
+#PrevBtn{
+  width:120px;
+  height:50px;
+  font-size:30px;
+  cursor: pointer;
+  color:#FFFFFF;
+  text-decoration: none;
+  display: block; 
+  float:left;
+  margin-right:290px;
+}
+
+#Dummy{
+  width:120px;
+  height:50px;
+  float:left;
+  margin-right:290px;
+}
+
+/*月のページネーションが未選択の時のスタイル*/
+.monthsend{
+  width:50px;
+  height:50px;
+  font-size:30px;
+  background-color:#000000;
+  color:#FFFFFF;
+  text-align: center;
+  text-decoration: none;
+  display: block; 
+  float:left;
+}
+
+/*翌年のページネーションButtonタグ*/
+#NextBtn{
+  width:120px;
+  height:50px;
+  font-size:30px;
+  cursor: pointer;
+  color:#FFFFFF;
+  text-decoration: none;
+  display: block; 
+  float:left;
+  margin-left:290px;
+}
+
+/*月のページネーションが選択中の時のスタイル*/
+.Nowselect{
+  width:50px;
+  height:45px;
+  font-size:30px;
+  background-color:#FFFFFF;
+  color:#000000;
+  text-align: center;
+  text-decoration: none;
+  display: block; 
+  float:left;
+  border-bottom-left-radius:10px;
+  border-bottom-right-radius:10px;
+}
+
+/*----------------------フッター領域(END)---------------------*/
+
+
+
+
+/*----------------------新規登録のモーダルウィンドウ---------------------*/
+
+/*全体の枠のdivタグの設定*/
+#Addform{
+  width: 400px;
+  /* height:460px; */
+  padding-bottom: 20px;
+  border-radius:20px;
+  background-color:#FFFFFF;
+  display: none;
+  position:fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index:100;
+}
+
+/*閉じるボタンの設定*/
+#AddClose{
+  cursor: pointer;
+  width:40px;
+  height:40px;
+  border-top-right-radius:20px;
+  margin-left:360px;
+  margin-right: 0px;
+  font-size:30px;
+  color:#C0C0C0;
+  background-color:#FFFFFF;
+  border:none;
+  /*-------------------上下左右の中央寄せ------------------------*/
+  display: flex;/*fFlexコンテナ化*/
+  align-items: center;/*f縦方向の位置を中央に*/
+  justify-content: center;/*横方向のアイテム位置を中央に*/
+  /*-------------------上下左右の中央寄せ------------------------*/
+}
+
+/*内側の枠の設定*/
+#insertform{
+  width: 360px;
+  height: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top:0px;
+  margin-bottom:20px;
+  background-color:#FFFFFF;
+}
+
+/*新規登録する年月日を表示するテキスト*/
+#AddConfirm{
+  font-size:30px;
+  text-align: center;
+}
+
+/*タイトル*/
+#AddTitle{
+  width: 338px;
+  height: 30px;
+  padding:10px;
+  margin-top: 5px;
+}
+
+/*テキストエリア*/
+#AddPreviwe{
+  width: 320px;
+  height: 100px;
+  padding:20px;
+  margin-top: 5px;
+}
+
+/*背景ラジオのチェックを非表示に*/
+#Addgreen[type=radio],#Addyellow[type=radio],#Addbule[type=radio],#Addpurple[type=radio],#Addred[type=radio],#Addorange[type=radio],#Addwhite[type=radio]{
+  display: none; /* ラジオボタンを非表示にする */
+}
+
+/*背景ラベルのスタイル設定*/
+#Addgreen,#Addyellow,#Addbule,#Addpurple,#Addred,#Addorange,#Addwhite{
+  display: block; /* ブロックレベル要素化する */
+  float: left; /* 要素の左寄せ・回り込を指定する */
+  margin: 5px; /* ボックス外側の余白を指定する */
+  width: 30px; /* ボックスの横幅を指定する */
+  height: 30px; /* ボックスの高さを指定する */
+  cursor: pointer; /* マウスカーソルの形（リンクカーソル）を指定する */
+  border: 1px solid #000000;/* ボックスの境界線を実線で指定する */
+  border-radius: 3px; /* 角丸を指定する */
+}
+
+/*背景ラベルが選択された時のスタイル設定*/
+#AddTdColor input[type="radio"]:checked + label{
+  border-radius: 20px;
+}
+
+/*背景カラーパレット*/
+#Addgreen{
+    background-color:#66FF66;
+}
+
+#Addyellow{
+    background-color:#FFFF88;
+}
+
+#Addbule{
+    background-color:#75A9FF;
+}
+
+#Addpurple{
+    background-color:#C299FF;
+}
+
+#Addred{
+    background-color:#FF4F50;
+}
+
+#Addorange{
+    background-color:#FFA500;
+}
+
+#Addwhite{
+    background-color:#FFFFFF;
+}
+
+/*文字色をカスタム*/
+#AddSelectTextColor{
+  clear: both;/*ラジオボタンをブロック要素にしてfloat:left;かけてるので改行のためクリアする*/
+}
+
+/*文字ラジオのチェックを非表示に*/
+#Addtxtred[type=radio],#Addtxtbule[type=radio],#Addtxtgreen[type=radio],#Addtxtwhite[type=radio],#Addtxtblack[type=radio] {
+  display: none; /* ラジオボタンを非表示にする */
+}
+
+/*文字ラベルのスタイル設定*/
+#Addtxtred,#Addtxtbule,#Addtxtgreen,#Addtxtwhite,#Addtxtblack{
+  display: block; /* ブロックレベル要素化する */
+  float: left; /* 要素の左寄せ・回り込を指定する */
+  margin: 5px; /* ボックス外側の余白を指定する */
+  width: 30px; /* ボックスの横幅を指定する */
+  height: 30px; /* ボックスの高さを指定する */
+  cursor: pointer; /* マウスカーソルの形（リンクカーソル）を指定する */
+  border: 1px solid #000000;/* ボックスの境界線を実線で指定する */
+  border-radius: 3px; /* 角丸を指定する */
+}
+
+/*文字ラベルが選択された時のスタイル設定*/
+#AddTextColor input[type="radio"]:checked + label{
+  border-radius: 20px;
+}
+
+/*文字カラーパレット*/
+#Addtxtred{
+  background-color:#EE0000;
+}
+
+#Addtxtbule{
+  background-color:#0000FF;
+}
+
+#Addtxtgreen{
+  background-color:#009900;
+}
+
+#Addtxtwhite{
+  background-color:#FFFFFF;
+}
+
+#Addtxtblack{
+  background-color:#000000;
+}
+
+#AddOut{
+  clear: both;/*ラジオボタンをブロック要素にしてfloat:left;かけてるので改行のためクリアする*/
+}
+
+/*新規メモ登録*/
+#AddBtn{
+  -webkit-appearance: none;/*スマホでの自動デザイン無効化*/
+  cursor: pointer;
+  width: 200px;
+  height: 30px;
+  margin-top:20px;
+  margin-left:80px;
+  margin-left:80px;
+  /* margin-bottom:20px; */
+  font-size:15px;
+  font-weight:bold;
+  color:#FFFFFF;
+  background-color:#0066FF;
+  border:none;
+  border-radius:20px;
+}
+/*----------------------新規登録のモーダルウィンドウ(END)---------------------*/
+
+
+
+
+/*----------------------編集機能のモーダルウィンドウ---------------------*/
+
+/*ポップアップ時に背景を薄暗くする。削除モーダルウィンドウと供用*/
+#popback{
+  position: absolute;
+  top:0%;
+  left:0%;
+  width:100%;
+  height:100%;
+  opacity:0.5;
+  background-color:#000000;
+  display:none;
+}
+
+
+
+
+/*編集する年月日を表示するテキスト*/
+#EditDayText{
+  font-size:30px;
+  text-align: center;
+}
+
+/*閉じるボタンの設定*/
+.closebtn{
+  cursor: pointer;
+  width:40px;
+  height:40px;
+  border-top-right-radius:20px;
+  margin-left:360px;
+  margin-right: 0px;
+  font-size:30px;
+  color:#C0C0C0;
+  /* background-color:#FF0000; */
+  border:none;
+  /*-------------------上下左右の中央寄せ------------------------*/
+  display: flex;/*fFlexコンテナ化*/
+  align-items: center;/*f縦方向の位置を中央に*/
+  justify-content: center;/*横方向のアイテム位置を中央に*/
+  /*-------------------上下左右の中央寄せ------------------------*/
+}
+
+
+
+/*背景ラジオのチェックを非表示に*/
+#green[type=radio],#yellow[type=radio],#bule[type=radio],#purple[type=radio],#red[type=radio],#orange[type=radio],#white[type=radio]{
+  display: none; /* ラジオボタンを非表示にする */
+}
+
+/*背景ラベルのスタイル設定*/
+#green,#yellow,#bule,#purple,#red,#orange,#white{
+  display: block; /* ブロックレベル要素化する */
+  float: left; /* 要素の左寄せ・回り込を指定する */
+  margin: 5px; /* ボックス外側の余白を指定する */
+  width: 30px; /* ボックスの横幅を指定する */
+  height: 30px; /* ボックスの高さを指定する */
+  cursor: pointer; /* マウスカーソルの形（リンクカーソル）を指定する */
+  border: 1px solid #000000;/* ボックスの境界線を実線で指定する */
+  border-radius: 3px; /* 角丸を指定する */
+}
+
+/*背景ラベルが選択された時のスタイル設定*/
+#EditTdColor input[type="radio"]:checked + label{
+  border-radius: 20px;
+}
+
+/*背景カラーパレット*/
+#green{
+    background-color:#66FF66;
+}
+
+#yellow{
+    background-color:#FFFF88;
+}
+
+#bule{
+    background-color:#75A9FF;
+}
+
+#purple{
+    background-color:#C299FF;
+}
+
+#red{
+    background-color:#FF4F50;
+}
+
+#orange{
+    background-color:#FFA500;
+}
+
+#white{
+    background-color:#FFFFFF;
+}
+
+/*文字色をカスタム*/
+#SelectTextColor{
+  clear: both;/*ラジオボタンをブロック要素にしてfloat:left;かけてるので改行のためクリアする*/
+}
+
+/*文字ラジオのチェックを非表示に*/
+#txtred[type=radio],#txtbule[type=radio],#txtgreen[type=radio],#txtwhite[type=radio],#txtblack[type=radio] {
+  display: none; /* ラジオボタンを非表示にする */
+}
+
+/*文字ラベルのスタイル設定*/
+#txtred,#txtbule,#txtgreen,#txtwhite,#txtblack{
+  display: block; /* ブロックレベル要素化する */
+  float: left; /* 要素の左寄せ・回り込を指定する */
+  margin: 5px; /* ボックス外側の余白を指定する */
+  width: 30px; /* ボックスの横幅を指定する */
+  height: 30px; /* ボックスの高さを指定する */
+  cursor: pointer; /* マウスカーソルの形（リンクカーソル）を指定する */
+  border: 1px solid #000000;/* ボックスの境界線を実線で指定する */
+  border-radius: 3px; /* 角丸を指定する */
+}
+
+/*文字ラベルが選択された時のスタイル設定*/
+#EditTextColor input[type="radio"]:checked + label{
+  border-radius: 20px;
+}
+
+/*文字カラーパレット*/
+#txtred{
+    background-color:#EE0000;
+}
+
+#txtbule{
+    background-color:#0000FF;
+}
+
+#txtgreen{
+    background-color:#009900;
+}
+
+#txtwhite{
+    background-color:#FFFFFF;
+}
+
+#txtblack{
+    background-color:#000000;
+}
+
+
+
+/*-------------------------編集機能のモーダルウィンドウ(END)-----------------------------------*/
+
+
+/*----------------------削除機能のモーダルウィンドウ---------------------*/
+/*全体の枠のdivタグの設定*/
+.deletepops{
+  width: 600px;
+  height: 240px;
+  border-radius:20px;
+  background-color:#FFFFFF;
+  display: none;
+  position:fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index:100;
+}
+
+/*内側の枠の設定*/
+.deleteform{
+  width: 500px;
+  height: 70px;
+  margin-left: auto;
+  margin-right: auto;
+
+	display: block;
+  background-color:#FFFFFF;
+}
+
+/*確認用テキスト*/
+.confirmText{
+  width:600px;
+  text-align: center;
+  font-size:25px;
+  margin-top:10px;
+  margin-bottom:40px;
+}
+
+/*閉じるボタンの設定*/
+.closebtn2{
+  width:40px;
+  height:40px;
+  border-top-right-radius:20px;
+  margin-left:560px;
+  margin-right: 0px;
+  font-size:30px;
+  /*-------------------上下左右の中央寄せ------------------------*/
+  display: flex;/*fFlexコンテナ化*/
+  align-items: center;/*f縦方向の位置を中央に*/
+  justify-content: center;/*横方向のアイテム位置を中央に*/
+  /*-------------------上下左右の中央寄せ------------------------*/
+  color:#FFFFFF;
+  background-color:#FF0000;
+  border:none;
+
+}
+
+/*削除するボタン*/
+.deleteExecute{
+  background-color:#FF0000;
+  color:#FFFFFF;
+  font-size: 20px;
+  border-radius:25px;
+  margin-left:120px;
+  margin-right:10px;
+  width: 120px;
+  height: 50px;
+  border:none;
+}
+
+/*キャンセルボタン*/
+.CancelBtn{
+  background-color:#0066FF;
+  color:#FFFFFF;
+  font-size: 20px;
+  border-radius:25px;
+  margin-left:10px;
+  width: 120px;
+  height: 50px;
+  border:none;
+
+}
+
+
+/*-------------------------削除機能のモーダルウィンドウ(END)-----------------------------------*/
