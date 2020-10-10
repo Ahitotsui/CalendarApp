@@ -44,75 +44,76 @@
         <?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日
     </h2>
 
-    <!-- <table border="1"> -->
-    <table class="table table-striped container">
-        <thead>
-            <th>Time</th>
-            <th>start</th>
-            <th>end</th>
-            <th>title</th>
-            <th>detail</th>
-            <th colspan="3">progress</th>
-        </thead>
-        <tbody>
-        <?php 
-            //DB接続
-            require_once('DBInfo.php');
-            $dbh = new PDO(DBInfo::DSN,DBInfo::USER,DBInfo::PASSWORD);
-            $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=?";
-            $stmt = $dbh->prepare($sql);
-            $stmt->execute([$userid,$year,$month,$day]);
+    <ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" id="list_view">簡易リスト表示</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" id="table_view">タイムテーブル表示</a>
+    </li>
+    </ul>
 
-            foreach($stmt as $row){
-                $array[$row['start_time']] =([  $row['start_time'],
-                                                $row['end_time'],
-                                                $row['title'],
-                                                $row['memo'],
-                                                $row['progress'],
-                                                $row['color'],
-                                                $row['logic_delete'],
-                                                $row['id']
-                                            ]);
+   
+    <?php 
+        //DB接続
+        require_once('DBInfo.php');
+        $dbh = new PDO(DBInfo::DSN,DBInfo::USER,DBInfo::PASSWORD);
+        $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=?";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute([$userid,$year,$month,$day]);
+
+        if($stmt->rowCount() == 0){
+            print("<div>まだ本日の予定はありません</div>");
+        }
+
+        // <!-- 簡易リスト表示 -->
+        foreach($stmt as $row){
+            $S_time = $row['start_time'];
+            $E_time = $row['end_time'];
+            $title = $row['title'];
+            $memo = nl2br($row['memo']);
+
+            //進捗ステータス文字列に変換
+            if($row['progress'] == 0){
+                $progress = "未了";
+            }else if($row['progress'] == 1){
+                $progress = "完了";
+            }else if($row['progress'] == 2){
+                $progress = "キャンセル";
             }
 
-            for($i=0;$i<=23;$i++){
-                $time = "{$i}:00";
-                $S_time = $array[$time][0];
-                $E_time = $array[$time][1];
-                $title = $array[$time][2];
-                $memo = nl2br($array[$time][3]);
-                $style = "style=\"background-color:{$array[$time][5]}\"";
-                $delete = $array[$time][6];
-
-                if($array[$time][4] == 0){
-                    $progress = "未了";
-                }else if($array[$time][4] == 1){
-                    $progress = "完了";
-                }else if($array[$time][4] == 2){
-                    $progress = "キャンセル";
-                }
-
-                //縦に結合するセル数を算出
-                $str1 = str_replace(':00','',$S_time);
-                $str2 = str_replace(':00','',$E_time);
-                $rowValue = (int)$str2 - (int)$str1;
-                $rowspan = "rowspan=\"{$rowValue}\"";
+            //未了・完了のボタンの切替で使用
+            if($row['progress'] == 0){
+                $toggle = 1;
+            }else if($row['progress'] == 1){
+                $toggle = 0;
+            }
 
 
-                if(isset($S_time) == true && $delete == "false"){
+            $color = $row['color'];
+            $delete = $row['logic_delete'];
+            $id = $row['id'];
 
-                    print("<tr>");
-                    print("<td {$style}>{$time}</td>");
-                    print("<td {$style}>{$S_time}</td>");
-                    print("<td {$style}>{$E_time}</td>");
-                    print("<td {$style}>{$title}</td>");
+            
 
-                    //詳細なメモを表示
-                    //print("<td {$style}>{$memo}</td>");
-                    $disp_memo = <<<disp_memo
-                    <td {$style}>
-                    <a data-toggle="modal" href="#memo{$i}" class="">詳細</a>
-                    <div class="modal" id="memo{$i}">
+            $list_view = <<<EOF
+                <div class="list_view" style="background-color:{$color}">
+                    <p class="list_time">{$S_time}〜{$E_time}</p>
+                    <p class="list_title">{$title}</p>
+                    <form action="edit.php" method="post">
+                        <input type="hidden" name="userid" value="$userid">
+                        <input type="hidden" name="year" value="$year">
+                        <input type="hidden" name="month" value="$month">
+                        <input type="hidden" name="day" value="$day">
+                        <input type="hidden" name="id" value="$id">
+                        <input type="hidden" name="progFlag" value="$toggle">
+                        <button type="submit">{$progress}</button>
+                    </form>
+                    <a data-toggle="modal" href="#memo{$id}" class="">詳細</a>
+                    <a href="schedule.php?ID={$id}&userid=$userid&year=$year&month=$month&day=$day" class="edit">編集</a>
+                    <a data-toggle="modal" href="#delete" class="delete" id="{$id}">削除</a>
+                    
+                    <div class="modal" id="memo{$id}">
                     <form class="deleteform" action="delete.php" method="post">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -126,7 +127,6 @@
                                         <p>{$memo}</p>                
                                     </div>
                                 </div>
-                
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
                                 </div>
@@ -134,31 +134,69 @@
                         </div>
                     </form>
                     </div>
+                </div>
+            EOF;
+
+            if($delete == "false"){
+                print($list_view);
+            }
+        }
+
+
+        // <!-- タイムテーブル表示 -->
+        print("<table id=\"table_view\" border=1>");
+        print("<thead class=\"timesTh\">");
+        for($i=0;$i<=23;$i++){
+            print("<th><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add\" id=\"{$i}\">{$i}:00</a></th>");
+            // print("<td><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add\" id=\"{$i}\">新規</a></td>");
+        }
+        print("</thead>");
+
+        $stmt->execute([$userid,$year,$month,$day]);
+        foreach($stmt as $row){
+            $S_time = $row['start_time'];
+            $E_time = $row['end_time'];
+            $title = $row['title'];
+            $color = $row['color'];
+            $delete = $row['logic_delete'];
+            $id = $row['id'];
+
+            if($delete == "false"){
+                //開始時刻の前の空白マスを算出
+                $prev = (int)str_replace(':00','',$S_time);
+
+                //予定の期間を算出
+                $during = (int)str_replace(':00','',$E_time) - $prev;
+
+                //終了時刻の後の空白マスを算出
+                $back = 24 - ($prev + $during);
+
+                print("<tr>");
+                //開始時刻の前の空白マス
+                for($i=1;$i<=$prev;$i++){
+                    print("<td class=\"tdView\"></td>");
+                }
+
+                //予定を出力
+                // print("<td class=\"tdSche\" colspan=\"{$during}\" style=\"background-color:{$color}\">{$row['title']}</td>");
+                $table_view = <<<EOF
+                    <td class="tdSche" colspan="{$during}" style="background-color:{$color}">
+                        <div class="scheDiv">{$row['title']}</div>
                     </td>
-                    disp_memo;
-                    print($disp_memo);
+                EOF;
+                print($table_view);
 
-                    print("<td {$style}>{$progress}</td>");
-                    print("<td {$style}><a href=\"schedule.php?ID={$array[$time][7]}&userid=$userid&year=$year&month=$month&day=$day\" class=\"edit\">編集</a></td>");
-                    print("<td {$style}><a data-toggle=\"modal\" href=\"#delete\" class=\"delete\" id=\"{$array[$time][7]}\">削除</a></td>");
-                    print("</tr>");
-
-                }else{
-                    print("<tr>");
-                    print("<td>{$time}</td>");
-                    print("<td></td>");
-                    print("<td></td>");
-                    print("<td></td>");
-                    print("<td></td>");
-                    print("<td></td>");
-                    print("<td></td>");
-                    print("<td><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add\" id=\"{$i}\">新規</a></td>");
-                    print("</tr>");
+                //終了時刻の後の空白マス
+                for($i=1;$i<=$back;$i++){
+                    print("<td class=\"tdView\"></td>");
                 }
             }
-        ?>
-        </tbody>
-    </table>
+            print("</tr>");
+        }
+        print("</table>");
+    ?>
+
+    
 
     <!-- 編集フォーム -->
     <?php
@@ -297,7 +335,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">ヘッダー</h4>
+                        <h4 class="modal-title">削除の確認</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
@@ -318,7 +356,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
-                        <button type="submit" class="btn btn-primary">削除する</button>
+                        <button type="submit" class="btn btn-danger">削除する</button>
                     </div>
 
                 </div>
@@ -384,8 +422,8 @@
 
 
                
-    <footer>
-    </footer>
+    <!-- <footer>
+    </footer> -->
     
 
 
@@ -393,6 +431,17 @@
     <script src="js/bootstrap.min.js"></script>
     <script>
         $(function(){
+
+            $("#list_view").click(function(){
+                $('.table_view').hide();
+                $('.list_view').show();
+            });
+
+            $("#table_view").click(function(){
+                $('.list_view').hide();
+                $('.table_view').show();
+            });
+
             $(".delete").click(function(){
                 
                 //対象のid番号を取得し変数idに代入
