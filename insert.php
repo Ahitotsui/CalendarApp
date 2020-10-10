@@ -6,14 +6,26 @@ $day = $_POST['day'];
 $start = $_POST['start'];
 $end = $_POST['end'];
 $title = $_POST['title'];
-//メモはテキストデータ入力のためサニタイズ処理する
-$memo = htmlspecialchars($_POST['memo']);
+$memo = $_POST['memo'];
 $progress = $_POST['progress'];
 $color = $_POST['color'];
 $delete = $_POST['delete'];
 
 //詳細ページから追加された場合はこの値を受け取り、リダイレクトの判定に使用
 $redirect = $_POST['redirect'];
+
+//関数validation():終了時刻>開始時刻でデータが送られたらエラー出す
+function validation($start,$end){
+    $str1 = (int)str_replace(':00','',$start);
+    $str2 = (int)str_replace(':00','',$end);
+    if($str2-$str1 <= 0){
+        //エラーあり
+        return false;
+    }else{
+        //エラーなし
+        return true;
+    }
+}
 
 //外部ファイル読み込み
 require_once('DBInfo.php');
@@ -29,7 +41,15 @@ try{
     $dbh->beginTransaction();
         $sql = "INSERT INTO Memo_tags VALUES(Null,?,?,?,?,?,?,?,?,?,?,?)";
         $stmt = $dbh->prepare($sql);
-        $stmt->execute([$userid,$year,$month,$day,$start,$end,$title,$memo,$progress,$color,$delete]);
+        if(validation($start,$end) == true){
+            $stmt->execute([$userid,$year,$month,$day,$start,$end,$title,$memo,$progress,$color,$delete]);
+            header("location:calendar.php?year={$year}&month={$month}");
+        }else if(validation($start,$end) == false){
+            print('<h3>入力にエラーがあります。</h3>');
+            print('<p>・終了時刻と開始時刻を同じ値で登録することはできません。</p>');
+            print('<p>・終了時刻は、開始時刻よりも後の時刻でないと登録できません。</p>');
+            print("<a HREF=\"javascript:history.back()\">戻る</a>");
+        }
 
     //コミットで、テーブルの書き換え処理を確定  
     $dbh->commit();
@@ -47,7 +67,8 @@ $dbh = null;
 //リダイレクト
 if($redirect == "true"){
     header("location:schedule.php?userid=$userid&year=$year&month=$month&day=$day");
-}else{
-    header("location:calendar.php?year={$year}&month={$month}");
 }
+// else{
+//     header("location:calendar.php?year={$year}&month={$month}");
+// }
 
