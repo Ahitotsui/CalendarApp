@@ -162,7 +162,8 @@
           $stmt->execute([$_SESSION['login']['username'],$TitleYear,$Titlemonth,$day]);
           foreach($stmt as $row){
             if($row['logic_delete'] == "false"){
-              print("<p class=\"tags\" style=background-color:{$row['color']};>・{$row['title']}</p>");
+              $title = htmlspecialchars($row['title']);
+              print("<p class=\"tags\" style=background-color:{$row['color']};>・{$title}</p>");
             }
           }
         print("</div>");
@@ -197,7 +198,7 @@ print("</table>");
       <option value="" disabled selected style="display:none;">選択</option>
       <?php 
         for($i=0;$i<=23;$i++){
-          print("<option value=\"{$i}:00\">{$i}:00</option>");
+          print("<option value=\"{$i}:00:00\">{$i}:00</option>");
         }
       ?>
     </select>
@@ -205,8 +206,8 @@ print("</table>");
     <select name="end" required>
       <option value="" disabled selected style="display:none;">選択</option>
       <?php 
-        for($i=0;$i<=23;$i++){
-          print("<option value=\"{$i}:00\">{$i}:00</option>");
+        for($i=1;$i<=24;$i++){
+          print("<option value=\"{$i}:00:00\">{$i}:00</option>");
         }
       ?>
     </select>
