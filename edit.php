@@ -14,7 +14,8 @@ $memo = $_POST['memo'];
 $progress = $_POST['progress'];
 $color = $_POST['color'];
 
-
+//進捗ボタンで編集する際に受け取るパラメータ
+$progFlag = $_POST['progFlag'];
 
 //外部ファイル読み込み
 require_once('DBInfo.php');
@@ -28,9 +29,17 @@ try{
 
     //トランザクション開始
     $dbh->beginTransaction();
-        $sql = "UPDATE Memo_tags SET start_time = ? , end_time = ? , title = ? , memo = ? , progress = ? , color = ? WHERE id = ?";
-        $stmt = $dbh->prepare($sql);
-        $stmt->execute([$start,$end,$title,$memo,$progress,$color,$id]);
+        //編集フォームでの処理
+        if(isset($progFlag) == false){
+            $sql = "UPDATE Memo_tags SET start_time = ? , end_time = ? , title = ? , memo = ? , progress = ? , color = ? WHERE id = ?";
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute([$start,$end,$title,$memo,$progress,$color,$id]);
+        //進捗ボタンでの処理
+        }else if(isset($progFlag) == true){
+            $sql = "UPDATE Memo_tags SET progress = ? WHERE id = ?";
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute([$progFlag,$id]);
+        }
     //コミットで、テーブルの書き換え処理を確定  
     $dbh->commit();
     
