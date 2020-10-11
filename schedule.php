@@ -64,9 +64,6 @@
         <?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日
     </h2>
 
-
-    <h3>予定の達成率</h3>
-
     <!-- フィルタ&検索機能 -->
     <div class="row" id="search">
         <div id="disp_filter" class="coll col-md-4">
@@ -74,19 +71,19 @@
             <div class="btn-group" role="group">
             <form action="schedule.php?userid=<?php print($userid); ?>&year=<?php print($year); ?>&month=<?php print($month); ?>&day=<?php print($day); ?>" method="post">
                 <input type="hidden" name="all_disp" value="All">
-                <button type="submit" class="btn btn-secondary">全て</button>
+                <button type="submit" id="filBtn1" class="btn btn-secondary">全て</button>
             </form>
             <form action="schedule.php?userid=<?php print($userid); ?>&year=<?php print($year); ?>&month=<?php print($month); ?>&day=<?php print($day); ?>" method="post">
                 <input type="hidden" name="unfini_disp" value="0">
-                <button type="submit" class="btn btn-secondary">未了</button>
+                <button type="submit" id="filBtn2" class="btn btn-secondary">未了</button>
             </form>
             <form action="schedule.php?userid=<?php print($userid); ?>&year=<?php print($year); ?>&month=<?php print($month); ?>&day=<?php print($day); ?>" method="post">
                 <input type="hidden" name="fini_disp" value="1">
-                <button type="submit" class="btn btn-secondary">完了</button>
+                <button type="submit" id="filBtn3" class="btn btn-secondary">完了</button>
             </form>
             <form action="schedule.php?userid=<?php print($userid); ?>&year=<?php print($year); ?>&month=<?php print($month); ?>&day=<?php print($day); ?>" method="post">
                 <input type="hidden" name="can_disp" value="2">
-                <button type="submit" class="btn btn-secondary">キャンセル</button>
+                <button type="submit" id="filBtn4" class="btn btn-secondary">キャンセル</button>
             </form>
             </div>
         </div>
@@ -95,8 +92,9 @@
             <form action="schedule.php?userid=<?php print($userid); ?>&year=<?php print($year); ?>&month=<?php print($month); ?>&day=<?php print($day); ?>" method="post">
             <div class="input-group">
                 <span class="input-group">
-                    <button class="btn btn-secondary" type="submit">検索</button>
+                    
                     <input class="form-control" type="text" placeholder="予定のタイトルでさがす" name="keyword" value="">
+                    <button class="btn btn-secondary" type="submit">検索</button>
                 </span>
             </div>
             </form>
@@ -148,11 +146,14 @@
                 if($row['progress'] == 0){
                     $toggle = 1;
                     $disabled = "";
+                    $class = "unfinish";
                 }else if($row['progress'] == 1){
                     $toggle = 0;
                     $disabled = "";
+                    $class = "finish";
                 }else if($row['progress'] == 2){
                     $disabled = "disabled";
+                    $class = "cancel";
                 }
 
                 $color = $row['color'];
@@ -164,16 +165,16 @@
                     <div class="list_view" style="background-color:{$color}">
                         <p class="list_time">{$S_time}〜{$E_time}</p>
                         <p class="list_title">{$title}</p>
-                        <form action="edit.php" method="post">
+                        <form class="progBtn" action="edit.php" method="post">
                             <input type="hidden" name="userid" value="$userid">
                             <input type="hidden" name="year" value="$year">
                             <input type="hidden" name="month" value="$month">
                             <input type="hidden" name="day" value="$day">
                             <input type="hidden" name="id" value="$id">
                             <input type="hidden" name="progFlag" value="$toggle">
-                            <button type="submit" $disabled>{$progress}</button>
+                            <button type="submit" class="$class" $disabled>{$progress}</button>
                         </form>
-                        <a data-toggle="modal" href="#memo{$id}" class="">詳細</a>
+                        <a data-toggle="modal" href="#memo{$id}" class="detail">詳細</a>
                         <a href="schedule.php?ID={$id}&userid=$userid&year=$year&month=$month&day=$day" class="edit">編集</a>
                         <a data-toggle="modal" href="#delete" class="delete" id="{$id}">削除</a>
                         
@@ -206,11 +207,11 @@
 
 
             // <!-- タイムテーブル表示 -->
-            print("<table id=\"table_view\" border=1>");
-            print("<thead class=\"timesTh\">");
+            print("<table id=\"time_table\" border=1>");
+            print("<thead class=\"timesThead\">");
             for($i=0;$i<=23;$i++){
                 //時刻の文字がリンクになっていて、新規登録ページのモーダルを開く
-                print("<th><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add\" id=\"{$i}\">{$i}:00</a></th>");
+                print("<th class=\"timesTh\"><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add\" id=\"{$i}\">{$i}:00</a></th>");
             }
             print("</thead>");
 
@@ -267,21 +268,20 @@
             
             $f_upper = <<<EOF
             <div id="popback"></div>
-            <!--編集のポップアップウィンドウ-->
             <div id="Editform">
-        
-                <!-- Bootstrapでヘッダーをデザイン -->
+            <form action="edit.php" method="post">
                 <div class="modal-header">
-                    <h4 class="modal-title">内容を編集</h4>
+                    <h4 class="modal-title">編集</h4>
                     <button id="closeBtn" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
         
-                <form id="editform" action="edit.php" method="post">
+                
                     <!-- ページリダイレクトに必要なパラメータ -->
                     <input type="hidden" name="userid" value="$userid">
                     <input type="hidden" name="year" value="$year">
                     <input type="hidden" name="month" value="$month">
                     <input type="hidden" name="day" value="$day">
+                    <div class="modal-body">
             EOF;
             print($f_upper);
 
@@ -297,7 +297,7 @@
 
                 //<開始時刻>
                 print("<label for=\"start\">開始時刻</label>");
-                print("<select name=\"start\">");
+                print("<select id=\"selectTime1\" name=\"start\">");
                     print("<option value=\"\" disabled selected style=\"display:none;\">選択</option>");
                     for($i=0;$i<=23;$i++){
                         if($i < 10){
@@ -315,7 +315,7 @@
 
                 //<終了時刻>
                 print("<label for=\"start\">終了時刻</label>");
-                print("<select name=\"end\">");
+                print("<select id=\"selectTime2\" name=\"end\">");
                     print("<option value=\"\" disabled selected style=\"display:none;\">選択</option>");
                     for($i=0;$i<=23;$i++){
                         if($i < 10){
@@ -348,9 +348,10 @@
                     $selected2 = "selected";
                 }
 
+                //<進捗ステータス>
                 $f_progress = <<<EOF
                 <p id="pre_progress">進捗</p>
-                <select name="progress">
+                <select id="prog_select" name="progress">
                     <option value="" disabled selected style="display:none;">選択</option>
                     <option value="0" $selected0>未了</option>
                     <option value="1" $selected1>完了</option>
@@ -368,7 +369,7 @@
                     $checked2 = "checked";
                 }else if($row['color'] == "#C299FF"){
                     $checked3 = "checked";
-                }else if($row['color'] == "#FF4F50"){
+                }else if($row['color'] == "#FA8072"){
                     $checked4 = "checked";
                 }else if($row['color'] == "#FFA500"){
                     $checked5 = "checked";
@@ -381,9 +382,9 @@
                 <div id="EditTdColor">
                     <input type="radio" name="color" value="#66FF66" id="green" $checked0><label for="green" id="green"></label>
                     <input type="radio" name="color" value="#FFFF88" id="yellow" $checked1><label for="yellow" id="yellow"></label>
-                    <input type="radio" name="color" value="#75A9FF" id="bule" $checked2><label for="bule" id="bule"></label>
+                    <input type="radio" name="color" value="#87CEFA" id="bule" $checked2><label for="bule" id="bule"></label>
                     <input type="radio" name="color" value="#C299FF" id="purple" $checked3><label for="purple" id="purple"></label>
-                    <input type="radio" name="color" value="#FF4F50" id="red" $checked4><label for="red" id="red"></label>
+                    <input type="radio" name="color" value="#FA8072" id="red" $checked4><label for="red" id="red"></label>
                     <input type="radio" name="color" value="#FFA500" id="orange" $checked5><label for="orange" id="orange"></label>
                     <input type="radio" name="color" value="#FFFFFF" id="white" $checked6><label for="white" id="white"></label>
                 </div>
@@ -391,7 +392,10 @@
                 print($f_color);
 
                 $f_bottom = <<<EOF
-                        <div id="EdiOut"><input id="EditBtn" type="submit" value="この内容で編集する"></div>
+                    </div>
+                    <div class="modal-footer" id="editFormFoot">
+                        <button type="submit" class="btn btn-primary">編集</button>
+                    </div>
                     </form>
                 </div>
                 EOF;
@@ -447,37 +451,38 @@
                     </div>
                     <div class="modal-body">
                         <div id="Addform">
-                            <p><span id="s_text"></span>-<span id="e_text"></span></p>
-                                <input type="hidden" name="userid" value="<?php print($userid); ?>">
-                                <input type="hidden" name="year" value="<?php print($year); ?>">
-                                <input type="hidden" name="month" value="<?php print($month); ?>">
-                                <input type="hidden" name="day" id="AddHiddenday" value="<?php print($day); ?>">
+                            <b><span id="s_text"></span>-<span id="e_text"></span>に予定を追加します</b>
+                            <input type="hidden" name="userid" value="<?php print($userid); ?>">
+                            <input type="hidden" name="year" value="<?php print($year); ?>">
+                            <input type="hidden" name="month" value="<?php print($month); ?>">
+                            <input type="hidden" name="day" id="AddHiddenday" value="<?php print($day); ?>">
 
-                                <input type="hidden" name="start" id="AddHiddenStart" value="">
-                                <input type="hidden" name="end" id="AddHiddenEnd" value="">
+                            <input type="hidden" name="start" id="AddHiddenStart" value="">
+                            <input type="hidden" name="end" id="AddHiddenEnd" value="">
 
-                                <input type="hidden" name="progress" value="0">
-                                <div><input type="text" name="title" value=""></div>
-                                <p><textarea id="AddPreviwe" name="memo" cols="11" rows="4" value="" placeholder="ここに書いてください"></textarea></p>
+                            <input type="hidden" name="progress" value="0">
+                            <p>予定のタイトル</p>
+                            <input id="subAddTitle" type="text" name="title" value="" placeholder="入力必須です" required>
+                            <p>詳細なメモ</p>
+                            <textarea id="subAddMemo" name="memo" cols="11" rows="4" value="" placeholder="ご自由にお書きください"></textarea>
 
-                                <p id="AddSelectTdColor">背景色をカスタム</p>
-                                <div id="AddTdColor">
-                                    <input type="radio" name="color" value="#66FF66" id="Addgreen"><label for="Addgreen" id="Addgreen"></label>
-                                    <input type="radio" name="color" value="#FFFF88" id="Addyellow"><label for="Addyellow" id="Addyellow"></label>
-                                    <input type="radio" name="color" value="#75A9FF" id="Addbule"><label for="Addbule" id="Addbule"></label>
-                                    <input type="radio" name="color" value="#C299FF" id="Addpurple"><label for="Addpurple" id="Addpurple"></label>
-                                    <input type="radio" name="color" value="#FF4F50" id="Addred"><label for="Addred" id="Addred"></label>
-                                    <input type="radio" name="color" value="#FFA500" id="Addorange"><label for="Addorange" id="Addorange"></label>
-                                    <input type="radio" name="color" value="#FFFFFF" id="Addwhite" checked><label for="Addwhite" id="Addwhite"></label>
-                                </div>
+                            <p id="AddSelectTdColor">背景色をカスタム</p>
+                            <div id="AddTdColor">
+                                <input type="radio" name="color" value="#66FF66" id="Addgreen"><label for="Addgreen" id="Addgreen"></label>
+                                <input type="radio" name="color" value="#FFFF88" id="Addyellow"><label for="Addyellow" id="Addyellow"></label>
+                                <input type="radio" name="color" value="#87CEFA;" id="Addbule"><label for="Addbule" id="Addbule"></label>
+                                <input type="radio" name="color" value="#C299FF" id="Addpurple"><label for="Addpurple" id="Addpurple"></label>
+                                <input type="radio" name="color" value="#FA8072" id="Addred"><label for="Addred" id="Addred"></label>
+                                <input type="radio" name="color" value="#FFA500" id="Addorange"><label for="Addorange" id="Addorange"></label>
+                                <input type="radio" name="color" value="#FFFFFF" id="Addwhite" checked><label for="Addwhite" id="Addwhite"></label>
+                            </div>
 
-                                <input type="hidden" name="delete" value="false">
-                                <input type="hidden" name="redirect" value="true">
+                            <input type="hidden" name="delete" value="false">
+                            <input type="hidden" name="redirect" value="true">
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
                         <button type="submit" class="btn btn-primary">登録</button>
                     </div>
 
@@ -491,11 +496,13 @@
     <script>
         $(function(){
 
+            // 簡易リスト表示切替
             $("#list_view").click(function(){
                 $('.table_view').hide();
                 $('.list_view').show();
             });
 
+            // タイムテーブル表示切替
             $("#table_view").click(function(){
                 $('.list_view').hide();
                 $('.table_view').show();
@@ -517,10 +524,11 @@
                 var val1 = id+":00";
                 var val2 = (Number(id)+1)+":00";
 
-                //編集フォームの<input type=hidden>タグのvalueに日付を書く
+                //新規登録フォームの<input type=hidden>タグのvalueに日付を書く
                 $("#AddHiddenStart").val(val1);
                 $("#AddHiddenEnd").val(val2);
 
+                //新規登録フォームの確認コメントに日付を書く
                 $("#s_text").text(val1);
                 $("#e_text").text(val2);
             });
