@@ -89,7 +89,7 @@
 
   /*-------------------------------------------カレンダー表示領域---------------------------------------------------*/
   //テーブルヘッド
-  print("<table border=1>");
+  print("<table id=\"mainTable\" border=1>");
   print("<thead id=tbhead>");
   print("<td class=tdtop>月 MON</td>");
   print("<td class=tdtop>火 TUE</td>");
@@ -187,49 +187,104 @@ print("</table>");
 <div id="Addform">
   <button id="AddClose">&times;</button>
   <form id="insertform" action="insert.php" method="post">
-    <p id="AddConfirm"><?php print($TitleYear); ?>年<?php print($Titlemonth); ?>月<span id="AddDay"></span>日</p>
+    <table>
 
-    <input type="hidden" name="userid" value="<?php print($_SESSION['login']['username']); ?>">
-    <input type="hidden" name="year" value="<?php print($TitleYear); ?>">
-    <input type="hidden" name="month" value="<?php print($Titlemonth); ?>">
-    <input type="hidden" name="day" id="AddHiddenday" value="">
+      <!-- 登録する日時の表示 -->
+      <tr>
+        <td  colspan="2">
+          <p id="AddConfirm"><?php print($TitleYear); ?>年<?php print($Titlemonth); ?>月<span id="AddDay"></span>日</p>
+        </td>
+      </tr>
 
-    <select name="start" required>
-      <option value="" disabled selected style="display:none;">選択</option>
-      <?php 
-        for($i=0;$i<=23;$i++){
-          print("<option value=\"{$i}:00:00\">{$i}:00</option>");
-        }
-      ?>
-    </select>
+      <!-- 開始時刻・終了時刻 -->
+      <tr>
+        <td>
+          <label for="timeSelect1">開始時刻</label>
+          <select id="timeSelect1" name="start" required>
+            <option value="" disabled selected style="display:none;">選択</option>
+            <?php 
+              for($i=0;$i<=23;$i++){
+                print("<option value=\"{$i}:00:00\">{$i}:00</option>");
+              }
+            ?>
+          </select>
+        </td>
 
-    <select name="end" required>
-      <option value="" disabled selected style="display:none;">選択</option>
-      <?php 
-        for($i=1;$i<=24;$i++){
-          print("<option value=\"{$i}:00:00\">{$i}:00</option>");
-        }
-      ?>
-    </select>
+        <td>
+          <label for="timeSelect2">終了時刻</label>
+          <select id="timeSelect2" name="end" required>
+            <option value="" disabled selected style="display:none;">選択</option>
+            <?php 
+              for($i=1;$i<=24;$i++){
+                print("<option value=\"{$i}:00:00\">{$i}:00</option>");
+              }
+            ?>
+          </select>
+        </td>
+      </tr>
 
-    <input type="hidden" name="progress" value="0">
-    <div><input id="AddTitle" type="text" name="title" value=""></div>
-    <p><textarea id="AddPreviwe" name="memo" cols="11" rows="4" value="" placeholder="詳細なコメント"></textarea></p>
+      <!-- 予定のタイトル入力 -->
+      <tr>
+        <td colspan="2">
+          <p>予定のタイトル入力</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input id="AddTitle" type="text" name="title" value="" placeholder="入力必須です" required>
+        </td>
+      </tr>
 
-    <p id="AddSelectTdColor">背景色をカスタム</p>
-      <div id="AddTdColor">
-        <input type="radio" name="color" value="#66FF66" id="Addgreen"><label for="Addgreen" id="Addgreen"></label>
-        <input type="radio" name="color" value="#FFFF88" id="Addyellow"><label for="Addyellow" id="Addyellow"></label>
-        <input type="radio" name="color" value="#75A9FF" id="Addbule"><label for="Addbule" id="Addbule"></label>
-        <input type="radio" name="color" value="#C299FF" id="Addpurple"><label for="Addpurple" id="Addpurple"></label>
-        <input type="radio" name="color" value="#FF4F50" id="Addred"><label for="Addred" id="Addred"></label>
-        <input type="radio" name="color" value="#FFA500" id="Addorange"><label for="Addorange" id="Addorange"></label>
-        <input type="radio" name="color" value="#FFFFFF" id="Addwhite" checked><label for="Addwhite" id="Addwhite"></label>
-      </div>
+      <!-- 詳細なコメント入力 -->
+      <tr>
+        <td colspan="2">
+          <p>詳細なコメント入力</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <textarea id="AddPreviwe" name="memo" cols="11" rows="4" value="" placeholder="ご自由に書いてください"></textarea>
+        </td>
+      </tr>
+      
+      <!-- カラー選択  -->
+      <tr>
+        <td colspan="2">
+          <p id="AddSelectTdColor">背景色をカスタム</p>
+        </td>
+      </tr>
 
-    <input type="hidden" name="delete" value="false">
+      <!-- カラー選択  -->
+      <tr>
+        <td colspan="2">
+          <div id="AddTdColor">
+            <input type="radio" name="color" value="#66FF66" id="Addgreen"><label for="Addgreen" id="Addgreen"></label>
+            <input type="radio" name="color" value="#FFFF88" id="Addyellow"><label for="Addyellow" id="Addyellow"></label>
+            <input type="radio" name="color" value="#87CEFA" id="Addbule"><label for="Addbule" id="Addbule"></label>
+            <input type="radio" name="color" value="#C299FF" id="Addpurple"><label for="Addpurple" id="Addpurple"></label>
+            <input type="radio" name="color" value="#FA8072" id="Addred"><label for="Addred" id="Addred"></label>
+            <input type="radio" name="color" value="#FFA500" id="Addorange"><label for="Addorange" id="Addorange"></label>
+            <input type="radio" name="color" value="#FFFFFF" id="Addwhite" checked><label for="Addwhite" id="Addwhite"></label>
+          </div>
+        </td>
+      </tr>
 
-    <div id="AddOut"><input id="AddBtn" type="submit" value="新規メモ登録"></div>
+      <!-- 新規登録フォームでは入力しないパラメータ -->
+      <input type="hidden" name="userid" value="<?php print($_SESSION['login']['username']); ?>">
+      <input type="hidden" name="year" value="<?php print($TitleYear); ?>">
+      <input type="hidden" name="month" value="<?php print($Titlemonth); ?>">
+      <input type="hidden" name="day" id="AddHiddenday" value="">
+      <input type="hidden" name="progress" value="0">
+      <input type="hidden" name="delete" value="false">
+
+      <!-- 新規登録ボタン -->
+      <tr>
+        <td colspan="2">
+            <input id="AddBtn" type="submit" value="新規メモ登録">
+        </td>
+      </tr>
+      
+    </table>
   </form>
 </div>
 <!--===========================================================================================================================-->

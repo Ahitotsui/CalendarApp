@@ -108,8 +108,6 @@ h1{
   justify-content: center;/*横方向のアイテム位置を中央に*/
   /*-------------------上下左右の中央寄せ------------------------*/
 }
-
-
 /*------------------ヘッダー領域(END)------------------*/
 
 
@@ -123,7 +121,7 @@ main{
   padding-top: 3px;
 }
 
-table{
+#mainTable{
   width:1400px;
   margin-left: auto;
   margin-right: auto;
@@ -328,12 +326,23 @@ footer{
 
 
 /*----------------------新規登録のモーダルウィンドウ---------------------*/
+/*ポップアップ時に背景を薄暗くする。*/
+#popback{
+  position: absolute;
+  top:0%;
+  left:0%;
+  width:100%;
+  height:100%;
+  opacity:0.5;
+  background-color:#000000;
+  display:none;
+}
 
 /*全体の枠のdivタグの設定*/
 #Addform{
   width: 400px;
-  /* height:460px; */
-  padding-bottom: 20px;
+  height:550px;
+  padding: 10px;
   border-radius:20px;
   background-color:#FFFFFF;
   display: none;
@@ -380,20 +389,28 @@ footer{
   text-align: center;
 }
 
-/*タイトル*/
+/* 開始時刻・終了時刻 */
+#timeSelect1,#timeSelect2{
+  width: 109px;/*110*/
+  height: 40px;
+}
+
+/*予定のタイトル入力*/
 #AddTitle{
-  width: 338px;
-  height: 30px;
-  padding:10px;
+  width: 318px;
+  height: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
   margin-top: 5px;
 }
 
-/*テキストエリア*/
+/*詳細なコメント入力ア*/
 #AddPreviwe{
   width: 320px;
   height: 100px;
   padding:20px;
   margin-top: 5px;
+  resize: none;
 }
 
 /*背景ラジオのチェックを非表示に*/
@@ -413,6 +430,13 @@ footer{
   border-radius: 3px; /* 角丸を指定する */
 }
 
+/* カラーラベルを囲むdivタグ */
+#AddTdColor{
+  width: 300px;/*280?*/
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /*背景ラベルが選択された時のスタイル設定*/
 #AddTdColor input[type="radio"]:checked + label{
   border-radius: 20px;
@@ -428,7 +452,7 @@ footer{
 }
 
 #Addbule{
-    background-color:#75A9FF;
+    background-color:#87CEFA;
 }
 
 #Addpurple{
@@ -436,7 +460,7 @@ footer{
 }
 
 #Addred{
-    background-color:#FF4F50;
+    background-color:#FA8072;
 }
 
 #Addorange{
@@ -447,57 +471,6 @@ footer{
     background-color:#FFFFFF;
 }
 
-/*文字色をカスタム*/
-#AddSelectTextColor{
-  clear: both;/*ラジオボタンをブロック要素にしてfloat:left;かけてるので改行のためクリアする*/
-}
-
-/*文字ラジオのチェックを非表示に*/
-#Addtxtred[type=radio],#Addtxtbule[type=radio],#Addtxtgreen[type=radio],#Addtxtwhite[type=radio],#Addtxtblack[type=radio] {
-  display: none; /* ラジオボタンを非表示にする */
-}
-
-/*文字ラベルのスタイル設定*/
-#Addtxtred,#Addtxtbule,#Addtxtgreen,#Addtxtwhite,#Addtxtblack{
-  display: block; /* ブロックレベル要素化する */
-  float: left; /* 要素の左寄せ・回り込を指定する */
-  margin: 5px; /* ボックス外側の余白を指定する */
-  width: 30px; /* ボックスの横幅を指定する */
-  height: 30px; /* ボックスの高さを指定する */
-  cursor: pointer; /* マウスカーソルの形（リンクカーソル）を指定する */
-  border: 1px solid #000000;/* ボックスの境界線を実線で指定する */
-  border-radius: 3px; /* 角丸を指定する */
-}
-
-/*文字ラベルが選択された時のスタイル設定*/
-#AddTextColor input[type="radio"]:checked + label{
-  border-radius: 20px;
-}
-
-/*文字カラーパレット*/
-#Addtxtred{
-  background-color:#EE0000;
-}
-
-#Addtxtbule{
-  background-color:#0000FF;
-}
-
-#Addtxtgreen{
-  background-color:#009900;
-}
-
-#Addtxtwhite{
-  background-color:#FFFFFF;
-}
-
-#Addtxtblack{
-  background-color:#000000;
-}
-
-#AddOut{
-  clear: both;/*ラジオボタンをブロック要素にしてfloat:left;かけてるので改行のためクリアする*/
-}
 
 /*新規メモ登録*/
 #AddBtn{
@@ -505,7 +478,7 @@ footer{
   cursor: pointer;
   width: 200px;
   height: 30px;
-  margin-top:20px;
+  margin-top:10px;
   margin-left:80px;
   margin-left:80px;
   /* margin-bottom:20px; */
@@ -519,235 +492,3 @@ footer{
 /*----------------------新規登録のモーダルウィンドウ(END)---------------------*/
 
 
-
-
-/*----------------------編集機能のモーダルウィンドウ---------------------*/
-
-/*ポップアップ時に背景を薄暗くする。削除モーダルウィンドウと供用*/
-#popback{
-  position: absolute;
-  top:0%;
-  left:0%;
-  width:100%;
-  height:100%;
-  opacity:0.5;
-  background-color:#000000;
-  display:none;
-}
-
-
-
-
-/*編集する年月日を表示するテキスト*/
-#EditDayText{
-  font-size:30px;
-  text-align: center;
-}
-
-/*閉じるボタンの設定*/
-.closebtn{
-  cursor: pointer;
-  width:40px;
-  height:40px;
-  border-top-right-radius:20px;
-  margin-left:360px;
-  margin-right: 0px;
-  font-size:30px;
-  color:#C0C0C0;
-  /* background-color:#FF0000; */
-  border:none;
-  /*-------------------上下左右の中央寄せ------------------------*/
-  display: flex;/*fFlexコンテナ化*/
-  align-items: center;/*f縦方向の位置を中央に*/
-  justify-content: center;/*横方向のアイテム位置を中央に*/
-  /*-------------------上下左右の中央寄せ------------------------*/
-}
-
-
-
-/*背景ラジオのチェックを非表示に*/
-#green[type=radio],#yellow[type=radio],#bule[type=radio],#purple[type=radio],#red[type=radio],#orange[type=radio],#white[type=radio]{
-  display: none; /* ラジオボタンを非表示にする */
-}
-
-/*背景ラベルのスタイル設定*/
-#green,#yellow,#bule,#purple,#red,#orange,#white{
-  display: block; /* ブロックレベル要素化する */
-  float: left; /* 要素の左寄せ・回り込を指定する */
-  margin: 5px; /* ボックス外側の余白を指定する */
-  width: 30px; /* ボックスの横幅を指定する */
-  height: 30px; /* ボックスの高さを指定する */
-  cursor: pointer; /* マウスカーソルの形（リンクカーソル）を指定する */
-  border: 1px solid #000000;/* ボックスの境界線を実線で指定する */
-  border-radius: 3px; /* 角丸を指定する */
-}
-
-/*背景ラベルが選択された時のスタイル設定*/
-#EditTdColor input[type="radio"]:checked + label{
-  border-radius: 20px;
-}
-
-/*背景カラーパレット*/
-#green{
-    background-color:#66FF66;
-}
-
-#yellow{
-    background-color:#FFFF88;
-}
-
-#bule{
-    background-color:#75A9FF;
-}
-
-#purple{
-    background-color:#C299FF;
-}
-
-#red{
-    background-color:#FF4F50;
-}
-
-#orange{
-    background-color:#FFA500;
-}
-
-#white{
-    background-color:#FFFFFF;
-}
-
-/*文字色をカスタム*/
-#SelectTextColor{
-  clear: both;/*ラジオボタンをブロック要素にしてfloat:left;かけてるので改行のためクリアする*/
-}
-
-/*文字ラジオのチェックを非表示に*/
-#txtred[type=radio],#txtbule[type=radio],#txtgreen[type=radio],#txtwhite[type=radio],#txtblack[type=radio] {
-  display: none; /* ラジオボタンを非表示にする */
-}
-
-/*文字ラベルのスタイル設定*/
-#txtred,#txtbule,#txtgreen,#txtwhite,#txtblack{
-  display: block; /* ブロックレベル要素化する */
-  float: left; /* 要素の左寄せ・回り込を指定する */
-  margin: 5px; /* ボックス外側の余白を指定する */
-  width: 30px; /* ボックスの横幅を指定する */
-  height: 30px; /* ボックスの高さを指定する */
-  cursor: pointer; /* マウスカーソルの形（リンクカーソル）を指定する */
-  border: 1px solid #000000;/* ボックスの境界線を実線で指定する */
-  border-radius: 3px; /* 角丸を指定する */
-}
-
-/*文字ラベルが選択された時のスタイル設定*/
-#EditTextColor input[type="radio"]:checked + label{
-  border-radius: 20px;
-}
-
-/*文字カラーパレット*/
-#txtred{
-    background-color:#EE0000;
-}
-
-#txtbule{
-    background-color:#0000FF;
-}
-
-#txtgreen{
-    background-color:#009900;
-}
-
-#txtwhite{
-    background-color:#FFFFFF;
-}
-
-#txtblack{
-    background-color:#000000;
-}
-
-
-
-/*-------------------------編集機能のモーダルウィンドウ(END)-----------------------------------*/
-
-
-/*----------------------削除機能のモーダルウィンドウ---------------------*/
-/*全体の枠のdivタグの設定*/
-.deletepops{
-  width: 600px;
-  height: 240px;
-  border-radius:20px;
-  background-color:#FFFFFF;
-  display: none;
-  position:fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  z-index:100;
-}
-
-/*内側の枠の設定*/
-.deleteform{
-  width: 500px;
-  height: 70px;
-  margin-left: auto;
-  margin-right: auto;
-
-	display: block;
-  background-color:#FFFFFF;
-}
-
-/*確認用テキスト*/
-.confirmText{
-  width:600px;
-  text-align: center;
-  font-size:25px;
-  margin-top:10px;
-  margin-bottom:40px;
-}
-
-/*閉じるボタンの設定*/
-.closebtn2{
-  width:40px;
-  height:40px;
-  border-top-right-radius:20px;
-  margin-left:560px;
-  margin-right: 0px;
-  font-size:30px;
-  /*-------------------上下左右の中央寄せ------------------------*/
-  display: flex;/*fFlexコンテナ化*/
-  align-items: center;/*f縦方向の位置を中央に*/
-  justify-content: center;/*横方向のアイテム位置を中央に*/
-  /*-------------------上下左右の中央寄せ------------------------*/
-  color:#FFFFFF;
-  background-color:#FF0000;
-  border:none;
-
-}
-
-/*削除するボタン*/
-.deleteExecute{
-  background-color:#FF0000;
-  color:#FFFFFF;
-  font-size: 20px;
-  border-radius:25px;
-  margin-left:120px;
-  margin-right:10px;
-  width: 120px;
-  height: 50px;
-  border:none;
-}
-
-/*キャンセルボタン*/
-.CancelBtn{
-  background-color:#0066FF;
-  color:#FFFFFF;
-  font-size: 20px;
-  border-radius:25px;
-  margin-left:10px;
-  width: 120px;
-  height: 50px;
-  border:none;
-
-}
-
-
-/*-------------------------削除機能のモーダルウィンドウ(END)-----------------------------------*/

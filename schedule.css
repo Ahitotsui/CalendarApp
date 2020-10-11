@@ -109,52 +109,120 @@ h1{
 }
 /*------------------ヘッダー領域(END)------------------*/
 
+
+/* フィルタボタン・検索フォームを囲むdivタグ */
 #search{
   width: 70%;
+  margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 20px;
 }
 
-#filer_text{
-  /* float: left; */
-  /* text-align: center; */
+/* 全て */
+#filBtn1{
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
+/* 未了 */
+#filBtn2{
+  border-radius: 0px;
+}
+
+/* 完了 */
+#filBtn3{
+  border-radius: 0px;
+}
+
+/* キャンセル */
+#filBtn4{
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
 
 /*------------------簡易リスト表示------------------*/
+/* リスト */
 .list_view{
-  width: 70%;
+  width: 80%;
+  height:100px;
   margin-left:auto;
   margin-right:auto;
   padding:10px;
   margin-top:10px;
+  border-radius: 4px;
   border:solid;
   border-width:1px;
   border-color: #808080;
 }
 
-/* .list_time{
-  width: 50%;
-} */
-
+/* リストタイトル */
 .list_title{
-  width: 70%;
+  width: 80%;
   font-size: 30px;
   float: left;
 }
 
+/* 進捗ステータスボタンのスタイル */
+/* 未了 */
+.unfinish{
+  width:100px;
+  height:60px;
+  border-radius: 4px;
+  background-color: #FFFFFF;
+}
+
+/* 完了 */
+.finish{
+  width:100px;
+  height:60px;
+  border-radius: 4px;
+  background-color: #66FFCC;
+}
+
+/* キャンセル */
+.cancel{
+  width:100px;
+  height:60px;
+  border-radius: 4px;
+  background-color: #C0C0C0;
+}
+
+/* 進捗ステータスボタンのformタグ */
+.progBtn{
+  margin-top:-30px;
+  float: left;
+  margin-right: 20px;
+}
+
+.detail,.edit,.delete{
+  margin-top:-100px;
+  margin-left:5px;
+}
 
 /*------------------タイムテーブル表示------------------*/
-table{
+#time_table{
   width: 95%;
+  table-layout: fixed;
   margin-top:60px;
-  /* border-top-style:none; 
-  border-bottom-style:none;  */
   margin-left:auto;
   margin-right:auto;
+  margin-bottom: 30px;
+}
+
+.timesThead{
+  width:4%;
+  border-top-style:none; 
 }
 
 .timesTh{
+  width:4%;
+  height: 50px;
+  text-align: center;
   border-top-style:none; 
 }
 
@@ -162,21 +230,14 @@ table{
   width:4%;
   border-top-style:none; 
   border-bottom-style:none; 
+  background-color:#DDDDDD;
 }
 
 .tdSche{
-  overflow: hidden;
-  width:4%;
+  font-size: 15px;
   height: 60px;
-  /* border-top-style:none; 
-  border-bottom-style:none; */
 }
 
-/* .scheDiv{
-  width:90%;
-  height:100%;
-  border-radius: 30px;
-} */
 
 /*------------------編集フォーム------------------*/
 
@@ -193,12 +254,10 @@ table{
 
 /*全体の枠のdivタグの設定*/
 #Editform{
-  width: 40%;
-  height: 80%;
+  width: 500px;
   padding-bottom: 20px;
   border-radius:10px;
   background-color:#FFFFFF;
-  /* display: none; */
   position:fixed;
   top: 50%;
   left: 50%;
@@ -206,32 +265,36 @@ table{
   z-index:100;
 }
 
-/*内側の枠の設定*/
-#editform{
-  width: 95%;
-  height: 80%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top:0px;
-  margin-bottom:20px;
-  background-color:#FFFFFF;
+/* 開始時間・終了時間のセレクトタグのラベル */
+label{
+  margin-left: 6px;
+}
+
+/* 開始時間・終了時間 */
+#selectTime1,#selectTime2{
+  width: 160px;
+  height: 40px;
 }
 
 /*タイトルの入力タグ*/
 #pre_title{
-  /* width: 660px; */
   width: 100%;
-  padding:10px;
+  padding:20px;
 }
 
 /*テキストエリア*/
 #EditPreviwe{
-  /* width: 660px; */
   width: 100%;
   height: 250px;
   font-size:15px;
   padding:20px;
-  border-color:#0066FF;
+  resize: none;
+}
+
+/* 進捗選択 */
+#prog_select{
+  width: 100%;
+  height: 40px;
 }
 
 /*背景ラジオのチェックを非表示に*/
@@ -266,7 +329,7 @@ border-radius: 20px;
 }
 
 #bule{
-  background-color:#75A9FF;
+  background-color:#87CEFA;
 }
 
 #purple{
@@ -274,7 +337,7 @@ border-radius: 20px;
 }
 
 #red{
-  background-color:#FF4F50;
+  background-color:#FA8072;
 }
 
 #orange{
@@ -285,33 +348,72 @@ border-radius: 20px;
   background-color:#FFFFFF;
 }
 
-#EdiOut{
-  clear: both;/*ラジオボタンをブロック要素にしてfloat:left;かけてるので改行のためクリアする*/
-  width: 200px;
-  margin-left:auto;
-  margin-right:auto;
+/*モーダルフッター*/
+#editFormFoot{
+  clear: both;/*モーダルフッターの手前の要素でfloat: left;してるので解除*/
+  height: 50px;
 }
 
-/*この内容で編集する*/
-#EditBtn{
-  cursor: pointer;
-  width: 200px;
-  height: 30px;
-  /* margin-left:80px;
-  margin-left:80px; */
-  margin-left:auto;
-  margin-right:auto;
-  margin-top:20px;
-  font-size:15px;
-  font-weight:bold;
-  color:#FFFFFF;
-  background-color:#0066FF;
-  border:none;
-  border-radius:20px;
+
+/*------------------新規登録フォーム------------------*/
+/*背景ラジオのチェックを非表示に*/
+#Addgreen[type=radio],#Addyellow[type=radio],#Addbule[type=radio],#Addpurple[type=radio],#Addred[type=radio],#Addorange[type=radio],#Addwhite[type=radio]{
+  display: none; /* ラジオボタンを非表示にする */
 }
 
-footer{
+/*背景ラベルのスタイル設定*/
+#Addgreen,#Addyellow,#Addbule,#Addpurple,#Addred,#Addorange,#Addwhite{
+  display: block; /* ブロックレベル要素化する */
+  float: left; /* 要素の左寄せ・回り込を指定する */
+  margin: 5px; /* ボックス外側の余白を指定する */
+  width: 30px; /* ボックスの横幅を指定する */
+  height: 30px; /* ボックスの高さを指定する */
+  cursor: pointer; /* マウスカーソルの形（リンクカーソル）を指定する */
+  border: 1px solid #000000;/* ボックスの境界線を実線で指定する */
+  border-radius: 3px; /* 角丸を指定する */
+}
+
+/*背景ラベルが選択された時のスタイル設定*/
+#AddTdColor input[type="radio"]:checked + label{
+  border-radius: 20px;
+}
+
+/*背景カラーパレット*/
+#Addgreen{
+    background-color:#66FF66;
+}
+
+#Addyellow{
+    background-color:#FFFF88;
+}
+
+#Addbule{
+    background-color:#87CEFA;
+}
+
+#Addpurple{
+    background-color:#C299FF;
+}
+
+#Addred{
+    background-color:#FA8072;
+}
+
+#Addorange{
+    background-color:#FFA500;
+}
+
+#Addwhite{
+    background-color:#FFFFFF;
+}
+
+/* 予定のタイトル */
+#subAddTitle{
   width: 100%;
-  height: 70px;
-  background-color:#000000;
+}
+
+/* 詳細なメモ */
+#subAddMemo{
+  width: 100%;
+  resize: none;
 }
