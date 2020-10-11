@@ -109,6 +109,17 @@ h1{
 }
 /*------------------ヘッダー領域(END)------------------*/
 
+#search{
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#filer_text{
+  /* float: left; */
+  /* text-align: center; */
+}
+
 
 /*------------------簡易リスト表示------------------*/
 .list_view{
