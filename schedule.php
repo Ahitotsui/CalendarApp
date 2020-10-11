@@ -8,11 +8,31 @@
       $userid = $_SESSION['login']['username'];
     }
 
-    //ページ表示に必要なデータの受け取り
-    $userid = $_GET['userid'];
+    //ページ表示に必要なパラメータの受け取り
+    // $userid = $_GET['userid'];
     $year = $_GET['year'];
     $month = $_GET['month'];
     $day = $_GET['day'];
+
+    //検索条件のパラメータ受け取り
+    if(isset($_POST['all_disp']) == true && $_POST['all_disp'] != ""){
+        $dispMode =  $_POST['all_disp'];
+    }else if(isset($_POST['unfini_disp']) == true && $_POST['unfini_disp'] != ""){
+        $dispMode =  $_POST['unfini_disp'];
+        $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? and progress=0 ORDER BY start_time";
+    }else if(isset($_POST['fini_disp']) == true && $_POST['fini_disp'] != ""){
+        $dispMode =  $_POST['fini_disp'];
+        $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? and progress=1 ORDER BY start_time";
+    }else if(isset($_POST['can_disp']) == true && $_POST['can_disp'] != ""){
+        $dispMode =  $_POST['can_disp'];
+        $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? and progress=2 ORDER BY start_time";
+    }else if(isset($_POST['keyword']) == true && $_POST['keyword'] != ""){
+        $dispMode = "Keyword";
+        $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? and title like '%{$_POST['keyword']}%' ORDER BY start_time";
+    }else{
+        $dispMode = "All";
+    }
+    
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -44,6 +64,46 @@
         <?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日
     </h2>
 
+
+    <h3>予定の達成率</h3>
+
+    <!-- フィルタ&検索機能 -->
+    <div class="row" id="search">
+        <div id="disp_filter" class="coll col-md-4">
+            <!-- <p id="filer_text">表示する予定の絞り込み</p> -->
+            <div class="btn-group" role="group">
+            <form action="schedule.php?userid=<?php print($userid); ?>&year=<?php print($year); ?>&month=<?php print($month); ?>&day=<?php print($day); ?>" method="post">
+                <input type="hidden" name="all_disp" value="All">
+                <button type="submit" class="btn btn-secondary">全て</button>
+            </form>
+            <form action="schedule.php?userid=<?php print($userid); ?>&year=<?php print($year); ?>&month=<?php print($month); ?>&day=<?php print($day); ?>" method="post">
+                <input type="hidden" name="unfini_disp" value="0">
+                <button type="submit" class="btn btn-secondary">未了</button>
+            </form>
+            <form action="schedule.php?userid=<?php print($userid); ?>&year=<?php print($year); ?>&month=<?php print($month); ?>&day=<?php print($day); ?>" method="post">
+                <input type="hidden" name="fini_disp" value="1">
+                <button type="submit" class="btn btn-secondary">完了</button>
+            </form>
+            <form action="schedule.php?userid=<?php print($userid); ?>&year=<?php print($year); ?>&month=<?php print($month); ?>&day=<?php print($day); ?>" method="post">
+                <input type="hidden" name="can_disp" value="2">
+                <button type="submit" class="btn btn-secondary">キャンセル</button>
+            </form>
+            </div>
+        </div>
+
+        <div class="coll col-md-4">
+            <form action="schedule.php?userid=<?php print($userid); ?>&year=<?php print($year); ?>&month=<?php print($month); ?>&day=<?php print($day); ?>" method="post">
+            <div class="input-group">
+                <span class="input-group">
+                    <button class="btn btn-secondary" type="submit">検索</button>
+                    <input class="form-control" type="text" placeholder="予定のタイトルでさがす" name="keyword" value="">
+                </span>
+            </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 表示モード切替機能 -->
     <ul class="nav nav-tabs">
     <li class="nav-item">
         <a class="nav-link active" data-toggle="tab" id="list_view">簡易リスト表示</a>
@@ -58,13 +118,16 @@
         //DB接続
         require_once('DBInfo.php');
         $dbh = new PDO(DBInfo::DSN,DBInfo::USER,DBInfo::PASSWORD);
-        $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? ORDER BY start_time";
+        if($dispMode ==  "All"){
+            $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? ORDER BY start_time";
+        }
+
         $stmt = $dbh->prepare($sql);
         $stmt->execute([$userid,$year,$month,$day,'false']);
 
-        if($stmt->rowCount() == 0){
+        if($stmt->rowCount() == 0 && $dispMode ==  "All"){
             print("<div>まだ本日の予定はありません</div>");
-        }else{
+        }else if($stmt->rowCount() != 0){
             // <!-- 簡易リスト表示 -->
             foreach($stmt as $row){
                 $S_time = preg_replace('/:00/','',$row['start_time'],1);
@@ -170,27 +233,30 @@
                 $back = 24 - ($prev + $during);
 
                 print("<tr>");
-                //開始時刻の前の空白マス
-                for($i=1;$i<=$prev;$i++){
-                    print("<td class=\"tdView\"></td>");
-                }
+                    //開始時刻の前の空白マス
+                    for($i=1;$i<=$prev;$i++){
+                        print("<td class=\"tdView\"></td>");
+                    }
 
-                //予定を出力
-                $table_view = <<<EOF
-                    <td class="tdSche" colspan="{$during}" style="background-color:{$color}">
-                        <div class="scheDiv">{$title}</div>
-                    </td>
-                EOF;
-                print($table_view);
+                    //予定を出力
+                    $table_view = <<<EOF
+                        <td class="tdSche" colspan="{$during}" style="background-color:{$color}">
+                            <div class="scheDiv">{$title}</div>
+                        </td>
+                    EOF;
+                    print($table_view);
 
-                //終了時刻の後の空白マス
-                for($i=1;$i<=$back;$i++){
-                    print("<td class=\"tdView\"></td>");
-                }
+                    //終了時刻の後の空白マス
+                    for($i=1;$i<=$back;$i++){
+                        print("<td class=\"tdView\"></td>");
+                    }
                 print("</tr>");
             }
+            print("</table>");
+        }else{
+            print("<div>該当する予定はありません</div>");
         }
-        print("</table>");
+        
     ?>
 
     
