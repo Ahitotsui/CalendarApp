@@ -365,7 +365,7 @@
                     $checked0 = "checked";
                 }else if($row['color'] == "#FFFF88"){
                     $checked1 = "checked";
-                }else if($row['color'] == "#75A9FF"){
+                }else if($row['color'] == "#87CEFA"){
                     $checked2 = "checked";
                 }else if($row['color'] == "#C299FF"){
                     $checked3 = "checked";
@@ -498,14 +498,14 @@
 
             // 簡易リスト表示切替
             $("#list_view").click(function(){
-                $('.table_view').hide();
+                $('#time_table').hide();
                 $('.list_view').show();
             });
 
             // タイムテーブル表示切替
             $("#table_view").click(function(){
                 $('.list_view').hide();
-                $('.table_view').show();
+                $('#time_table').show();
             });
 
             $(".delete").click(function(){
