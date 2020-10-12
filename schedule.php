@@ -14,6 +14,20 @@
     $month = $_GET['month'];
     $day = $_GET['day'];
 
+    date_default_timezone_set('Japan');
+    //今現在の年を取得
+    $TodayYear = date("Y");
+
+    //今現在の月を"先頭の0"無しで取得
+    $TodayMonth = date("n");
+
+    //今現在の日付を取得
+    $today = date("d");
+
+    // 今現在の時刻(h)を取得
+    $todayTime = date("H");
+
+
     //検索条件のパラメータ受け取り
     if(isset($_POST['all_disp']) == true && $_POST['all_disp'] != ""){
         $dispMode =  $_POST['all_disp'];
@@ -210,8 +224,15 @@
             print("<table id=\"time_table\" border=1>");
             print("<thead class=\"timesThead\">");
             for($i=0;$i<=23;$i++){
-                //時刻の文字がリンクになっていて、新規登録ページのモーダルを開く
-                print("<th class=\"timesTh\"><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add\" id=\"{$i}\">{$i}:00</a></th>");
+                
+                //現在時刻の時は背景色つける
+                if($year == $TodayYear && $month == $TodayMonth && $day == $today && $todayTime == $i){
+                    //時刻の文字がリンクになっていて、新規登録ページのモーダルを開く
+                    print("<th id=\"timesNow\"><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add\" id=\"{$i}\">{$i}:00</a></th>");
+                }else{
+                    //時刻の文字がリンクになっていて、新規登録ページのモーダルを開く
+                    print("<th class=\"timesTh\"><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add\" id=\"{$i}\">{$i}:00</a></th>");
+                }
             }
             print("</thead>");
 
@@ -232,11 +253,21 @@
 
                 //終了時刻の後の空白マスを算出
                 $back = 24 - ($prev + $during);
+                if($prev + $during < $todayTime){
+                    $nowMaker2 =  "";
+                }else if($prev + $during > $todayTime){
+                    $nowMaker2 =  $todayTime - ($prev + $during);
+                }
 
                 print("<tr>");
                     //開始時刻の前の空白マス
                     for($i=1;$i<=$prev;$i++){
-                        print("<td class=\"tdView\"></td>");
+                        //現在時刻の時は背景色つける
+                        if($year == $TodayYear && $month == $TodayMonth && $day == $today && ($i-1)  == $todayTime){
+                            print("<td class=\"timesNow\"></td>");
+                        }else{
+                            print("<td class=\"tdView\"></td>");
+                        }
                     }
 
                     //予定を出力
@@ -249,7 +280,12 @@
 
                     //終了時刻の後の空白マス
                     for($i=1;$i<=$back;$i++){
-                        print("<td class=\"tdView\"></td>");
+                        //現在時刻の時は背景色つける
+                        if($year == $TodayYear && $month == $TodayMonth && $day == $today && ($i-1) == $todayTime - ($prev + $during)){
+                            print("<td class=\"timesNow\"></td>");
+                        }else{
+                            print("<td class=\"tdView\"></td>");
+                        }
                     }
                 print("</tr>");
             }

@@ -226,6 +226,23 @@ h1{
   border-top-style:none; 
 }
 
+/* 現在時刻のth */
+#timesNow{
+  width:4%;
+  height: 50px;
+  text-align: center;
+  background-color:#00FFFF;
+}
+
+/* 現在時刻のtd */
+.timesNow{
+  width:4%;
+  height: 50px;
+  border-top-style:none; 
+  border-bottom-style:none; 
+  background-color:#00FFFF;
+}
+
 .tdView{
   width:4%;
   border-top-style:none; 
@@ -234,8 +251,9 @@ h1{
 }
 
 .tdSche{
-  font-size: 15px;
-  height: 60px;
+  font-size: 13px;
+  height: 40px;
+  table-layout: fixed;
 }
 
 
