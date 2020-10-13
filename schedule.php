@@ -542,18 +542,6 @@
     <script>
         $(function(){
 
-            // 簡易リスト表示切替
-            // $("#listTab").click(function(){
-            //     $('#tabletab').css('background-color': 'Lime');
-            //     alert('aaaa');
-            // });
-
-            // タイムテーブル表示切替
-            // $("#table_view").click(function(){
-            //     $('.list_view').hide();
-            //     $('#time_table').show();
-            // });
-
             $(".delete").click(function(){
                 
                 //対象のid番号を取得し変数idに代入
