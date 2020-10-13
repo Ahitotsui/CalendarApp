@@ -47,9 +47,13 @@
         $dispMode = "All";
     }
 
+    //ページ遷移に使うURLを変数で扱う
     $URL = "schedule.php?userid=$userid&year=$year&month=$month&day=$day";
+
+    //リスト・タイムテーブルの表示モードを選択するためのパラメータ
     $viewMode = $_GET['view'];
 
+    //リスト・タイムテーブルの表示モードを選択ボタンのCSSで使うid名
     if($viewMode == "list"){
         $tabStyle1 = "tabStyle1";
     }else if($viewMode == "table"){
