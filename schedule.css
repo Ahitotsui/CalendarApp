@@ -145,6 +145,28 @@ h1{
   border-bottom-right-radius: 10px;
 }
 
+/* リスト・タイムテーブル切替のタブのスタイル */
+#dispTabs{
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* リスト・タイムテーブル切替のタブ(未選択時)*/
+.dispTab{
+  width: 100px;
+  height: 30px;
+  padding: 8px;
+  border-radius: 3px;
+  color: #000000;
+}
+
+/* リスト・タイムテーブル切替のタブ(選択時)*/
+#tabStyle1,#tabStyle2{
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
 /*------------------簡易リスト表示------------------*/
 /* リスト */
 .list_view{
@@ -208,7 +230,7 @@ h1{
 #time_table{
   width: 95%;
   table-layout: fixed;
-  margin-top:60px;
+  margin-top:10px;
   margin-left:auto;
   margin-right:auto;
   margin-bottom: 30px;
@@ -254,6 +276,16 @@ h1{
   font-size: 13px;
   height: 40px;
   table-layout: fixed;
+}
+
+
+.no_data{
+  font-size: 25px;
+  width: 50%;
+  margin-top: 40px;
+  text-align: center;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 
