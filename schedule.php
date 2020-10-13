@@ -46,7 +46,15 @@
     }else{
         $dispMode = "All";
     }
-    
+
+    $URL = "schedule.php?userid=$userid&year=$year&month=$month&day=$day";
+    $viewMode = $_GET['view'];
+
+    if($viewMode == "list"){
+        $tabStyle1 = "tabStyle1";
+    }else if($viewMode == "table"){
+        $tabStyle2 = "tabStyle2";
+    }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -83,19 +91,19 @@
         <div id="disp_filter" class="coll col-md-4">
             <!-- <p id="filer_text">表示する予定の絞り込み</p> -->
             <div class="btn-group" role="group">
-            <form action="schedule.php?userid=<?php print($userid); ?>&year=<?php print($year); ?>&month=<?php print($month); ?>&day=<?php print($day); ?>" method="post">
+            <form action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
                 <input type="hidden" name="all_disp" value="All">
                 <button type="submit" id="filBtn1" class="btn btn-secondary">全て</button>
             </form>
-            <form action="schedule.php?userid=<?php print($userid); ?>&year=<?php print($year); ?>&month=<?php print($month); ?>&day=<?php print($day); ?>" method="post">
+            <form action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
                 <input type="hidden" name="unfini_disp" value="0">
                 <button type="submit" id="filBtn2" class="btn btn-secondary">未了</button>
             </form>
-            <form action="schedule.php?userid=<?php print($userid); ?>&year=<?php print($year); ?>&month=<?php print($month); ?>&day=<?php print($day); ?>" method="post">
+            <form action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
                 <input type="hidden" name="fini_disp" value="1">
                 <button type="submit" id="filBtn3" class="btn btn-secondary">完了</button>
             </form>
-            <form action="schedule.php?userid=<?php print($userid); ?>&year=<?php print($year); ?>&month=<?php print($month); ?>&day=<?php print($day); ?>" method="post">
+            <form action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
                 <input type="hidden" name="can_disp" value="2">
                 <button type="submit" id="filBtn4" class="btn btn-secondary">キャンセル</button>
             </form>
@@ -103,7 +111,7 @@
         </div>
 
         <div class="coll col-md-4">
-            <form action="schedule.php?userid=<?php print($userid); ?>&year=<?php print($year); ?>&month=<?php print($month); ?>&day=<?php print($day); ?>" method="post">
+            <form action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
             <div class="input-group">
                 <span class="input-group">
                     
@@ -116,15 +124,10 @@
     </div>
 
     <!-- 表示モード切替機能 -->
-    <ul class="nav nav-tabs">
-    <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" id="list_view">簡易リスト表示</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" id="table_view">タイムテーブル表示</a>
-    </li>
-    </ul>
-
+    <div id="dispTabs">
+        <a id="<?php print($tabStyle1); ?>" class="dispTab" href="<?php print($URL); ?>&view=list">簡易リスト表示</a>
+        <a id="<?php print($tabStyle2); ?>" class="dispTab" href="<?php print($URL); ?>&view=table">タイムテーブル表示</a>
+    </div>
    
     <?php 
         //DB接続
@@ -138,7 +141,7 @@
         $stmt->execute([$userid,$year,$month,$day,'false']);
 
         if($stmt->rowCount() == 0 && $dispMode ==  "All"){
-            print("<div>まだ本日の予定はありません</div>");
+            print("<div class=\"no_data\">まだ本日の予定はありません</div>");
         }else if($stmt->rowCount() != 0){
             // <!-- 簡易リスト表示 -->
             foreach($stmt as $row){
@@ -184,12 +187,13 @@
                             <input type="hidden" name="year" value="$year">
                             <input type="hidden" name="month" value="$month">
                             <input type="hidden" name="day" value="$day">
+                            <input type="hidden" name="view" value="$viewMode">
                             <input type="hidden" name="id" value="$id">
                             <input type="hidden" name="progFlag" value="$toggle">
                             <button type="submit" class="$class" $disabled>{$progress}</button>
                         </form>
                         <a data-toggle="modal" href="#memo{$id}" class="detail">詳細</a>
-                        <a href="schedule.php?ID={$id}&userid=$userid&year=$year&month=$month&day=$day" class="edit">編集</a>
+                        <a href="$URL&ID={$id}&view=$viewMode" class="edit">編集</a>
                         <a data-toggle="modal" href="#delete" class="delete" id="{$id}">削除</a>
                         
                         <div class="modal" id="memo{$id}">
@@ -216,82 +220,86 @@
                     </div>
                 EOF;
 
-                print($list_view);
+                if($viewMode == "list"){
+                    print($list_view);
+                }
             }
 
 
             // <!-- タイムテーブル表示 -->
-            print("<table id=\"time_table\" border=1>");
-            print("<thead class=\"timesThead\">");
-            for($i=0;$i<=23;$i++){
-                
-                //現在時刻の時は背景色つける
-                if($year == $TodayYear && $month == $TodayMonth && $day == $today && $todayTime == $i){
-                    //時刻の文字がリンクになっていて、新規登録ページのモーダルを開く
-                    print("<th id=\"timesNow\"><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add\" id=\"{$i}\">{$i}:00</a></th>");
-                }else{
-                    //時刻の文字がリンクになっていて、新規登録ページのモーダルを開く
-                    print("<th class=\"timesTh\"><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add\" id=\"{$i}\">{$i}:00</a></th>");
+            if($viewMode == "table"){
+                print("<table id=\"time_table\" border=1>");
+                print("<thead class=\"timesThead\">");
+                for($i=0;$i<=23;$i++){
+                    
+                    //現在時刻の時は背景色つける
+                    if($year == $TodayYear && $month == $TodayMonth && $day == $today && $todayTime == $i){
+                        //時刻の文字がリンクになっていて、新規登録ページのモーダルを開く
+                        print("<th id=\"timesNow\"><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add\" id=\"{$i}\">{$i}:00</a></th>");
+                    }else{
+                        //時刻の文字がリンクになっていて、新規登録ページのモーダルを開く
+                        print("<th class=\"timesTh\"><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add\" id=\"{$i}\">{$i}:00</a></th>");
+                    }
                 }
-            }
-            print("</thead>");
+                print("</thead>");
 
-            $stmt->execute([$userid,$year,$month,$day,'false']);
-            foreach($stmt as $row){
-                $S_time = $row['start_time'];
-                $E_time = $row['end_time'];
-                $title = htmlspecialchars($row['title']);
-                $color = $row['color'];
-                $delete = $row['logic_delete'];
-                $id = $row['id'];
+                $stmt->execute([$userid,$year,$month,$day,'false']);
+                foreach($stmt as $row){
+                    $S_time = $row['start_time'];
+                    $E_time = $row['end_time'];
+                    $title = htmlspecialchars($row['title']);
+                    $color = $row['color'];
+                    $delete = $row['logic_delete'];
+                    $id = $row['id'];
 
-                //開始時刻の前の空白マスを算出
-                $prev = (int)str_replace(':00','',$S_time);
+                    //開始時刻の前の空白マスを算出
+                    $prev = (int)str_replace(':00','',$S_time);
 
-                //予定の期間を算出
-                $during = (int)str_replace(':00','',$E_time) - $prev;
+                    //予定の期間を算出
+                    $during = (int)str_replace(':00','',$E_time) - $prev;
 
-                //終了時刻の後の空白マスを算出
-                $back = 24 - ($prev + $during);
-                if($prev + $during < $todayTime){
-                    $nowMaker2 =  "";
-                }else if($prev + $during > $todayTime){
-                    $nowMaker2 =  $todayTime - ($prev + $during);
-                }
-
-                print("<tr>");
-                    //開始時刻の前の空白マス
-                    for($i=1;$i<=$prev;$i++){
-                        //現在時刻の時は背景色つける
-                        if($year == $TodayYear && $month == $TodayMonth && $day == $today && ($i-1)  == $todayTime){
-                            print("<td class=\"timesNow\"></td>");
-                        }else{
-                            print("<td class=\"tdView\"></td>");
-                        }
+                    //終了時刻の後の空白マスを算出
+                    $back = 24 - ($prev + $during);
+                    if($prev + $during < $todayTime){
+                        $nowMaker2 =  "";
+                    }else if($prev + $during > $todayTime){
+                        $nowMaker2 =  $todayTime - ($prev + $during);
                     }
 
-                    //予定を出力
-                    $table_view = <<<EOF
-                        <td class="tdSche" colspan="{$during}" style="background-color:{$color}">
-                            <div class="scheDiv">{$title}</div>
-                        </td>
-                    EOF;
-                    print($table_view);
-
-                    //終了時刻の後の空白マス
-                    for($i=1;$i<=$back;$i++){
-                        //現在時刻の時は背景色つける
-                        if($year == $TodayYear && $month == $TodayMonth && $day == $today && ($i-1) == $todayTime - ($prev + $during)){
-                            print("<td class=\"timesNow\"></td>");
-                        }else{
-                            print("<td class=\"tdView\"></td>");
+                    print("<tr>");
+                        //開始時刻の前の空白マス
+                        for($i=1;$i<=$prev;$i++){
+                            //現在時刻の時は背景色つける
+                            if($year == $TodayYear && $month == $TodayMonth && $day == $today && ($i-1)  == $todayTime){
+                                print("<td class=\"timesNow\"></td>");
+                            }else{
+                                print("<td class=\"tdView\"></td>");
+                            }
                         }
-                    }
-                print("</tr>");
+
+                        //予定を出力
+                        $table_view = <<<EOF
+                            <td class="tdSche" colspan="{$during}" style="background-color:{$color}">
+                                <div class="scheDiv">{$title}</div>
+                            </td>
+                        EOF;
+                        print($table_view);
+
+                        //終了時刻の後の空白マス
+                        for($i=1;$i<=$back;$i++){
+                            //現在時刻の時は背景色つける
+                            if($year == $TodayYear && $month == $TodayMonth && $day == $today && ($i-1) == $todayTime - ($prev + $during)){
+                                print("<td class=\"timesNow\"></td>");
+                            }else{
+                                print("<td class=\"tdView\"></td>");
+                            }
+                        }
+                    print("</tr>");
+                }
+                print("</table>");
             }
-            print("</table>");
         }else{
-            print("<div>該当する予定はありません</div>");
+            print("<div class=\"no_data\">該当する予定はありません</div>");
         }
         
     ?>
@@ -317,6 +325,7 @@
                     <input type="hidden" name="year" value="$year">
                     <input type="hidden" name="month" value="$month">
                     <input type="hidden" name="day" value="$day">
+                    <input type="hidden" name="view" value="$viewMode">
                     <div class="modal-body">
             EOF;
             print($f_upper);
@@ -458,6 +467,7 @@
                             <input type="hidden" name="year" value="<?php print($year);?>">
                             <input type="hidden" name="month" value="<?php print($month);?>">
                             <input type="hidden" name="day" value="<?php print($day);?>">
+                            <input type="hidden" name="view" value="<?php print($viewMode);?>">
 
                             <input type="hidden" id="selectId" name="id" value="">
                             <input type="hidden" name="logic_delete" value="true">
@@ -531,18 +541,6 @@
     <script src="js/bootstrap.min.js"></script>
     <script>
         $(function(){
-
-            // 簡易リスト表示切替
-            $("#list_view").click(function(){
-                $('#time_table').hide();
-                $('.list_view').show();
-            });
-
-            // タイムテーブル表示切替
-            $("#table_view").click(function(){
-                $('.list_view').hide();
-                $('#time_table').show();
-            });
 
             $(".delete").click(function(){
                 

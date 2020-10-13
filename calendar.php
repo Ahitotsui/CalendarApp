@@ -84,7 +84,7 @@
   //DB接続
   require_once('DBInfo.php');
   $dbh = new PDO(DBInfo::DSN,DBInfo::USER,DBInfo::PASSWORD);
-  $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=?";
+  $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? ORDER BY start_time";
   $stmt = $dbh->prepare($sql);
 
   /*-------------------------------------------カレンダー表示領域---------------------------------------------------*/
@@ -156,7 +156,7 @@
       // print("<div id=\"hiddenID{$day}\" class=\"{$id}\"></div>");
 
       //詳細画面に飛ばすためaタグ囲む
-      print("<a class=\"linkSche\" href=\"schedule.php?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day\">");
+      print("<a class=\"linkSche\" href=\"schedule.php?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list\">");
         //日にちごとにメモを表示
         print("<div id=\"memo{$day}\" class=\"memos\">");
           $stmt->execute([$_SESSION['login']['username'],$TitleYear,$Titlemonth,$day]);

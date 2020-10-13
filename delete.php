@@ -4,6 +4,7 @@ $userid = $_POST['userid'];
 $year = $_POST['year'];
 $month = $_POST['month'];
 $day = $_POST['day'];
+$view = $_POST['view'];
 
 //DBの内容を書き換えるパラメータ
 $id = $_POST['id'];
@@ -38,4 +39,4 @@ try{
 }
 $dbh = null;
 
-header("location:schedule.php?userid=$userid&year=$year&month=$month&day=$day");
+header("location:schedule.php?userid=$userid&year=$year&month=$month&day=$day&view=$view");

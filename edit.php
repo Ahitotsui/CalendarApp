@@ -4,6 +4,7 @@ $userid = $_POST['userid'];
 $year = $_POST['year'];
 $month = $_POST['month'];
 $day = $_POST['day'];
+$view = $_POST['view'];
 
 //DBの内容を書き換えるパラメータ
 $id = $_POST['id'];
@@ -49,7 +50,7 @@ try{
                 $stmt = $dbh->prepare($sql);
                 if(validation($start,$end) == true){
                     $stmt->execute([$start,$end,$title,$memo,$progress,$color,$id]);
-                    header("location:schedule.php?userid=$userid&year=$year&month=$month&day=$day");
+                    header("location:schedule.php?userid=$userid&year=$year&month=$month&day=$day&view=$view");
                 }else if(validation($start,$end) == false){
                     print('<h3>入力にエラーがあります。</h3>');
                     print('<p>・終了時刻と開始時刻を同じ値で登録することはできません。</p>');
@@ -61,7 +62,7 @@ try{
                 $sql = "UPDATE Memo_tags SET progress = ? WHERE id = ?";
                 $stmt = $dbh->prepare($sql);
                 $stmt->execute([$progFlag,$id]);
-                header("location:schedule.php?userid=$userid&year=$year&month=$month&day=$day");
+                header("location:schedule.php?userid=$userid&year=$year&month=$month&day=$day&view=$view");
             }
         
     //コミットで、テーブルの書き換え処理を確定  
