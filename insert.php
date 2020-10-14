@@ -12,7 +12,7 @@ $color = $_POST['color'];
 $delete = $_POST['delete'];
 
 //詳細ページから追加された場合はこの値を受け取り、リダイレクトの判定に使用
-$redirect = $_POST['redirect'];
+$view = $_POST['view'];
 
 //関数validation():終了時刻>開始時刻でデータが送られたらエラー出す
 function validation($start,$end){
@@ -65,10 +65,7 @@ try{
 $dbh = null;
 
 //リダイレクト
-if($redirect == "true"){
-    header("location:schedule.php?userid=$userid&year=$year&month=$month&day=$day");
+if(isset($view) == "true"){
+    header("location:schedule.php?userid=$userid&year=$year&month=$month&day=$day&view=$view");
 }
-// else{
-//     header("location:calendar.php?year={$year}&month={$month}");
-// }
 

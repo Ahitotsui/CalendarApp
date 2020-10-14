@@ -72,7 +72,7 @@
     <title><?php print($year); ?>/<?php print($month); ?>/<?php print($day); ?></title>
 </head>
 <body>
-    <header class="fixed-top">
+    <header>
         <div id="top">
             <div id="Htitle">
             <a id="TitleBackLink" href="calendar.php?year=<?php print($year) ?>&month=<?php print($month) ?>">
@@ -86,7 +86,7 @@
     </header>
     <!--ヘッダー領域(END)--->
 
-    <h2 class="container">
+    <h2 class="container" id="today_title">
         <?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日
     </h2>
 
@@ -205,12 +205,12 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title">{$S_time}-{$E_time}</h4>
+                                        <h4>{$title}</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                     </div>
                                     <div class="modal-body">
                                         <div id="Deleteform" class="deletepops">
-                                            <h4>【{$title}】</h4>
+                                            <h5 class="modal-title">{$S_time}-{$E_time}</h5>
                                             <p>{$memo}</p>                
                                         </div>
                                     </div>
@@ -506,7 +506,8 @@
                             <input type="hidden" name="year" value="<?php print($year); ?>">
                             <input type="hidden" name="month" value="<?php print($month); ?>">
                             <input type="hidden" name="day" id="AddHiddenday" value="<?php print($day); ?>">
-
+                            <input type="hidden" name="view" value="<?php print($viewMode);?>">
+                            <input type="hidden" name="delete" value="false">
                             <input type="hidden" name="start" id="AddHiddenStart" value="">
                             <input type="hidden" name="end" id="AddHiddenEnd" value="">
 
@@ -527,8 +528,7 @@
                                 <input type="radio" name="color" value="#FFFFFF" id="Addwhite" checked><label for="Addwhite" id="Addwhite"></label>
                             </div>
 
-                            <input type="hidden" name="delete" value="false">
-                            <input type="hidden" name="redirect" value="true">
+                            
                         </div>
                     </div>
 

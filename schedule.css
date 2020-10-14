@@ -4,14 +4,17 @@
 }
 
 body{
-  padding-top: 60px; /*ヘッダー固定のためにマージンとる*/
+  /* padding-top: 60px; ヘッダー固定のためにマージンとる */
 }
 /*------------------ヘッダー領域------------------*/
 /*ヘッダーの背景*/
 header{
+  position: fixed;
+  margin-top: -60px;
   width:100%;
   height:50px;
   background-color:#000000;
+  z-index:998;
 }
   
 /*ヘッダーの中の３つの要素全てを囲んだdiv*/
@@ -109,6 +112,9 @@ h1{
 }
 /*------------------ヘッダー領域(END)------------------*/
 
+#today_title{
+  margin-top: 60px;
+}
 
 /* フィルタボタン・検索フォームを囲むdivタグ */
 #search{
@@ -294,17 +300,19 @@ h1{
 /*ポップアップ時に背景を薄暗くする。削除モーダルウィンドウと供用*/
 #popback{
   position: absolute;
-  top:0%;
+  top:-10%;
   left:0%;
-  width:100%;
-  height:200%;
+  width: 100%;
+  height: 200%;
   opacity:0.5;
   background-color:#000000;
+  z-index:999;
 }
 
 /*全体の枠のdivタグの設定*/
 #Editform{
-  width: 500px;
+  max-width: 90%;
+  max-height: 120%;
   padding-bottom: 20px;
   border-radius:10px;
   background-color:#FFFFFF;
@@ -312,7 +320,7 @@ h1{
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  z-index:100;
+  z-index:1000;
 }
 
 /* 開始時間・終了時間のセレクトタグのラベル */
@@ -335,7 +343,7 @@ label{
 /*テキストエリア*/
 #EditPreviwe{
   width: 100%;
-  height: 250px;
+  height: 150px;
   font-size:15px;
   padding:20px;
   resize: none;
