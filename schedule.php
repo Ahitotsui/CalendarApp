@@ -8,6 +8,19 @@
     $month = $_GET['month'];
     $day = $_GET['day'];
 
+    date_default_timezone_set('Japan');
+    //今現在の年を取得
+    $TodayYear = date("Y");
+
+    //今現在の月を"先頭の0"無しで取得
+    $TodayMonth = date("n");
+
+    //今現在の日付を取得
+    $today = date("d");
+
+    // 今現在の時刻(h)を取得
+    $todayTime = date("H");
+
     //セキュリティ対策
     function Security($userid,$year,$month,$day,$viewMode){
 
@@ -31,24 +44,10 @@
         header("location:error.html");
     }else if(Security($userid,$year,$month,$day,$viewMode) == false){
         //セキュリティ対策でエラー検知したら、強制的にデフォルト表示にする
-        header("location:schedule.php?userid=$userid&year=$year&month=$month&day=$day&view=list");
+        header("location:schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$today&view=list");
     }else{
         $userid = $_SESSION['login']['username'];
     }
-
-    date_default_timezone_set('Japan');
-    //今現在の年を取得
-    $TodayYear = date("Y");
-
-    //今現在の月を"先頭の0"無しで取得
-    $TodayMonth = date("n");
-
-    //今現在の日付を取得
-    $today = date("d");
-
-    // 今現在の時刻(h)を取得
-    $todayTime = date("H");
-
 
     //検索条件のパラメータ受け取り
     if(isset($_POST['all_disp']) == true && $_POST['all_disp'] != ""){
