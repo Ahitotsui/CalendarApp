@@ -135,15 +135,32 @@ main{
   
 }
 
+/* 曜日表記 */
 .tdtop{
   width:200px;
   height:30px;
+  font-family: 'Sriracha', cursive;
+  font-size: 18px;
   color:#FFFFFF;
   background-color:#000000;
   font-weight:bold;
   text-align: center;
-  /*border-radius:25px;*/
   border-color: #FFFFFF;
+}
+
+/* 曜日英語表記 */
+.small{
+  font-size:14px;
+}
+
+/* 土 SAT */
+#sat{
+  color:#66FFFF	;
+}
+
+/* 日 SUN */
+#sun{
+  color:#FF66FF;
 }
 
 /*日にちのtdタグ*/
@@ -164,7 +181,7 @@ main{
   width:30px;
   height:30px;
   color:#FFFFFF;
-  background-color:#0000FF;
+  background-color:#000000;
   margin-left:5px;
   border-radius: 15px;
   /*-------------------上下左右の中央寄せ------------------------*/
@@ -191,27 +208,19 @@ main{
   height:25px;
   background-color:#FFFFFF;
   font-size: 25px;
-  color:#008000;
+  color:#777777;
   border: none;
-  /* border:solid; */
   border-width:1px;
   border-radius: 50%;
-  /*-------------------上下左右の中央寄せ-----------------------*/
-  /*line-height: 25px;*/
-  /*display: inline-block;*/
-  /*display: flex;/*fFlexコンテナ化*/
-	/*align-items: center;/*f縦方向の位置を中央に*/
-  /*justify-content: center;/*横方向のアイテム位置を中央に*/
-  /*-------------------上下左右の中央寄せ------------------------*/
   -webkit-appearance: none;/*スマホでの自動デザイン無効化*/
-  /* border-color:#008000; */
   cursor: pointer;
   float: left;
 }
 
+/*新規登録ボタン マウスオーバー*/
 .addbtns:hover{
-  background-color:#008000;
-  color:#FFFFFF;
+  color:#000000;
+  font-size: 30px;
 }
 
 

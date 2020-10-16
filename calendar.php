@@ -52,7 +52,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-  <!-- <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre&family=Lora:wght@600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet"> -->
+  <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet"><!-- 曜日のフォント -->
   <link rel="stylesheet" href="calendar.css">
   <!-- <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
   <link href="../css/bootstrap-theme.min.css" rel="stylesheet" media="screen"> -->
@@ -89,15 +89,15 @@
 
   /*-------------------------------------------カレンダー表示領域---------------------------------------------------*/
   //テーブルヘッド
-  print("<table id=\"mainTable\" border=1>");
-  print("<thead id=tbhead>");
-  print("<td class=tdtop>月 MON</td>");
-  print("<td class=tdtop>火 TUE</td>");
-  print("<td class=tdtop>水 WED</td>");
-  print("<td class=tdtop>木 THU</td>");
-  print("<td class=tdtop>金 FRI</td>");
-  print("<td class=tdtop>土 SAT</td>");
-  print("<td class=tdtop>日 SUN</td>");
+  print("<table id=\"mainTable\" border=\"1\">");
+  print("<thead id=\"tbhead\">");
+  print("<td class=\"tdtop\">月 <span class=\"small\">-MON-</span></td>");
+  print("<td class=\"tdtop\">火 <span class=\"small\">-TUE-</span></td>");
+  print("<td class=\"tdtop\">水 <span class=\"small\">-WED-</span></td>");
+  print("<td class=\"tdtop\">木 <span class=\"small\">-THU-</span></td>");
+  print("<td class=\"tdtop\">金 <span class=\"small\">-FRI-</span></td>");
+  print("<td class=\"tdtop\" id=\"sat\">土 <span class=\"small\">-SAT-</span></td>");
+  print("<td class=\"tdtop\" id=\"sun\">日 <span class=\"small\">-SUN-</span></td>");
   print("</thead>");
 
   //前月の空白マスの数を決めるため、$iniを定義

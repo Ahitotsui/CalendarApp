@@ -1,18 +1,40 @@
 <?php
     //セッション開始
-    session_start(); 
-    if(isset($_SESSION['login']) == false){
-      //このページのURLをコピーして他のブラウザで閲覧できないようにする
-      header("location:error.html");
-    }else{
-      $userid = $_SESSION['login']['username'];
-    }
+    session_start();
+    $userid = $_SESSION['login']['username']; 
 
     //ページ表示に必要なパラメータの受け取り
-    // $userid = $_GET['userid'];
     $year = $_GET['year'];
     $month = $_GET['month'];
     $day = $_GET['day'];
+
+    //セキュリティ対策
+    function Security($userid,$year,$month,$day,$viewMode){
+
+        if($userid != $_SESSION['login']['username']){
+            return false;
+        }else if($year < 2019 || ctype_digit($year) == false){
+            return false;
+        }else if($month < 1 || $month >12 || ctype_digit($month) == false){
+            return false;
+        }else if($day < 1 || $day > date( 't' , strtotime($year . "/" . $month . "/01")) || ctype_digit($day) == false){
+            return false;
+        }else if($_GET['view'] != "list" && $_GET['view'] != "table"){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    if(isset($_SESSION['login']) == false){
+        //このページのURLをコピーして他のブラウザで閲覧できないようにする
+        header("location:error.html");
+    }else if(Security($userid,$year,$month,$day,$viewMode) == false){
+        //セキュリティ対策でエラー検知したら、強制的にデフォルト表示にする
+        header("location:schedule.php?userid=$userid&year=$year&month=$month&day=$day&view=list");
+    }else{
+        $userid = $_SESSION['login']['username'];
+    }
 
     date_default_timezone_set('Japan');
     //今現在の年を取得
