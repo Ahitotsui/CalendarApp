@@ -54,8 +54,7 @@
 <meta charset="UTF-8">
   <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet"><!-- 曜日のフォント -->
   <link rel="stylesheet" href="calendar.css">
-  <!-- <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-  <link href="../css/bootstrap-theme.min.css" rel="stylesheet" media="screen"> -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"><!-- Font Awesome -->
   <script src="jquery-3.4.1.min.js"></script>
   <script src="calendar.js"></script>
   <title>Calendar</title>
@@ -72,7 +71,12 @@
       </a>
     </div>
 
-    <div id="Hlogin"><p id=login>ようこそ<span id=username><?php print($_SESSION['login']['name']); ?></span>さん</p></div>
+    <div id="Hlogin">
+      <p id=login>
+        <i class="fas fa-user"></i><span id=username><?php print($_SESSION['login']['name']); ?></span>さん
+      </p>
+    </div>
+
     <div id="Hlogout"><a id="logout" href="logout.php">ログアウト</a></div>
   </div>
 </header>
@@ -151,7 +155,7 @@
       }
 
       //新規登録ボタン
-      print("<button class=\"addbtns\" id=\"{$day}\">+</button>");
+      print("<button class=\"addbtns\" id=\"{$day}\"><i class=\"fas fa-plus-circle\"></i></button>");
 
       // print("<div id=\"hiddenID{$day}\" class=\"{$id}\"></div>");
 

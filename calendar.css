@@ -207,7 +207,7 @@ main{
   width:25px;
   height:25px;
   background-color:#FFFFFF;
-  font-size: 25px;
+  font-size: 18px;
   color:#777777;
   border: none;
   border-width:1px;
@@ -220,7 +220,6 @@ main{
 /*新規登録ボタン マウスオーバー*/
 .addbtns:hover{
   color:#000000;
-  font-size: 30px;
 }
 
 
