@@ -90,6 +90,7 @@
     <script src="jquery-3.4.1.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="../css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"><!-- Font Awesome -->
     <title><?php print($year); ?>/<?php print($month); ?>/<?php print($day); ?></title>
 </head>
 <body>
@@ -101,7 +102,11 @@
             </a>
             </div>
 
-            <div id="Hlogin"><p id=login>ようこそ<span id="username"><?php print($_SESSION['login']['name']); ?></span>さん</p></div>
+            <div id="Hlogin">
+                <p id=login>
+                    <i class="fas fa-user"></i><span id="username"><?php print($_SESSION['login']['name']); ?></span>さん
+                </p>
+            </div>
             <div id="Hlogout"><a id="logout" href="logout.php">ログアウト</a></div>
         </div>
     </header>
@@ -205,7 +210,7 @@
 
                 $list_view = <<<EOF
                     <div class="list_view" style="background-color:{$color}">
-                        <p class="list_time">{$S_time}〜{$E_time}</p>
+                        <p class="list_time"><i class="far fa-clock"></i>{$S_time}〜{$E_time}</p>
                         <p class="list_title">{$title}</p>
                         <form class="progBtn" action="edit.php" method="post">
                             <input type="hidden" name="userid" value="$userid">
