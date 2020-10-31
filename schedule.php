@@ -91,6 +91,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="../css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"><!-- Font Awesome -->
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.ico" />
     <title><?php print($year); ?>/<?php print($month); ?>/<?php print($day); ?></title>
 </head>
 <body>
@@ -146,7 +147,7 @@
                 <span class="input-group">
                     
                     <input class="form-control" type="text" placeholder="予定のタイトルでさがす" name="keyword" value="">
-                    <button class="btn btn-secondary" type="submit">検索</button>
+                    <button class="btn btn-secondary" type="submit"><i class="fas fa-search"></i></button>
                 </span>
             </div>
             </form>

@@ -57,6 +57,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"><!-- Font Awesome -->
   <script src="jquery-3.4.1.min.js"></script>
   <script src="calendar.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.ico" />
   <title>Calendar</title>
 </head>
 
