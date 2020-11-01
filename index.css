@@ -17,11 +17,11 @@ header{
 /*ヘッダーの中身*/
 h1{
   height:50px;
-  width:1420px;
+  /* width:100%; */
   font-size:40px;
   color:#FFFFFF;
-  margin-left: auto;
-  margin-right: auto;
+  /* margin-left: auto;
+  margin-right: auto; */
   /*-------------------上下左右の中央寄せ------------------------*/
   display: flex;/*fFlexコンテナ化*/
 	align-items: center;/*f縦方向の位置を中央に*/
@@ -33,11 +33,7 @@ h1{
 
 /*----------------------メインコンテンツ領域---------------------*/
 main{
-  width:1420px;
-  height:830px;
   background-color:#FFFFFF;
-  margin-left: auto;
-  margin-right: auto;
   padding-top: 3px;
 }
 

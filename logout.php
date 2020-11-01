@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="logout.css">
+<link rel="shortcut icon" type="image/x-icon" href="./img/favicon.ico" />
 <title>ログアウト</title>
 </head>
 
@@ -22,7 +23,7 @@
 <main>
   <div>
     <h2>ログアウト</h2>
-    <h3>ログアウトに成功しました。</h3>
+    <h3>正常にログアウトしました。</h3>
     <p><a href="index.html">ログイン画面に戻る</a></p>
   </div>
 </main>
