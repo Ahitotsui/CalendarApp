@@ -55,6 +55,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet"><!-- 曜日のフォント -->
   <link rel="stylesheet" href="calendar.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"><!-- Font Awesome -->
+  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen"><!-- bootstrap -->
+  <link href="../css/bootstrap-theme.min.css" rel="stylesheet" media="screen"><!-- bootstrap -->
   <script src="jquery-3.4.1.min.js"></script>
   <script src="calendar.js"></script>
   <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.ico" />
@@ -94,7 +96,7 @@
 
   /*-------------------------------------------カレンダー表示領域---------------------------------------------------*/
   //テーブルヘッド
-  print("<table id=\"mainTable\" border=\"1\">");
+  print("<table id=\"mainTable\" border=\"1\"　class=\"table\">");
   print("<thead id=\"tbhead\">");
   print("<td class=\"tdtop\">月 <span class=\"small\">-MON-</span></td>");
   print("<td class=\"tdtop\">火 <span class=\"small\">-TUE-</span></td>");
@@ -129,7 +131,7 @@
   //もし、1日が月曜からスタートでは無い場合は空白のtdタグを最初に作る
   print("<tr>");
     for($i=0;$i<$ini;$i++){
-      print("<td class=tdPreMon></td>");
+      print("<td class=\"tdPreMon\"></td>");
     }
 
   //その月の日数を求める  
@@ -146,7 +148,7 @@
     $day++;
   
       //日にちを表示するtdタグ
-      print("<td id=td{$day} class=tddays>");
+      print("<td id=td{$day} class=\"tddays\">");
 
       //現在の日にちに背景色をつけるためのidをつけるため判別
       if($TitleYear == $TodayYear && $TodayMonth == $Titlemonth && $today == $day){
@@ -157,8 +159,6 @@
 
       //新規登録ボタン
       print("<button class=\"addbtns\" id=\"{$day}\"><i class=\"fas fa-plus-circle\"></i></button>");
-
-      // print("<div id=\"hiddenID{$day}\" class=\"{$id}\"></div>");
 
       //詳細画面に飛ばすためaタグ囲む
       print("<a class=\"linkSche\" href=\"schedule.php?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list\">");
@@ -296,7 +296,7 @@ print("</table>");
 
 </main>
 
-<footer>
+<footer class="fixed-bottom">
   <div id="monthSelectBtn">
 
   <!--前年のページネーション-->
@@ -329,7 +329,7 @@ print("</table>");
   </div>
 </footer>
 
-<!-- <script src="http://code.jquery.com/jquery.js"></script>
-<script src="js/bootstrap.min.js"></script> -->
+<script src="http://code.jquery.com/jquery.js"></script><!-- bootstrap -->
+<script src="js/bootstrap.min.js"></script><!-- bootstrap -->
 </body>
 </html>

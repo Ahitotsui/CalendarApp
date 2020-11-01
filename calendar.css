@@ -64,8 +64,6 @@ h1{
 	align-items: center;/*f縦方向の位置を中央に*/
   justify-content: center;/*横方向のアイテム位置を中央に*/
   /*-------------------上下左右の中央寄せ------------------------*/
-  /* font-family: 'Lora', serif;
-  font-family: 'Noto Sans JP', sans-serif; */
 }
 
 /*○月の表示のスタイル*/
@@ -113,7 +111,8 @@ h1{
 
 /*----------------------メインコンテンツ領域---------------------*/
 main{
-  width:1420px;
+  padding-left: 10px;
+  padding-right: 10px;
   height:830px;
   background-color:#FFFFFF;
   margin-left: auto;
@@ -122,7 +121,6 @@ main{
 }
 
 #mainTable{
-  width:1400px;
   margin-left: auto;
   margin-right: auto;
   border-collapse: collapse;
@@ -130,14 +128,10 @@ main{
   margin-top: 5px;
 }
 
-#tbhead{
-  width:1400px;
-  
-}
 
-/* 曜日表記 */
+/* 月 -MON-	火 -TUE-	水 -WED-	木 -THU-	金 -FRI-	土 -SAT-	日 -SUN- 表記 */
 .tdtop{
-  width:200px;
+  width:255px;
   height:30px;
   font-family: 'Sriracha', cursive;
   font-size: 18px;
@@ -165,14 +159,13 @@ main{
 
 /*日にちのtdタグ*/
 .tddays{
-  width:200px;
-  height:130px;
+  width:255px;
+  padding-bottom: 3px;
 }
 
 /*前月の日にちの空白tdタグ*/
 .tdPreMon{
-  width:200px;
-  height:130px;
+  width:255px;
   background-color:#808080;
 }
 
@@ -203,7 +196,7 @@ main{
 
 /*新規登録ボタン*/
 .addbtns{
-  margin-left:138px;
+  margin-left:72%;
   width:25px;
   height:25px;
   background-color:#FFFFFF;
@@ -217,6 +210,22 @@ main{
   float: left;
 }
 
+/*新規登録ボタン レスポンシブル対応*/
+@media screen and ( max-width:768px )
+{
+	.addbtns{
+    margin-left:5%;
+	}
+}
+
+/*新規登録ボタン レスポンシブル対応*/
+@media screen and ( min-width:768px ) and ( max-width:1600px )
+{
+	.addbtns{
+    margin-left:50%;
+	}
+}
+
 /*新規登録ボタン マウスオーバー*/
 .addbtns:hover{
   color:#000000;
@@ -225,7 +234,6 @@ main{
 
 /*メモの領域*/
 .memos{
-  width:190px;
   height:90px;
   padding: 0px 5px 0px 5px;
   font-size: 15px;
@@ -235,19 +243,26 @@ main{
 
 /*タグのスタイル*/
 .tags{
-  width:190px;
+  width:100%;
   height:20px;
   overflow: hidden;
   margin-bottom:4px;
   border-radius: 2px;
 }
 
-/* タグのリンクのスタイル */
+/* 日にちスケジュールページのリンクのスタイル */
 .linkSche{
   color:#000000;
   text-decoration: none;
   margin:0px;
 }
+/* 日にちスケジュールページのリンクのスタイル */
+.linkSche:hover{
+  color:#000000;
+  text-decoration: none;
+  margin:0px;
+}
+
 
 /*----------------------メインコンテンツ領域(END)---------------------*/
 
