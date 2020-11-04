@@ -158,7 +158,7 @@
       }
 
       //新規登録ボタン
-      print("<button class=\"addbtns\" id=\"{$day}\"><i class=\"fas fa-plus-circle\"></i></button>");
+      print("<div class=\"addbtns\" id=\"{$day}\"><i class=\"fas fa-plus-circle\"></i></div>");
 
       //詳細画面に飛ばすためaタグ囲む
       print("<a class=\"linkSche\" href=\"schedule.php?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list\">");
