@@ -95,24 +95,26 @@
     <title><?php print($year); ?>/<?php print($month); ?>/<?php print($day); ?></title>
 </head>
 <body>
+    <!--ヘッダー-->
     <header>
-        <div id="top">
-            <div id="Htitle">
+        <div id="top" class="row">
+            <div id="Htitle" class="col col-md-2"></div>
+            <div id="Htitle" class="col col-md-8">
             <a id="TitleBackLink" href="calendar.php?year=<?php print($year) ?>&month=<?php print($month) ?>">
-                <h1>Calendar&gt;&gt;<span id=TitleMonth>Day</span></h1>
+                <h1><?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?></h1>
             </a>
             </div>
 
-            <div id="Hlogin">
+            <div id="Hlogin" class="col col-md-1">
                 <p id=login>
                     <i class="fas fa-user"></i><span id="username"><?php print($_SESSION['login']['name']); ?></span>さん
                 </p>
             </div>
-            <div id="Hlogout"><a id="logout" href="logout.php">ログアウト</a></div>
+            <div id="Hlogout" class="col col-md-1"><a id="logout" href="logout.php">ログアウト</a></div>
         </div>
-    </header>
-    <!--ヘッダー領域(END)--->
+    </header>    
 
+    <!-- 昨日　今日　明日　ページ送り -->
     <div class="row">
         <div class="col col-md-5">
             <?php 
@@ -120,9 +122,7 @@
                 print("<h2><a id=\"prevDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$prev_day&view=$viewMode\">&lt;&lt;昨日</a></h2>");
             ?>
         </div>
-        <h2 id="today_title" class="col col-md-2">
-            <?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日
-        </h2>
+        <h2 id="today_title" class="col col-md-2">本日の予定</h2>        
         <div class="col col-md-5" style:background-color=red>
             <?php 
                 $next_day = $day + 1;
@@ -227,21 +227,36 @@
 
                 $list_view = <<<EOF
                     <div class="list_view" style="background-color:{$color}">
-                        <p class="list_time"><i class="far fa-clock"></i>{$S_time}〜{$E_time}</p>
-                        <p class="list_title">{$title}</p>
-                        <form class="progBtn" action="edit.php" method="post">
-                            <input type="hidden" name="userid" value="$userid">
-                            <input type="hidden" name="year" value="$year">
-                            <input type="hidden" name="month" value="$month">
-                            <input type="hidden" name="day" value="$day">
-                            <input type="hidden" name="view" value="$viewMode">
-                            <input type="hidden" name="id" value="$id">
-                            <input type="hidden" name="progFlag" value="$toggle">
-                            <button type="submit" class="$class" $disabled>{$progress}</button>
-                        </form>
-                        <a data-toggle="modal" href="#memo{$id}" class="detail">詳細</a>
-                        <a href="$URL&ID={$id}&view=$viewMode" class="edit">編集</a>
-                        <a data-toggle="modal" href="#delete" class="delete" id="{$id}">削除</a>
+                        <div class="row">
+                            <div id="Hlogin" class="col col-md-2">
+                                <p class="list_time"><i class="far fa-clock"></i>{$S_time}〜{$E_time}</p>
+                            </div>
+                            <div id="Hlogin" class="col col-md-10">
+                                <a id="operate1" data-toggle="modal" href="#memo{$id}" class="detail"><i class="fas fa-info-circle"></i></a>
+                                <a id="operate2" href="$URL&ID={$id}&view=$viewMode" class="edit"><i class="fas fa-pen"></i></a>
+                                <a id="operate3" data-toggle="modal" href="#delete" class="delete" id="{$id}"><i class="fas fa-trash-alt"></i></a>
+                            </div>
+                        </div>     
+                        
+                        <div class="row">
+                            
+                            <div id="Hlogin" class="col col-md-2">
+                                <form class="progBtn" action="edit.php" method="post">
+                                    <input type="hidden" name="userid" value="$userid">
+                                    <input type="hidden" name="year" value="$year">
+                                    <input type="hidden" name="month" value="$month">
+                                    <input type="hidden" name="day" value="$day">
+                                    <input type="hidden" name="view" value="$viewMode">
+                                    <input type="hidden" name="id" value="$id">
+                                    <input type="hidden" name="progFlag" value="$toggle">
+                                    <button type="submit" class="$class" $disabled>{$progress}</button>
+                                </form>
+                            </div>
+
+                            <div id="Hlogin" class="col col-md-10">
+                                <p class="list_title">{$title}</p>
+                            </div>
+                        </div>
                         
                         <div class="modal" id="memo{$id}">
                         <form class="deleteform" action="delete.php" method="post">

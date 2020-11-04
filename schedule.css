@@ -6,8 +6,6 @@
 /*------------------ヘッダー領域------------------*/
 /*ヘッダーの背景*/
 header{
-  /* position: fixed; */
-  /* margin-top: -60px; */
   width:100%;
   height:50px;
   background-color:#000000;
@@ -16,7 +14,6 @@ header{
   
 /*ヘッダーの中の３つの要素全てを囲んだdiv*/
 #top{
-  width:1420px;
   height:50px;
   margin-left: auto;
   margin-right: auto;
@@ -24,23 +21,18 @@ header{
 
 /*タイトルを囲んだdiv*/
 #Htitle{
-  width:550px;
   height:50px;
-  margin-left: 435px;/*タイトルが中央にくるようこの値を指定*/
-  margin-right: 155px;/*ログインユーザーとログアウトがメインの横幅の右端と位置が揃って右端にくるようにこの値を指定*/
   float:left;/*divの中のdivを横並びにするには全ての要素にfloat:leftがいる*/
 }
 
 /*ログインユーザー囲んだdiv*/
 #Hlogin{
-  width:180px;
   height:50px;
   float:left;/*divの中のdivを横並びにするには全ての要素にfloat:leftがいる*/
 }
 
   /*ログアウトのリンク囲んだdiv*/ 
 #Hlogout{
-  width:100px;
   height:50px;
   float:left;/*divの中のdivを横並びにするには全ての要素にfloat:leftがいる*/
 }
@@ -53,7 +45,6 @@ header{
 /*ヘッダーの中身*/
 h1{
   height:50px;
-  width:550px;
   font-size:40px;
   color:#FFFFFF;
   margin-left: auto;
@@ -63,8 +54,6 @@ h1{
     align-items: center;/*f縦方向の位置を中央に*/
   justify-content: center;/*横方向のアイテム位置を中央に*/
   /*-------------------上下左右の中央寄せ------------------------*/
-  /* font-family: 'Lora', serif;
-  font-family: 'Noto Sans JP', sans-serif; */
 }
 
 /*○月の表示のスタイル*/
@@ -79,12 +68,11 @@ h1{
 
 /*ログインしたユーザー名のスタイル*/
 #login{
-  width:180px;
   height:50px;
   color:#FFFFFF;
   /*-------------------上下左右の中央寄せ------------------------*/
   display: flex;/*fFlexコンテナ化*/
-    align-items: center;/*f縦方向の位置を中央に*/
+  align-items: center;/*f縦方向の位置を中央に*/
   justify-content: center;/*横方向のアイテム位置を中央に*/
   /*-------------------上下左右の中央寄せ------------------------*/
 }
@@ -103,7 +91,7 @@ h1{
   color:#FFFFFF;
   /*-------------------上下左右の中央寄せ------------------------*/
   display: flex;/*fFlexコンテナ化*/
-    align-items: center;/*f縦方向の位置を中央に*/
+  align-items: center;/*f縦方向の位置を中央に*/
   justify-content: center;/*横方向のアイテム位置を中央に*/
   /*-------------------上下左右の中央寄せ------------------------*/
 }
@@ -186,7 +174,7 @@ h1{
 /*------------------簡易リスト表示------------------*/
 /* リスト */
 .list_view{
-  width: 80%;
+  width: 90%;
   height:100px;
   margin-left:auto;
   margin-right:auto;
@@ -198,18 +186,44 @@ h1{
   border-color: #808080;
 }
 
+/* 詳細　編集　削除 */
+#operate1,#operate2,#operate3{
+  color:#666666;
+  margin-left: 25px;	
+}
+
 /* リストタイトル */
 .list_title{
-  width: 80%;
-  font-size: 30px;
-  float: left;
+  width: 600px;
+  margin-top:-20px;
+  height:30px;
+  font-size: 25px;
+  overflow-y: scroll;
+}
+
+/*リストタイトル レスポンシブル対応*/
+@media screen and ( max-width:768px )
+{
+	.list_title{
+    width: 180px;
+	}
+}
+
+/* 進捗ステータスボタンのformタグ */
+.progBtn{
+  margin-top:-20px;
+  margin-left:auto;
+  margin-right:auto;
+  /* margin-left: 100px; */
+  /* float: left; */
+  /* margin-right: 800px; */
 }
 
 /* 進捗ステータスボタンのスタイル */
 /* 未了 */
 .unfinish{
   width:100px;
-  height:60px;
+  height:50px;
   border-radius: 4px;
   background-color: #FFFFFF;
 }
@@ -217,7 +231,7 @@ h1{
 /* 完了 */
 .finish{
   width:100px;
-  height:60px;
+  height:50px;
   border-radius: 4px;
   background-color: #66FFCC;
 }
@@ -225,16 +239,9 @@ h1{
 /* キャンセル */
 .cancel{
   width:100px;
-  height:60px;
+  height:50px;
   border-radius: 4px;
   background-color: #C0C0C0;
-}
-
-/* 進捗ステータスボタンのformタグ */
-.progBtn{
-  margin-top:-30px;
-  float: left;
-  margin-right: 20px;
 }
 
 .detail,.edit,.delete{
