@@ -52,20 +52,25 @@
     //検索条件のパラメータ受け取り
     if(isset($_POST['all_disp']) == true && $_POST['all_disp'] != ""){
         $dispMode =  $_POST['all_disp'];
+        $selectedType1 = 'selectedType1';
     }else if(isset($_POST['unfini_disp']) == true && $_POST['unfini_disp'] != ""){
         $dispMode =  $_POST['unfini_disp'];
         $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? and progress=0 ORDER BY start_time";
+        $selectedType2 = 'selectedType2';
     }else if(isset($_POST['fini_disp']) == true && $_POST['fini_disp'] != ""){
         $dispMode =  $_POST['fini_disp'];
         $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? and progress=1 ORDER BY start_time";
+        $selectedType3 = 'selectedType3';
     }else if(isset($_POST['can_disp']) == true && $_POST['can_disp'] != ""){
         $dispMode =  $_POST['can_disp'];
         $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? and progress=2 ORDER BY start_time";
+        $selectedType4 = 'selectedType4';
     }else if(isset($_POST['keyword']) == true && $_POST['keyword'] != ""){
         $dispMode = "Keyword";
         $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? and title like '%{$_POST['keyword']}%' ORDER BY start_time";
     }else{
         $dispMode = "All";
+        $selectedType1 = 'selectedType1';
     }
 
     //ページ遷移に使うURLを変数で扱う
@@ -95,87 +100,90 @@
     <title><?php print($year); ?>/<?php print($month); ?>/<?php print($day); ?></title>
 </head>
 <body>
+
     <!--ヘッダー-->
     <header>
-        <div id="top" class="row">
-            <div id="Htitle" class="col col-md-2"></div>
-            <div id="Htitle" class="col col-md-8">
-            <a id="TitleBackLink" href="calendar.php?year=<?php print($year) ?>&month=<?php print($month) ?>">
-                <h1><?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?></h1>
-            </a>
+        <div id="header">
+            <div id="top" class="row">
+                <div id="Htitle" class="col col-md-2"></div>
+                <div id="Htitle" class="col col-md-8">
+                <a id="TitleBackLink" href="calendar.php?year=<?php print($year) ?>&month=<?php print($month) ?>">
+                    <h1><?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?></h1>
+                </a>
+                </div>
+
+                <div id="Hlogin" class="col col-md-1">
+                    <p id=login>
+                        <i class="fas fa-user"></i><span id="username"><?php print($_SESSION['login']['name']); ?></span>さん
+                    </p>
+                </div>
+                <div id="Hlogout" class="col col-md-1"><a id="logout" href="logout.php">ログアウト</a></div>
             </div>
+        </div>    
 
-            <div id="Hlogin" class="col col-md-1">
-                <p id=login>
-                    <i class="fas fa-user"></i><span id="username"><?php print($_SESSION['login']['name']); ?></span>さん
-                </p>
+        <!-- 昨日　明日　ページ送り -->
+        <div class="row">
+            <div class="col col-md-6">
+                <?php 
+                    $prev_day = $day - 1;
+                    print("<h2><a id=\"prevDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$prev_day&view=$viewMode\">&lt;&lt;前日</a></h2>");
+                ?>
             </div>
-            <div id="Hlogout" class="col col-md-1"><a id="logout" href="logout.php">ログアウト</a></div>
-        </div>
-    </header>    
-
-    <!-- 昨日　今日　明日　ページ送り -->
-    <div class="row">
-        <div class="col col-md-5">
-            <?php 
-                $prev_day = $day - 1;
-                print("<h2><a id=\"prevDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$prev_day&view=$viewMode\">&lt;&lt;昨日</a></h2>");
-            ?>
-        </div>
-        <h2 id="today_title" class="col col-md-2">本日の予定</h2>        
-        <div class="col col-md-5" style:background-color=red>
-            <?php 
-                $next_day = $day + 1;
-                print("<h2><a id=\"nextDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$next_day&view=$viewMode\">明日&gt;&gt;</a></h2>");
-            ?>
-        </div>
-    </div>
-
-    
-
-    <!-- フィルタ&検索機能 -->
-    <div class="row" id="search">
-        <div id="disp_filter" class="coll col-md-6">
-            <!-- <p id="filer_text">表示する予定の絞り込み</p> -->
-            <div class="btn-group" role="group">
-            <form action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
-                <input type="hidden" name="all_disp" value="All">
-                <button type="submit" id="filBtn1" class="btn btn-secondary">全て</button>
-            </form>
-            <form action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
-                <input type="hidden" name="unfini_disp" value="0">
-                <button type="submit" id="filBtn2" class="btn btn-secondary">未了</button>
-            </form>
-            <form action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
-                <input type="hidden" name="fini_disp" value="1">
-                <button type="submit" id="filBtn3" class="btn btn-secondary">完了</button>
-            </form>
-            <form action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
-                <input type="hidden" name="can_disp" value="2">
-                <button type="submit" id="filBtn4" class="btn btn-secondary">キャンセル</button>
-            </form>
+            <div class="col col-md-6">
+                <?php 
+                    $next_day = $day + 1;
+                    print("<h2><a id=\"nextDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$next_day&view=$viewMode\">翌日&gt;&gt;</a></h2>");
+                ?>
             </div>
         </div>
 
-        <div class="coll col-md-6">
-            <form action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
-            <div class="input-group">
-                <span class="input-group">
-                    
-                    <input class="form-control" type="text" placeholder="予定のタイトルでさがす" name="keyword" value="">
-                    <button class="btn btn-secondary" type="submit"><i class="fas fa-search"></i></button>
-                </span>
-            </div>
-            </form>
-        </div>
-    </div>
+        
 
-    <!-- 表示モード切替機能 -->
-    <div id="dispTabs">
-        <a id="<?php print($tabStyle1); ?>" class="dispTab" href="<?php print($URL); ?>&view=list">簡易リスト表示</a>
-        <a id="<?php print($tabStyle2); ?>" class="dispTab" href="<?php print($URL); ?>&view=table">タイムテーブル表示</a>
-    </div>
-   
+        <!-- フィルタ&検索機能 -->
+        <div class="row" id="search">
+            <div id="disp_filter" class="coll col-md-6">
+                <!-- <p id="filer_text">表示する予定の絞り込み</p> -->
+                <div>
+                <form class="searchBtns" action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
+                    <input type="hidden" name="all_disp" value="All">
+                    <button type="submit" id="filBtn1" class="<?php print($selectedType1); ?>">全て</button>
+                </form>
+                <form class="searchBtns" action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
+                    <input type="hidden" name="unfini_disp" value="0">
+                    <button type="submit" id="filBtn2" class="<?php print($selectedType2); ?>">未了</button>
+                </form>
+                <form class="searchBtns" action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
+                    <input type="hidden" name="fini_disp" value="1">
+                    <button type="submit" id="filBtn3" class="<?php print($selectedType3); ?>">完了</button>
+                </form>
+                <form class="searchBtns" action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
+                    <input type="hidden" name="can_disp" value="2">
+                    <button type="submit" id="filBtn4" class="<?php print($selectedType4); ?>">キャンセル</button>
+                </form>
+                </div>
+            </div>
+
+            <div class="coll col-md-6">
+                <form action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
+                <div class="input-group">
+                    <span class="input-group">
+                        
+                        <input class="form-control" type="text" placeholder="予定のタイトルでさがす" name="keyword" value="">
+                        <button class="btn btn-secondary" type="submit"><i class="fas fa-search"></i></button>
+                    </span>
+                </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 表示モード切替機能 -->
+        <div id="dispTabs">
+            <a id="<?php print($tabStyle1); ?>" class="dispTab" href="<?php print($URL); ?>&view=list">簡易リスト表示</a>
+            <a id="<?php print($tabStyle2); ?>" class="dispTab" href="<?php print($URL); ?>&view=table">タイムテーブル表示</a>
+        </div>
+    </header>
+
+    <main>
     <?php 
         //DB接続
         require_once('DBInfo.php');
@@ -228,19 +236,19 @@
                 $list_view = <<<EOF
                     <div class="list_view" style="background-color:{$color}">
                         <div class="row">
-                            <div id="Hlogin" class="col col-md-2">
+                            <div class="col col-md-10">
                                 <p class="list_time"><i class="far fa-clock"></i>{$S_time}〜{$E_time}</p>
                             </div>
-                            <div id="Hlogin" class="col col-md-10">
-                                <a id="operate1" data-toggle="modal" href="#memo{$id}" class="detail"><i class="fas fa-info-circle"></i></a>
-                                <a id="operate2" href="$URL&ID={$id}&view=$viewMode" class="edit"><i class="fas fa-pen"></i></a>
-                                <a id="operate3" data-toggle="modal" href="#delete" class="delete" id="{$id}"><i class="fas fa-trash-alt"></i></a>
+                            <div class="col col-md-2">
+                                <a data-toggle="modal" href="#memo{$id}" class="detail"><i id="operate1" class="fas fa-info-circle"></i></a>
+                                <a href="$URL&ID={$id}&view=$viewMode" class="edit"><i id="operate2" class="fas fa-pen"></i></a>
+                                <a data-toggle="modal" href="#delete" class="delete" id="{$id}"><i id="operate3" class="fas fa-trash-alt"></i></a>
                             </div>
                         </div>     
                         
                         <div class="row">
                             
-                            <div id="Hlogin" class="col col-md-2">
+                            <div class="col col-md-2">
                                 <form class="progBtn" action="edit.php" method="post">
                                     <input type="hidden" name="userid" value="$userid">
                                     <input type="hidden" name="year" value="$year">
@@ -253,7 +261,7 @@
                                 </form>
                             </div>
 
-                            <div id="Hlogin" class="col col-md-10">
+                            <div class="col col-md-10">
                                 <p class="list_title">{$title}</p>
                             </div>
                         </div>
@@ -365,6 +373,7 @@
         }
         
     ?>
+    </main>
 
     
 
