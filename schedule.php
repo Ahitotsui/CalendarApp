@@ -113,13 +113,29 @@
     </header>
     <!--ヘッダー領域(END)--->
 
-    <h2 class="container" id="today_title">
-        <?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日
-    </h2>
+    <div class="row">
+        <div class="col col-md-5">
+            <?php 
+                $prev_day = $day - 1;
+                print("<h2><a id=\"prevDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$prev_day&view=$viewMode\">&lt;&lt;昨日</a></h2>");
+            ?>
+        </div>
+        <h2 id="today_title" class="col col-md-2">
+            <?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日
+        </h2>
+        <div class="col col-md-5" style:background-color=red>
+            <?php 
+                $next_day = $day + 1;
+                print("<h2><a id=\"nextDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$next_day&view=$viewMode\">明日&gt;&gt;</a></h2>");
+            ?>
+        </div>
+    </div>
+
+    
 
     <!-- フィルタ&検索機能 -->
     <div class="row" id="search">
-        <div id="disp_filter" class="coll col-md-4">
+        <div id="disp_filter" class="coll col-md-6">
             <!-- <p id="filer_text">表示する予定の絞り込み</p> -->
             <div class="btn-group" role="group">
             <form action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
@@ -141,7 +157,7 @@
             </div>
         </div>
 
-        <div class="coll col-md-4">
+        <div class="coll col-md-6">
             <form action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
             <div class="input-group">
                 <span class="input-group">
