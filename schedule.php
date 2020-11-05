@@ -108,7 +108,7 @@
                 <div id="Htitle" class="col col-md-2"></div>
                 <div id="Htitle" class="col col-md-8">
                 <a id="TitleBackLink" href="calendar.php?year=<?php print($year) ?>&month=<?php print($month) ?>">
-                    <h1><?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?></h1>
+                    <h1><?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日</h1>
                 </a>
                 </div>
 
@@ -122,17 +122,20 @@
         </div>    
 
         <!-- 昨日　明日　ページ送り -->
-        <div class="row">
+        <div class="row" id="pagenation">
             <div class="col col-md-6">
                 <?php 
                     $prev_day = $day - 1;
-                    print("<h2><a id=\"prevDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$prev_day&view=$viewMode\">&lt;&lt;前日</a></h2>");
+                    print("<h2><a id=\"prevDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$prev_day&view=$viewMode\"><i class=\"fas fa-angle-double-left\"></i>前日</a></h2>");
                 ?>
             </div>
+
+            <!-- <div class="coll col-md-10"></div> -->
+
             <div class="col col-md-6">
                 <?php 
                     $next_day = $day + 1;
-                    print("<h2><a id=\"nextDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$next_day&view=$viewMode\">翌日&gt;&gt;</a></h2>");
+                    print("<h2><a id=\"nextDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$next_day&view=$viewMode\">翌日<i class=\"fas fa-angle-double-right\"></i></a></h2>");
                 ?>
             </div>
         </div>
@@ -141,9 +144,11 @@
 
         <!-- フィルタ&検索機能 -->
         <div class="row" id="search">
-            <div id="disp_filter" class="coll col-md-6">
-                <!-- <p id="filer_text">表示する予定の絞り込み</p> -->
-                <div>
+
+            <div class="coll col-md-4"><h3><i class="fas fa-tasks"></i>　予定の一覧</h3></div>
+
+            <div id="disp_filter" class="coll col-md-4">
+                <!-- <div> -->
                 <form class="searchBtns" action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
                     <input type="hidden" name="all_disp" value="All">
                     <button type="submit" id="filBtn1" class="<?php print($selectedType1); ?>">全て</button>
@@ -160,10 +165,10 @@
                     <input type="hidden" name="can_disp" value="2">
                     <button type="submit" id="filBtn4" class="<?php print($selectedType4); ?>">キャンセル</button>
                 </form>
-                </div>
+                <!-- </div> -->
             </div>
 
-            <div class="coll col-md-6">
+            <div class="coll col-md-4">
                 <form action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
                 <div class="input-group">
                     <span class="input-group">
@@ -196,7 +201,7 @@
         $stmt->execute([$userid,$year,$month,$day,'false']);
 
         if($stmt->rowCount() == 0 && $dispMode ==  "All"){
-            print("<div class=\"no_data\">まだ本日の予定はありません</div>");
+            print("<div class=\"no_data\">まだ予定はありません</div>");
         }else if($stmt->rowCount() != 0){
             // <!-- 簡易リスト表示 -->
             foreach($stmt as $row){
@@ -236,10 +241,10 @@
                 $list_view = <<<EOF
                     <div class="list_view" style="background-color:{$color}">
                         <div class="row">
-                            <div class="col col-md-10">
+                            <div class="col col-md-11">
                                 <p class="list_time"><i class="far fa-clock"></i>{$S_time}〜{$E_time}</p>
                             </div>
-                            <div class="col col-md-2">
+                            <div class="col col-md-1">
                                 <a data-toggle="modal" href="#memo{$id}" class="detail"><i id="operate1" class="fas fa-info-circle"></i></a>
                                 <a href="$URL&ID={$id}&view=$viewMode" class="edit"><i id="operate2" class="fas fa-pen"></i></a>
                                 <a data-toggle="modal" href="#delete" class="delete" id="{$id}"><i id="operate3" class="fas fa-trash-alt"></i></a>
@@ -248,7 +253,7 @@
                         
                         <div class="row">
                             
-                            <div class="col col-md-2">
+                            <div class="col col-md-1">
                                 <form class="progBtn" action="edit.php" method="post">
                                     <input type="hidden" name="userid" value="$userid">
                                     <input type="hidden" name="year" value="$year">
@@ -261,7 +266,7 @@
                                 </form>
                             </div>
 
-                            <div class="col col-md-10">
+                            <div class="col col-md-11">
                                 <p class="list_title">{$title}</p>
                             </div>
                         </div>
@@ -375,8 +380,12 @@
     ?>
     </main>
 
+    <!-- フッター -->
+    <footer class="fixed-bottom">
+    </footer>
     
 
+    <!-- ここからはモーダルの表示内容 -->
     <!-- 編集フォーム -->
     <?php
         if(isset($_GET['ID']) == true){
