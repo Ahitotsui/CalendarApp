@@ -17,7 +17,6 @@ header{
 
 /*ヘッダーの中の３つの要素全てを囲んだdiv*/
 #top{
-  width:1420px;
   height:50px;
   margin-left: auto;
   margin-right: auto;
@@ -25,23 +24,18 @@ header{
 
 /*タイトルを囲んだdiv*/
 #Htitle{
-  width:550px;
   height:50px;
-  margin-left: 435px;/*タイトルが中央にくるようこの値を指定*/
-  margin-right: 155px;/*ログインユーザーとログアウトがメインの横幅の右端と位置が揃って右端にくるようにこの値を指定*/
   float:left;/*divの中のdivを横並びにするには全ての要素にfloat:leftがいる*/
 }
 
 /*ログインユーザー囲んだdiv*/
 #Hlogin{
-  width:180px;
   height:50px;
   float:left;/*divの中のdivを横並びにするには全ての要素にfloat:leftがいる*/
 }
 
  /*ログアウトのリンク囲んだdiv*/ 
 #Hlogout{
-  width:100px;
   height:50px;
   float:left;/*divの中のdivを横並びにするには全ての要素にfloat:leftがいる*/
 }
@@ -54,7 +48,6 @@ header{
 /*ヘッダーの中身*/
 h1{
   height:50px;
-  width:550px;
   font-size:40px;
   color:#FFFFFF;
   margin-left: auto;
@@ -66,19 +59,8 @@ h1{
   /*-------------------上下左右の中央寄せ------------------------*/
 }
 
-/*○月の表示のスタイル*/
-#TitleMonth{
-  width:100px;
-  background-color:#FFFFFF;
-  color:#000000;
-  margin-left:15px;
-  text-align: center;
-  
-}
-
 /*ログインしたユーザー名のスタイル*/
 #login{
-  width:180px;
   height:50px;
   color:#FFFFFF;
   /*-------------------上下左右の中央寄せ------------------------*/
@@ -97,7 +79,6 @@ h1{
 }
 
 #logout{
-  width: 100px;
   height: 50px;
   color:#FFFFFF;
   /*-------------------上下左右の中央寄せ------------------------*/
@@ -117,6 +98,7 @@ main{
   background-color:#FFFFFF;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 120px;
   padding-top: 3px;
 }
 
@@ -161,6 +143,14 @@ main{
 .tddays{
   width:255px;
   padding-bottom: 3px;
+}
+
+/*日にちのtdタグ レスポンシブル対応*/
+@media screen and ( max-width:1000px )
+{
+	.tddays{
+    height: 250px;
+	}
 }
 
 /*前月の日にちの空白tdタグ*/
@@ -235,6 +225,14 @@ main{
   overflow-y: scroll;/*はみ出す場合は縦スクロールで閲覧可能*/
 }
 
+/*日にちのtdタグ レスポンシブル対応*/
+@media screen and ( max-width:1000px )
+{
+	.memos{
+    height: 200px;
+	}
+}
+
 /*タグのスタイル*/
 .tags{
   width:100%;
@@ -270,30 +268,45 @@ footer{
 
 /*ページネーションパーツを全て格納したdiv*/
 #monthSelectBtn{
-  width:1420px;
   height:90px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
-/*前年のページネーションButtonタグ*/
+/*前年のページネーション*/
 #PrevBtn{
-  width:120px;
   height:50px;
   font-size:30px;
   cursor: pointer;
   color:#FFFFFF;
   text-decoration: none;
   display: block; 
-  float:left;
-  margin-right:290px;
+}
+
+/*前年のページネーション レスポンシブル対応*/
+@media screen and ( max-width:1000px )
+{
+	#PrevBtn{
+    padding-top: 4px;
+	}
 }
 
 #Dummy{
-  width:120px;
   height:50px;
   float:left;
-  margin-right:290px;
+}
+
+/*月のボタンを囲むdiv*/
+#months{
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*月のボタンを囲むdiv レスポンシブル対応*/
+@media screen and ( max-width:1000px )
+{
+	#months{
+    width:480px;
+	}
 }
 
 /*月のページネーションが未選択の時のスタイル*/
@@ -309,17 +322,14 @@ footer{
   float:left;
 }
 
-/*翌年のページネーションButtonタグ*/
-#NextBtn{
-  width:120px;
-  height:50px;
-  font-size:30px;
-  cursor: pointer;
-  color:#FFFFFF;
-  text-decoration: none;
-  display: block; 
-  float:left;
-  margin-left:290px;
+/*月のページネーションが未選択の時のスタイル レスポンシブル対応*/
+@media screen and ( max-width:1000px )
+{
+	.monthsend{
+    width:40px;
+    padding-top: 8px;
+    font-size:25px;
+	}
 }
 
 /*月のページネーションが選択中の時のスタイル*/
@@ -335,6 +345,37 @@ footer{
   float:left;
   border-bottom-left-radius:10px;
   border-bottom-right-radius:10px;
+}
+
+/*月のページネーションが選択の時のスタイル レスポンシブル対応*/
+@media screen and ( max-width:1000px )
+{
+	.Nowselect{
+    width:40px;
+    padding-top: 8px;
+    border-bottom-left-radius:5px;
+    border-bottom-right-radius:5px;
+    font-size:25px;
+	}
+}
+
+/*翌年のページネーション*/
+#NextBtn{
+  height:50px;
+  font-size:30px;
+  cursor: pointer;
+  color:#FFFFFF;
+  text-decoration: none;
+  display: block; 
+  text-align: right;
+}
+
+/*翌年のページネーション レスポンシブル対応*/
+@media screen and ( max-width:1000px )
+{
+	#NextBtn{
+    padding-top: 4px;
+	}
 }
 
 /*----------------------フッター領域(END)---------------------*/
