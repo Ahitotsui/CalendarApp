@@ -67,22 +67,22 @@
 
 <!--ヘッダー領域-->
 <header>
-  <div id="top">
-    <div id="Htitle">
+  <div id="top" class="row">
+      <div id="Htitle" class="col col-md-2"></div>
+      <div id="Htitle" class="col col-md-8">
       <a id="TitleBackLink" href="calendar.php">
-        <h1><?php print($TitleYear); ?>年  <span id=TitleMonth> <?php print($Titlemonth); ?>月</span></h1>
+        <h1><?php print($TitleYear); ?>年<?php print($Titlemonth); ?>月</h1>
       </a>
-    </div>
+      </div>
 
-    <div id="Hlogin">
-      <p id=login>
-        <i class="fas fa-user"></i><span id=username><?php print($_SESSION['login']['name']); ?></span>さん
-      </p>
-    </div>
-
-    <div id="Hlogout"><a id="logout" href="logout.php">ログアウト</a></div>
+      <div id="Hlogin" class="col col-md-1">
+          <p id=login>
+              <i class="fas fa-user"></i><span id="username"><?php print($_SESSION['login']['name']); ?></span>さん
+          </p>
+      </div>
+      <div id="Hlogout" class="col col-md-1"><a id="logout" href="logout.php">ログアウト</a></div>
   </div>
-</header>
+</header>  
 <!--ヘッダー領域(END)--->
 
 <main>
@@ -297,36 +297,44 @@ print("</table>");
 </main>
 
 <footer class="fixed-bottom">
-  <div id="monthSelectBtn">
-
-  <!--前年のページネーション-->
+  <!-- <div id="monthSelectBtn"> -->
+  <div id="top" class="row">
+  <!--前年のページネーション(月は12月に選択)-->
+    <div class="col col-md-2">
     <?php
       $prev = $TitleYear - 1;
       if($prev >= 2019){
-        print("<a id=\"PrevBtn\" href=\"calendar.php?year={$prev}&month={$Titlemonth}\">&lt;&lt;{$prev}</a>");
+        print("<a id=\"PrevBtn\" href=\"calendar.php?year={$prev}&month=12\">&lt;&lt;{$prev}</a>");
       }else{
         print("<div id=\"Dummy\"></div>");
       }
     ?>  
+    </div>
 
   <!--12ヶ月のページネーション-->
-    <?php
-    for($i=1;$i<13;$i++){
-      if($i == $_GET['month']){
-        print("<a href=\"calendar.php?year={$TitleYear}&month={$i}\" id=\"SelectBtn\" class=\"Nowselect\">{$i}</a>");
-      }else{
-        print("<a href=\"calendar.php?year={$TitleYear}&month={$i}\" class=\"monthsend\">{$i}</a>");
+    <div class="col col-md-8">
+      <div id="months">  
+      <?php
+      for($i=1;$i<13;$i++){
+        if($i == $_GET['month']){
+          print("<a href=\"calendar.php?year={$TitleYear}&month={$i}\" id=\"SelectBtn\" class=\"Nowselect\">{$i}</a>");
+        }else{
+          print("<a href=\"calendar.php?year={$TitleYear}&month={$i}\" class=\"monthsend\">{$i}</a>");
+        }
       }
-    }
-    ?>
+      ?>
+      </div>
+    </div>
 
-  <!--翌年のページネーション-->
+  <!--翌年のページネーション(月は1月に選択)-->
+    <div class="col col-md-2">
     <?php
       $next = $TitleYear + 1;
-      print("<a id=\"NextBtn\" href=\"calendar.php?year={$next}&month={$Titlemonth}\">{$next}&gt;&gt;</a>");
+      print("<a id=\"NextBtn\" href=\"calendar.php?year={$next}&month=1\">{$next}&gt;&gt;</a>");
     ?>  
-  
+    </div>
   </div>
+  <!-- </div> -->
 </footer>
 
 <script src="http://code.jquery.com/jquery.js"></script><!-- bootstrap -->
