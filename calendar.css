@@ -15,31 +15,6 @@ header{
   background-color:#000000;
 }
 
-/*ヘッダーの中の３つの要素全てを囲んだdiv*/
-#top{
-  height:50px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/*タイトルを囲んだdiv*/
-#Htitle{
-  height:50px;
-  float:left;/*divの中のdivを横並びにするには全ての要素にfloat:leftがいる*/
-}
-
-/*ログインユーザー囲んだdiv*/
-#Hlogin{
-  height:50px;
-  float:left;/*divの中のdivを横並びにするには全ての要素にfloat:leftがいる*/
-}
-
- /*ログアウトのリンク囲んだdiv*/ 
-#Hlogout{
-  height:50px;
-  float:left;/*divの中のdivを横並びにするには全ての要素にfloat:leftがいる*/
-}
-
 /*タイトルのリンク線消す*/
 #TitleBackLink{
   text-decoration: none;
@@ -159,20 +134,28 @@ main{
   background-color:#808080;
 }
 
-/*今現在の日付には背景色つける*/
+/*今現在日付のpタグを囲むdiv*/
 #tdToday{
   width:30px;
   height:30px;
-  color:#FFFFFF;
-  background-color:#000000;
+  margin-top: 2px;
   margin-left:5px;
-  border-radius: 15px;
+  margin-bottom: -20px;
+  float: left;
+}
+
+/*今現在の日付には背景色つける*/
+#tdTodayStr{
+  width:25px;
+  height:25px;
+  background-color:#000000;
+  color:#FFFFFF;
+  border-radius: 12.5px;
   /*-------------------上下左右の中央寄せ------------------------*/
   display: flex;/*fFlexコンテナ化*/
 	align-items: center;/*f縦方向の位置を中央に*/
   justify-content: center;/*横方向のアイテム位置を中央に*/
   /*-------------------上下左右の中央寄せ------------------------*/
-  float: left;
 }
 
 /*今現在ではない日付には背景色つけない*/
@@ -181,6 +164,7 @@ main{
   height:30px;
   font-weight:bold;
   margin-left:5px;
+  margin-bottom: -20px;
   float: left;
 }
 
