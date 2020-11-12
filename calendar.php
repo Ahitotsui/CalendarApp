@@ -152,9 +152,9 @@
 
       //現在の日にちに背景色をつけるためのidをつけるため判別
       if($TitleYear == $TodayYear && $TodayMonth == $Titlemonth && $today == $day){
-        print("<p id=tdToday>{$day}</p>");
+        print("<div id=\"tdToday\"><p id=\"tdTodayStr\">{$day}</p></div>");
       }else{
-        print("<p class=tdDays>{$day}</p>");
+        print("<p class=\"tdDays\">{$day}</p>");
       }
 
       //新規登録ボタン
