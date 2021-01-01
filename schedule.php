@@ -352,13 +352,15 @@
                             }
                         }
 
+                        //予定の出力文字数が15を超える場合は一部のみをカットして表示する処理を行う
+                        if(mb_strlen($title) >= 15){
+                            // 10文字まで抜き出し、語末に...をつける
+                            $title = mb_substr($title,0,10) . '...';
+                        }
                         //予定を出力
-                        $table_view = <<<EOF
-                            <td class="tdSche" colspan="{$during}" style="background-color:{$color}">
-                                <div class="scheDiv">{$title}</div>
-                            </td>
-                        EOF;
-                        print($table_view);
+                        print("<td class=\"tdSche\" colspan=\"{$during}\">");
+                        print("<div class=\"scheDiv\" style=\"background-color:{$color}\">{$title}</div>");
+                        print("</td>");
 
                         //終了時刻の後の空白マス
                         for($i=1;$i<=$back;$i++){
