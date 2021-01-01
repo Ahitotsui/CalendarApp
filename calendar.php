@@ -168,6 +168,11 @@
           foreach($stmt as $row){
             if($row['logic_delete'] == "false"){
               $title = htmlspecialchars($row['title']);
+              //予定の出力文字数が15を超える場合は一部のみをカットして表示する処理を行う
+              if(mb_strlen($title) >= 25){
+                  // 10文字まで抜き出し、語末に...をつける
+                  $title = mb_substr($title,0,25) . '...';
+              }
               print("<p class=\"tags\" style=background-color:{$row['color']};>・{$title}</p>");
             }
           }

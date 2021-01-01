@@ -359,9 +359,24 @@ main{
 }
 
 .tdSche{
-  font-size: 13px;
+  border-top-style:none; 
+  border-bottom-style:none; 
+  background-color:#DDDDDD;
   height: 40px;
   table-layout: fixed;
+}
+
+/* 予定表示するdivタグ */
+.scheDiv{
+  padding-top: 5px;
+  padding-left: 5px;
+  border: solid;
+  border-width: 0.5px;
+  border-color: #DDDDDD;;
+  border-radius: 8px;
+  font-size: 12px;
+  height: 50px;
+  word-break : break-all;
 }
 
 
@@ -554,10 +569,12 @@ border-radius: 20px;
 /* 予定のタイトル */
 #subAddTitle{
   width: 100%;
+  padding-left: 10px;
 }
 
 /* 詳細なメモ */
 #subAddMemo{
   width: 100%;
+  padding-left: 10px;
   resize: none;
 }
