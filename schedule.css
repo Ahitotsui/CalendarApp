@@ -204,11 +204,6 @@ h1{
 	}
 }
 
-/* 予定の一覧 */
-h3{
-  /* text-align: center; */
-}
-
 /* リスト・タイムテーブル切替のタブのスタイル */
 #dispTabs{
   width: 300px;
@@ -249,6 +244,11 @@ main{
   border:solid;
   border-width:1px;
   border-color: #808080;
+}
+
+/* リスト カーソル当てた時のエフェクト */
+.list_view:hover{
+  box-shadow: 0 0 6px #000;
 }
 
 /* 詳細　編集　削除 */

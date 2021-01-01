@@ -120,6 +120,11 @@ main{
   padding-bottom: 3px;
 }
 
+/*日にちのtdタグ　カーソル当てた時のエフェクト*/
+.tddays:hover{
+  box-shadow: 0 0 6px #000;
+}
+
 /*日にちのtdタグ レスポンシブル対応*/
 @media screen and ( max-width:1000px )
 {

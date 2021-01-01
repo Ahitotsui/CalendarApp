@@ -123,16 +123,16 @@
 
         <!-- 昨日　明日　ページ送り -->
         <div class="row" id="pagenation">
-            <div class="col col-md-6">
+            <div class="col col-md-1">
                 <?php 
                     $prev_day = $day - 1;
                     print("<h2><a id=\"prevDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$prev_day&view=$viewMode\"><i class=\"fas fa-angle-double-left\"></i>前日</a></h2>");
                 ?>
             </div>
 
-            <!-- <div class="coll col-md-10"></div> -->
+            <div class="coll col-md-10"></div>
 
-            <div class="col col-md-6">
+            <div class="col col-md-1">
                 <?php 
                     $next_day = $day + 1;
                     print("<h2><a id=\"nextDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$next_day&view=$viewMode\">翌日<i class=\"fas fa-angle-double-right\"></i></a></h2>");
