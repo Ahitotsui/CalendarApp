@@ -168,11 +168,27 @@
           foreach($stmt as $row){
             if($row['logic_delete'] == "false"){
               $title = htmlspecialchars($row['title']);
-              //予定の出力文字数が15を超える場合は一部のみをカットして表示する処理を行う
-              if(mb_strlen($title) >= 25){
-                  // 10文字まで抜き出し、語末に...をつける
-                  $title = mb_substr($title,0,25) . '...';
+
+              //予定の出力文字数が14を超える場合は一部のみをカットして表示する処理を行う
+              if(mb_strlen($title) >= 20){
+
+                $half_chara = 0;
+                $full_chara = 0;
+                for($j=0;$j<=12;$j++){
+                  $check_chara = mb_substr($title,$j,$j+1);
+                  if(strlen($check_chara) - mb_strlen($check_chara) == 0){
+                    $half_chara += 2;
+                  }else if(strlen($check_chara) - mb_strlen($check_chara) != 0){
+                    $full_chara += 1; 
+                  }
+                }
+                $max_chara = $half_chara + $full_chara;
+
+                // $max_chara文字まで抜き出し、語末に...をつける
+                $title = mb_substr($title,0,$max_chara) . '...';
+
               }
+
               print("<p class=\"tags\" style=background-color:{$row['color']};>・{$title}</p>");
             }
           }
