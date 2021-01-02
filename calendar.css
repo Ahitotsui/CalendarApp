@@ -389,7 +389,6 @@ footer{
 /*全体の枠のdivタグの設定*/
 #Addform{
   width: 400px;
-  height:550px;
   padding: 10px;
   border-radius:20px;
   background-color:#FFFFFF;
@@ -405,7 +404,6 @@ footer{
 #AddClose{
   cursor: pointer;
   width:30px;
-  height:30px;
   margin-left:340px;
   margin-right: 0px;
   font-size:30px;
@@ -417,7 +415,6 @@ footer{
 /*内側の枠の設定*/
 #insertform{
   width: 360px;
-  height: 400px;
   margin-left: auto;
   margin-right: auto;
   margin-top:0px;
@@ -433,8 +430,9 @@ footer{
 
 /* 開始時刻・終了時刻 */
 #timeSelect1,#timeSelect2{
-  width: 109px;/*110*/
+  width: 109px;
   height: 40px;
+  margin-right: 2px;
 }
 
 /*予定のタイトル入力*/
@@ -443,7 +441,6 @@ footer{
   height: 40px;
   padding-left: 20px;
   padding-right: 20px;
-  margin-top: 5px;
 }
 
 /*詳細なコメント入力*/
@@ -516,20 +513,32 @@ footer{
 
 /*新規メモ登録*/
 #AddBtn{
-  -webkit-appearance: none;/*スマホでの自動デザイン無効化*/
+  /* -webkit-appearance: none;スマホでの自動デザイン無効化 */
   cursor: pointer;
   width: 200px;
   height: 30px;
   margin-top:10px;
   margin-left:80px;
   margin-left:80px;
-  /* margin-bottom:20px; */
   font-size:15px;
-  font-weight:bold;
-  color:#FFFFFF;
+  /* font-weight:bold; */
+  color: #FFFFFF;
   background-color:#0066FF;
   border:none;
   border-radius:20px;
+}
+
+/*新規メモ登録 ボタン無効*/
+#AddBtn:disabled{
+  color:#999999;
+  background-color:#DDDDDD;
+  cursor:not-allowed; /* 禁止カーソル */
+}
+
+
+#atention1,#atention2{
+  color: red;
+  font-size: 15px;
 }
 /*----------------------新規登録のモーダルウィンドウ(END)---------------------*/
 

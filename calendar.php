@@ -227,7 +227,7 @@ print("</table>");
         <td>
           <label for="timeSelect1">開始時刻</label>
           <select id="timeSelect1" name="start" required>
-            <option value="" disabled selected style="display:none;">選択</option>
+            <option value="0" disabled selected style="display:none;">選択</option>
             <?php 
               for($i=0;$i<=23;$i++){
                 print("<option value=\"{$i}:00:00\">{$i}:00</option>");
@@ -239,7 +239,7 @@ print("</table>");
         <td>
           <label for="timeSelect2">終了時刻</label>
           <select id="timeSelect2" name="end" required>
-            <option value="" disabled selected style="display:none;">選択</option>
+            <option value="0" disabled selected style="display:none;">選択</option>
             <?php 
               for($i=1;$i<=24;$i++){
                 print("<option value=\"{$i}:00:00\">{$i}:00</option>");
@@ -247,12 +247,21 @@ print("</table>");
             ?>
           </select>
         </td>
+
+        
+      </tr>
+
+      <!-- バリデーション1 -->
+      <tr>
+        <td colspan="2">
+          <p id="atention1"></p>
+        </td>
       </tr>
 
       <!-- 予定のタイトル入力 -->
       <tr>
         <td colspan="2">
-          <p>予定のタイトル入力</p>
+          <label for="title">予定のタイトル入力</label>
         </td>
       </tr>
       <tr>
@@ -260,11 +269,17 @@ print("</table>");
           <input id="AddTitle" type="text" name="title" value="" placeholder="入力必須です" required>
         </td>
       </tr>
+      <!-- バリデーション2 -->
+      <tr>
+        <td colspan="2">
+          <p id="atention2"></p>
+        </td>
+      </tr>
 
       <!-- 詳細なコメント入力 -->
       <tr>
         <td colspan="2">
-          <p>詳細なコメント入力</p>
+          <label for="memo">詳細なコメント入力</label>
         </td>
       </tr>
       <tr>
@@ -276,7 +291,7 @@ print("</table>");
       <!-- カラー選択  -->
       <tr>
         <td colspan="2">
-          <p id="AddSelectTdColor">背景色をカスタム</p>
+          <label>詳細なコメント入力</label>
         </td>
       </tr>
 
@@ -306,7 +321,8 @@ print("</table>");
       <!-- 新規登録ボタン -->
       <tr>
         <td colspan="2">
-            <input id="AddBtn" type="submit" value="新規メモ登録">
+            <!-- <input id="AddBtn" type="submit" value="新規メモ登録"> -->
+            <button id="AddBtn" type="submit">新規メモ登録</button>
         </td>
       </tr>
       

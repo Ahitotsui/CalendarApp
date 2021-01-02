@@ -444,7 +444,7 @@
                 print("<label for=\"start\">終了時刻</label>");
                 print("<select id=\"selectTime2\" name=\"end\" required>");
                     print("<option value=\"\" disabled selected style=\"display:none;\">選択</option>");
-                    for($i=0;$i<=23;$i++){
+                    for($i=0;$i<=24;$i++){
                         if($i < 10){
                             $time = "0{$i}:00:00";
                         }else{
