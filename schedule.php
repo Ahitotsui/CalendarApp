@@ -93,8 +93,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="schedule.css">
     <script src="jquery-3.4.1.min.js"></script>
-    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="../css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"><!-- Font Awesome -->
     <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.ico" />
     <title><?php print($year); ?>/<?php print($month); ?>/<?php print($day); ?></title>
@@ -245,9 +244,15 @@
                                 <p class="list_time"><i class="far fa-clock"></i>{$S_time}〜{$E_time}</p>
                             </div>
                             <div class="col col-md-1">
-                                <a data-toggle="modal" href="#memo{$id}" class="detail"><i id="operate1" class="fas fa-info-circle"></i></a>
-                                <a href="$URL&ID={$id}&view=$viewMode" class="edit"><i id="operate2" class="fas fa-pen"></i></a>
-                                <a data-toggle="modal" href="#delete" class="delete" id="{$id}"><i id="operate3" class="fas fa-trash-alt"></i></a>
+                                <span data-toggle="tooltip" data-placement="bottom" title="詳細情報を見る">
+                                    <a data-toggle="modal" href="#memo{$id}" class="detail"><i id="operate1" class="fas fa-info-circle"></i></a>
+                                </span>
+                                <span data-toggle="tooltip" data-placement="bottom" title="内容を編集する">
+                                    <a href="$URL&ID={$id}&view=$viewMode" class="edit"><i id="operate2" class="fas fa-pen"></i></a>
+                                </span>
+                                <span data-toggle="tooltip" data-placement="bottom" title="この予定を削除する">
+                                    <a data-toggle="modal" href="#delete" class="delete" id="{$id}"><i id="operate3" class="fas fa-trash-alt"></i></a>
+                                </span>
                             </div>
                         </div>     
                         
@@ -310,10 +315,10 @@
                     //現在時刻の時は背景色つける
                     if($year == $TodayYear && $month == $TodayMonth && $day == $today && $todayTime == $i){
                         //時刻の文字がリンクになっていて、新規登録ページのモーダルを開く
-                        print("<th id=\"timesNow\"><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add\" id=\"{$i}\">{$i}:00</a></th>");
+                        print("<th id=\"timesNow\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"クリックで予定追加\"><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add\" id=\"{$i}\">{$i}:00</a></th>");
                     }else{
                         //時刻の文字がリンクになっていて、新規登録ページのモーダルを開く
-                        print("<th class=\"timesTh\"><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add\" id=\"{$i}\">{$i}:00</a></th>");
+                        print("<th class=\"timesTh\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"クリックで予定追加\"><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add\" id=\"{$i}\">{$i}:00</a></th>");
                     }
                 }
                 print("</thead>");
@@ -619,8 +624,12 @@
         </form>
     </div>
 
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <!-- bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <!-- bootstrap -->
+
     <script>
         $(function(){
 
@@ -654,6 +663,9 @@
                 $('#Editform').hide();
                 $('#popback').hide();
             });
+
+            //ツールチップ
+            $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
 </body>
