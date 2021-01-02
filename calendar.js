@@ -77,6 +77,8 @@ $(function(){
     if(input_value == ''){
         document.getElementById("atention2").innerHTML = '※予定のタイトルは入力必須です';
         document.getElementById("AddBtn").disabled = true;
+    }else if(input_value != '' && select1 == 0 && select2 == 0){
+        document.getElementById("AddBtn").disabled = true;
     }else if(input_value != '' && select1 > select2){
         document.getElementById("atention2").innerHTML = '';
     }else if(input_value != '' && select1 < select2){
