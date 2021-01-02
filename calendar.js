@@ -20,6 +20,11 @@ $(function(){
   $("#AddClose").click(function(){
     $("#Addform").fadeOut("fast");
     $("#popback").fadeOut("fast");
+
+    // バリデーションも一緒に初期
+    $("#atention1").html('');
+    $("#atention2").html('');
+    $("#AddBtn").prop("disabled", false);
   });
 
 
