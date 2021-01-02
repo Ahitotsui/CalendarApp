@@ -170,7 +170,7 @@
               $title = htmlspecialchars($row['title']);
 
               //予定の出力文字数が14を超える場合は一部のみをカットして表示する処理を行う
-              if(mb_strlen($title) >= 20){
+              if(mb_strlen($title) >= 14){
 
                 $half_chara = 0;
                 $full_chara = 0;

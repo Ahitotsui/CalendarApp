@@ -424,7 +424,7 @@
 
                 //<開始時刻>
                 print("<label for=\"start\">開始時刻</label>");
-                print("<select id=\"selectTime1\" name=\"start\">");
+                print("<select id=\"selectTime1\" name=\"start\" required>");
                     print("<option value=\"\" disabled selected style=\"display:none;\">選択</option>");
                     for($i=0;$i<=23;$i++){
                         if($i < 10){
@@ -442,7 +442,7 @@
 
                 //<終了時刻>
                 print("<label for=\"start\">終了時刻</label>");
-                print("<select id=\"selectTime2\" name=\"end\">");
+                print("<select id=\"selectTime2\" name=\"end\" required>");
                     print("<option value=\"\" disabled selected style=\"display:none;\">選択</option>");
                     for($i=0;$i<=23;$i++){
                         if($i < 10){
@@ -460,7 +460,7 @@
 
                 //<タイトル>
                 print("<p id=\"label_title\">タイトル</p>");
-                print("<div><input type=\"text\" id=\"pre_title\" name=\"title\" value=\"{$row['title']}\"></div>");
+                print("<div><input type=\"text\" id=\"pre_title\" name=\"title\" required value=\"{$row['title']}\"></div>");
 
                 //<メモ>
                 print("<p id=\"label_memo\">メモ</p>");
@@ -478,7 +478,7 @@
                 //<進捗ステータス>
                 $f_progress = <<<EOF
                 <p id="pre_progress">進捗</p>
-                <select id="prog_select" name="progress">
+                <select id="prog_select" name="progress" required>
                     <option value="" disabled selected style="display:none;">選択</option>
                     <option value="0" $selected0>未了</option>
                     <option value="1" $selected1>完了</option>
