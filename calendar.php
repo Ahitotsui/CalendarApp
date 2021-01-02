@@ -211,8 +211,8 @@ print("</table>");
 
 <!--==============================================新規登録のポップアップウィンドウ====================================================-->
 <div id="Addform">
-  <button id="AddClose">&times;</button>
   <form id="insertform" action="insert.php" method="post">
+    <button id="AddClose" type="reset">&times;</button>
     <table>
 
       <!-- 登録する日時の表示 -->
