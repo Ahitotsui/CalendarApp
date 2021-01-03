@@ -291,7 +291,7 @@ print("</table>");
       <!-- カラー選択  -->
       <tr>
         <td colspan="2">
-          <label>詳細なコメント入力</label>
+          <label>カラー選択</label>
         </td>
       </tr>
 
@@ -321,8 +321,7 @@ print("</table>");
       <!-- 新規登録ボタン -->
       <tr>
         <td colspan="2">
-            <!-- <input id="AddBtn" type="submit" value="新規メモ登録"> -->
-            <button id="AddBtn" type="submit">新規メモ登録</button>
+            <button id="AddBtn" type="submit">予定を追加</button>
         </td>
       </tr>
       
