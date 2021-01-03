@@ -227,7 +227,7 @@ print("</table>");
         <td>
           <label for="timeSelect1">開始時刻</label>
           <select id="timeSelect1" name="start" required>
-            <option value="0" disabled selected style="display:none;">選択</option>
+            <option value="999" disabled selected style="display:none;">選択</option>
             <?php 
               for($i=0;$i<=23;$i++){
                 print("<option value=\"{$i}:00:00\">{$i}:00</option>");
@@ -239,7 +239,7 @@ print("</table>");
         <td>
           <label for="timeSelect2">終了時刻</label>
           <select id="timeSelect2" name="end" required>
-            <option value="0" disabled selected style="display:none;">選択</option>
+            <option value="999" disabled selected style="display:none;">選択</option>
             <?php 
               for($i=1;$i<=24;$i++){
                 print("<option value=\"{$i}:00:00\">{$i}:00</option>");
