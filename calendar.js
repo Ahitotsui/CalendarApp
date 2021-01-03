@@ -39,6 +39,8 @@ $(function(){
     if(select1 >= select2 && select2 != 999){
       document.getElementById("atention1").innerHTML = '※開始時刻に誤りがあります';
       document.getElementById("AddBtn").disabled = true;
+    }else if(select2 == 999){
+      document.getElementById("AddBtn").disabled = true;
     }else if(select1 < select2 && input_value == ''){
       document.getElementById("atention1").innerHTML = '';
     }else if(select1 < select2 && input_value != ''){
@@ -57,6 +59,8 @@ $(function(){
     if(select1 >= select2 && select1 != 999){
         document.getElementById("atention1").innerHTML = '※終了時刻に誤りがあります';
         document.getElementById("AddBtn").disabled = true;
+    }else if(select1 == 999){
+      document.getElementById("AddBtn").disabled = true;
     }else if(select1 < select2 && input_value == ''){
         document.getElementById("atention1").innerHTML = '';
     }else if(select1 < select2 && input_value != ''){
