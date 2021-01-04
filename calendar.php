@@ -86,7 +86,7 @@
 <!--ヘッダー領域(END)--->
 
 <main>
-  
+
   <?php
   //DB接続
   require_once('DBInfo.php');
@@ -130,8 +130,22 @@
 
   //もし、1日が月曜からスタートでは無い場合は空白のtdタグを最初に作る
   print("<tr>");
+    //前の月の最終日が何日かを取得し、$pervMonthLastに格納
+    $prevMonth = $Titlemonth - 1;
+    if($prevMonth == 0){
+      //1月は参照するのは前年なので　$refYear = $TitleYear - 1;　とする。
+      $refYear = $TitleYear - 1;
+      //1月は$prevMonth = 0になるので値を前月の12に直す
+      $prevMonth = 12;
+      $pervMonthLast = date( 't' , strtotime($refYear . "/" . $prevMonth . "/01"));
+    }else{
+      $pervMonthLast = date( 't' , strtotime($TitleYear . "/" . $prevMonth . "/01")); 
+    }
+    
     for($i=0;$i<$ini;$i++){
-      print("<td class=\"tdPreMon\"></td>");
+      //前の月の日付けを空白マスの数分算出し、$prevDayDispに格納
+      $prevDayDisp = ($pervMonthLast - ($ini - 1)) + $i;
+      print("<td class=\"tdPreMon\" valign=\"top\">$prevMonth / $prevDayDisp</td>");
     }
 
   //その月の日数を求める  
@@ -333,7 +347,6 @@ print("</table>");
 </main>
 
 <footer class="fixed-bottom">
-  <!-- <div id="monthSelectBtn"> -->
   <div id="top" class="row">
   <!--前年のページネーション(月は12月に選択)-->
     <div class="col col-md-2">
@@ -353,7 +366,7 @@ print("</table>");
       <?php
       for($i=1;$i<13;$i++){
         if($i == $_GET['month']){
-          print("<a href=\"calendar.php?year={$TitleYear}&month={$i}\" id=\"SelectBtn\" class=\"Nowselect\">{$i}</a>");
+          print("<p id=\"SelectBtn\" class=\"Nowselect\">{$i}</p>");
         }else{
           print("<a href=\"calendar.php?year={$TitleYear}&month={$i}\" class=\"monthsend\">{$i}</a>");
         }
@@ -370,7 +383,6 @@ print("</table>");
     ?>  
     </div>
   </div>
-  <!-- </div> -->
 </footer>
 
 <script src="http://code.jquery.com/jquery.js"></script><!-- bootstrap -->
