@@ -91,6 +91,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet"><!-- googleフォント -->
     <link rel="stylesheet" href="schedule.css">
     <script src="jquery-3.4.1.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -107,7 +108,8 @@
                 <div id="Htitle" class="col col-md-2"></div>
                 <div id="Htitle" class="col col-md-8">
                 <a id="TitleBackLink" href="calendar.php?year=<?php print($year) ?>&month=<?php print($month) ?>">
-                    <h1><?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日</h1>
+                    <!-- <h1><?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日</h1> -->
+                    <h1>Calendar</h1>
                 </a>
                 </div>
 
@@ -144,7 +146,7 @@
         <!-- フィルタ&検索機能 -->
         <div class="row" id="search">
 
-            <div class="coll col-md-4"><h3><i class="fas fa-tasks"></i>　予定の一覧</h3></div>
+            <div class="coll col-md-4"><h3><i class="fas fa-tasks"></i>　<?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日 の予定</h3></div>
 
             <div id="disp_filter" class="coll col-md-4">
                 <!-- <div> -->

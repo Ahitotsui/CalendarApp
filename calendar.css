@@ -32,6 +32,7 @@ h1{
 	align-items: center;/*f縦方向の位置を中央に*/
   justify-content: center;/*横方向のアイテム位置を中央に*/
   /*-------------------上下左右の中央寄せ------------------------*/
+  font-family: 'Dancing Script', cursive;
 }
 
 /*ログインしたユーザー名のスタイル*/
@@ -66,6 +67,24 @@ h1{
 
 
 /*----------------------メインコンテンツ領域---------------------*/
+
+/* テーブル上の日付表示などを囲むdiv */
+#topParts{
+  width: 88%;
+  /* height: 50px; */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* #topPartsのdivの中の要素を横並びにする */
+.inlineParts{
+  display: inline-block;
+}
+
+#day_link{
+  width: 50px;
+}
+
 main{
   padding-left: 10px;
   padding-right: 10px;

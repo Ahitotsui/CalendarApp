@@ -71,7 +71,8 @@
       <div id="Htitle" class="col col-md-2"></div>
       <div id="Htitle" class="col col-md-8">
       <a id="TitleBackLink" href="calendar.php">
-        <h1><?php print($TitleYear); ?>年 <?php print($Titlemonth); ?>月</h1>
+        <!-- <h1><?php print($TitleYear); ?>年 <?php print($Titlemonth); ?>月</h1> -->
+        <h1>Calendar</h1>
       </a>
       </div>
 
@@ -86,6 +87,28 @@
 <!--ヘッダー領域(END)--->
 
 <main>
+  <?php 
+    $link_prevM = $Titlemonth - 1;
+    $link_nextM = $Titlemonth + 1;
+    $link_year = $TitleYear;
+    if($link_prevM == 0){
+      $link_prevM = 12;
+      $link_year = $TitleYear - 1;
+    }else if($link_nextM == 13){
+      $link_nextM = 1;
+      $link_year = $TitleYear + 1;
+    }
+  ?>
+  <div id="topParts">
+    <h2 class="inlineParts"><?php print($TitleYear); ?>年 <?php print($Titlemonth); ?>月</h2>
+    <a href="calendar.php?year=<?php print($link_year); ?>&month=<?php print($link_prevM); ?>">&lt;&lt;前月</a>
+    <a href="calendar.php?year=<?php print($link_year); ?>&month=<?php print($link_nextM); ?>">翌月&gt;&gt;</a>
+    
+    <!-- <a href="schedule.php?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
+      <button class="inlineParts" id="day_link">日</button>
+    </a> -->
+    
+  </div>
 
   <?php
   //DB接続
