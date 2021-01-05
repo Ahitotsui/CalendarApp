@@ -90,19 +90,20 @@
   <?php 
     $link_prevM = $Titlemonth - 1;
     $link_nextM = $Titlemonth + 1;
-    $link_year = $TitleYear;
+    $link_prevyear = $TitleYear;
+    $link_nextyear = $TitleYear;
     if($link_prevM == 0){
       $link_prevM = 12;
-      $link_year = $TitleYear - 1;
+      $link_prevyear = $TitleYear - 1;
     }else if($link_nextM == 13){
       $link_nextM = 1;
-      $link_year = $TitleYear + 1;
+      $link_nextyear = $TitleYear + 1;
     }
   ?>
   <div id="topParts">
     <h2 class="inlineParts"><?php print($TitleYear); ?>年 <?php print($Titlemonth); ?>月</h2>
-    <a href="calendar.php?year=<?php print($link_year); ?>&month=<?php print($link_prevM); ?>">&lt;&lt;前月</a>
-    <a href="calendar.php?year=<?php print($link_year); ?>&month=<?php print($link_nextM); ?>">翌月&gt;&gt;</a>
+    <a href="calendar.php?year=<?php print($link_prevyear); ?>&month=<?php print($link_prevM); ?>">&lt;&lt;前月</a>
+    <a href="calendar.php?year=<?php print($link_nextyear); ?>&month=<?php print($link_nextM); ?>">翌月&gt;&gt;</a>
     
     <!-- <a href="schedule.php?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
       <button class="inlineParts" id="day_link">日</button>
