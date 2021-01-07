@@ -71,8 +71,8 @@
       <div id="Htitle" class="col col-md-2"></div>
       <div id="Htitle" class="col col-md-8">
       <a id="TitleBackLink" href="calendar.php">
-        <!-- <h1><?php print($TitleYear); ?>年 <?php print($Titlemonth); ?>月</h1> -->
-        <h1>Calendar</h1>
+        <!-- ヘッダーのロゴ画像 -->
+        <img src="./img/LOGO.png" alt="" id="logo">
       </a>
       </div>
 
