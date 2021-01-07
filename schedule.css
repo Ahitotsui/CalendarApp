@@ -8,10 +8,8 @@
 header{
   position: fixed;
   width:100%;
-  height: 204px;
+  height: 165px;
   background-color:#FFFFFF;
-  /* background-color:red; */
-  margin-top: -280px;
   border-bottom: solid;
   border-bottom-width: 1px;
   border-bottom-color: #C0C0C0;
@@ -24,7 +22,7 @@ header{
 @media screen and ( max-width:768px )
 {
 	header{
-    height: 285px;
+    height: 243px;
 	}
 }
 
@@ -78,10 +76,11 @@ header{
 /*ログインしたユーザー名のスタイル*/
 #login{
   height:50px;
+  font-size: 13px;
   color:#FFFFFF;
   /*-------------------上下左右の中央寄せ------------------------*/
   display: flex;/*fFlexコンテナ化*/
-  align-items: center;/*f縦方向の位置を中央に*/
+	align-items: center;/*f縦方向の位置を中央に*/
   justify-content: center;/*横方向のアイテム位置を中央に*/
   /*-------------------上下左右の中央寄せ------------------------*/
 }
@@ -89,39 +88,31 @@ header{
 /*ログインしたユーザー名を強調*/
 #username{
   color:#AEFFBD;
-  font-size:20px;
   margin-left:2px;
   margin-right:2px;
 }
 
 #logout{
   height: 50px;
+  font-size: 13px;
   color:#FFFFFF;
   /*-------------------上下左右の中央寄せ------------------------*/
   display: flex;/*fFlexコンテナ化*/
-  align-items: center;/*f縦方向の位置を中央に*/
+	align-items: center;/*f縦方向の位置を中央に*/
   justify-content: center;/*横方向のアイテム位置を中央に*/
   /*-------------------上下左右の中央寄せ------------------------*/
 }
 /*------------------ヘッダー領域(END)------------------*/
 
+/* 日付表示 */
+#dispSelectedDay{
+  font-size: 22px;
+}
+
 /* 昨日　明日　ページ送り */
-#pagenation{
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* 昨日 */
-#prevDay{
-  display: block; 
-  text-align: left;
-}
-
-/* 明日 */
-#nextDay{
-  display: block;
-  text-align: right;
+#prevDay,#nextDay{
+  padding-left: 3px;
+  font-size: 15px;
 }
 
 /* フィルタボタン・検索フォームを囲むdivタグ */
@@ -140,8 +131,9 @@ header{
 
 /* 全て */
 #filBtn1{
-  width: 100px;
-  height: 40px;
+  font-size: 13px;
+  width: 80px;
+  height: 35px;
   border:solid;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
@@ -153,8 +145,9 @@ header{
 
 /* 未了 */
 #filBtn2{
-  width: 100px;
-  height: 40px;
+  font-size: 13px;
+  width: 80px;
+  height: 35px;
   border:solid;
   border-radius: 0px;
   border-width: 1px;
@@ -163,8 +156,9 @@ header{
 
 /* 完了 */
 #filBtn3{
-  width: 100px;
-  height: 40px;
+  font-size: 13px;
+  width: 80px;
+  height: 35px;
   border:solid;
   border-radius: 0px;
   border-width: 1px;
@@ -173,8 +167,9 @@ header{
 
 /* キャンセル */
 #filBtn4{
-  width: 100px;
-  height: 40px;
+  font-size: 13px;
+  width: 80px;
+  height: 35px;
   border:solid;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
@@ -222,7 +217,7 @@ header{
 }
 
 main{
-  margin-top: 280px;
+  margin-top: 200px;
   margin-bottom: 140px;
 }
 
@@ -283,7 +278,6 @@ main{
 /* 進捗ステータスボタンのスタイル */
 /* 未了 */
 .unfinish{
-  /* transform: scale(0.8, 0.8); */
   font-size: 12px;
   width:80px;
   height:30px;

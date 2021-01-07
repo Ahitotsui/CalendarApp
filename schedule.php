@@ -102,7 +102,7 @@
 <body>
 
     <!--ヘッダー-->
-    <header>
+    <header class="fixed-top">
         <div id="header">
             <div id="top" class="row">
                 <div id="Htitle" class="col col-md-2"></div>
@@ -120,33 +120,22 @@
                 </div>
                 <div id="Hlogout" class="col col-md-1"><a id="logout" href="logout.php">ログアウト</a></div>
             </div>
-        </div>    
-
-        <!-- 昨日　明日　ページ送り -->
-        <div class="row" id="pagenation">
-            <div class="col col-md-1">
-                <?php 
-                    $prev_day = $day - 1;
-                    print("<h2><a id=\"prevDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$prev_day&view=$viewMode\"><i class=\"fas fa-angle-double-left\"></i>前日</a></h2>");
-                ?>
-            </div>
-
-            <div class="coll col-md-10"></div>
-
-            <div class="col col-md-1">
-                <?php 
-                    $next_day = $day + 1;
-                    print("<h2><a id=\"nextDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$next_day&view=$viewMode\">翌日<i class=\"fas fa-angle-double-right\"></i></a></h2>");
-                ?>
-            </div>
-        </div>
-
+        </div> 
         
-
         <!-- フィルタ&検索機能 -->
         <div class="row" id="search">
 
-            <div class="coll col-md-4"><h3><i class="fas fa-tasks"></i>　<?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日 の予定</h3></div>
+            <div class="coll col-md-4">
+                <p id="dispSelectedDay"><i class="fas fa-tasks"></i>　<?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日 の予定
+                 <!-- 昨日　明日　ページ送り -->
+                <?php 
+                    $prev_day = $day - 1;
+                    print("<a id=\"prevDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$prev_day&view=$viewMode\"><i class=\"fas fa-angle-double-left\"></i>前日</a>");
+                    $next_day = $day + 1;
+                    print("<a id=\"nextDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$next_day&view=$viewMode\">翌日<i class=\"fas fa-angle-double-right\"></i></a>");
+                ?>
+                </p>
+            </div>
 
             <div id="disp_filter" class="coll col-md-4">
                 <!-- <div> -->

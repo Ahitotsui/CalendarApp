@@ -32,6 +32,7 @@ header{
 /*ログインしたユーザー名のスタイル*/
 #login{
   height:50px;
+  font-size: 13px;
   color:#FFFFFF;
   /*-------------------上下左右の中央寄せ------------------------*/
   display: flex;/*fFlexコンテナ化*/
@@ -43,13 +44,13 @@ header{
 /*ログインしたユーザー名を強調*/
 #username{
   color:#AEFFBD;
-  font-size:20px;
   margin-left:2px;
   margin-right:2px;
 }
 
 #logout{
   height: 50px;
+  font-size: 13px;
   color:#FFFFFF;
   /*-------------------上下左右の中央寄せ------------------------*/
   display: flex;/*fFlexコンテナ化*/
