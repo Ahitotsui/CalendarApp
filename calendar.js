@@ -91,4 +91,8 @@ $(function(){
     }
   }
 
+  document.getElementById("checkMsg").onclick = function(){
+    document.getElementById("addMsg").style.display = 'none';
+  }
+
 });

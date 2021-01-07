@@ -85,7 +85,16 @@
   </div>
 </header>  
 <!--ヘッダー領域(END)--->
-
+<?php 
+  if(isset($_COOKIE["add"])){
+    print("<div id=\"addMsg\">");
+    print("<span>予定を追加しました</span>"); 
+    // print("<script>window.alert('予定を追加しました');</script>");
+    print("<button id=\"checkMsg\" class=\"btn btn-success btn-sm\">OK</button>");
+    print("</div>");
+  }
+  setcookie("add", 'add', time()-1800); 
+?>
 <main>
   <?php 
     $link_prevM = $Titlemonth - 1;
@@ -104,7 +113,6 @@
     <h2 class="inlineParts"><?php print($TitleYear); ?>年 <?php print($Titlemonth); ?>月</h2>
     <a href="calendar.php?year=<?php print($link_prevyear); ?>&month=<?php print($link_prevM); ?>">&lt;&lt;前月</a>
     <a href="calendar.php?year=<?php print($link_nextyear); ?>&month=<?php print($link_nextM); ?>">翌月&gt;&gt;</a>
-    
     <!-- <a href="schedule.php?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
       <button class="inlineParts" id="day_link">日</button>
     </a> -->

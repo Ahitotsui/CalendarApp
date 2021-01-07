@@ -43,6 +43,7 @@ try{
         $stmt = $dbh->prepare($sql);
         if(validation($start,$end) == true){
             $stmt->execute([$userid,$year,$month,$day,$start,$end,$title,$memo,$progress,$color,$delete]);
+            setcookie("add", 'add', time()+20); 
             header("location:calendar.php?year={$year}&month={$month}");
         }else if(validation($start,$end) == false){
             print('<h3>入力にエラーがあります。</h3>');

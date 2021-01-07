@@ -80,6 +80,40 @@ header{
   width: 50px;
 }
 
+/*予定追加後に表示するメッセージ*/
+#addMsg{
+ 
+  opacity: 0;                           /* アニメーション */
+  animation-name: fadein-bottom;        /* アニメーション */
+  animation-duration: 1.5s;             /* アニメーション */
+  animation-timing-function: ease-out;  /* アニメーション */
+  animation-fill-mode: forwards;        /* アニメーション */
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  background-color:#99FFCC;
+  position:fixed;
+  top: 40%;
+  z-index:100;
+}
+
+/* 予定追加後に表示するメッセージ アニメーション */
+@keyframes fadein-bottom {
+  0% {
+     opacity: 0;
+     transform: translateY(20px);
+  }
+  100% {
+     opacity: 1;
+     transform: translateY(0);
+  }
+}
+
+/* 予定追加後に表示するメッセージ button */
+#checkMsg{
+  margin-left: 5px;
+}
+
 main{
   padding-left: 10px;
   padding-right: 10px;
