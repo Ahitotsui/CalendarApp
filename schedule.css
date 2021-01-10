@@ -6,15 +6,15 @@
 /*------------------ヘッダー領域------------------*/
 
 header{
-  position: fixed;
+  /* position: fixed; */
   width:100%;
-  height: 165px;
+  height: 100px;
   background-color:#FFFFFF;
-  border-bottom: solid;
+  /* border-bottom: solid;
   border-bottom-width: 1px;
   border-bottom-color: #C0C0C0;
   box-shadow: 0px 10px 10px -5px rgba(0,0,0,0.5);
-  z-index:998;
+  z-index:998; */
 }
 
 
@@ -22,7 +22,7 @@ header{
 @media screen and ( max-width:768px )
 {
 	header{
-    height: 243px;
+    height: 160px;
 	}
 }
 
@@ -199,6 +199,7 @@ header{
   width: 300px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 3px;
 }
 
 /* リスト・タイムテーブル切替のタブ(未選択時)*/
@@ -212,20 +213,48 @@ header{
 
 /* リスト・タイムテーブル切替のタブ(選択時)*/
 #tabStyle1,#tabStyle2{
-  background-color: #000000;
+  background-color: gray;
   color: #FFFFFF;
 }
 
 main{
-  margin-top: 200px;
+  width: 90%;
+  height: 560px;
+  margin-left: auto;
+  margin-right: auto;
+  /* margin-top: 20px; */
   margin-bottom: 140px;
+  border-top: solid;
+  border-top-color: gray;
+  /* border: solid;
+  border-color: red; */
+  overflow-y: scroll;
+}
+
+/*スクロールバー全体*/
+main::-webkit-scrollbar {
+  width: 20px;
+}
+
+/*スクロールバーの軌道*/
+main::-webkit-scrollbar-track {
+/* border-radius: 10px; */
+box-shadow: inset 0 0 6px rgba(0, 0, 0, .1);
+}
+
+/*スクロールバーの動く部分*/
+main::-webkit-scrollbar-thumb {
+/* background-color: rgba(0, 0, 50, .5); */
+background-color: #BBBBBB	;
+/* border-radius: 10px; */
+box-shadow:0 0 0 1px rgba(255, 255, 255, .3);
 }
 
 /*------------------簡易リスト表示------------------*/
 /* リスト */
 .list_view{
-  width: 90%;
-  height:80px;
+  width: 98%;
+  height:75px;
   margin-left:auto;
   margin-right:auto;
   padding:10px;
@@ -307,7 +336,7 @@ main{
 
 /*------------------タイムテーブル表示------------------*/
 #time_table{
-  width: 95%;
+  width: 100%;
   table-layout: fixed;
   margin-top:10px;
   margin-left:auto;
@@ -388,123 +417,6 @@ footer{
   width:100%;
   height:60px;
   background-color:#000000;
-}
-
-/*------------------編集フォーム------------------*/
-
-/*ポップアップ時に背景を薄暗くする。削除モーダルウィンドウと供用*/
-#popback{
-  position: absolute;
-  top:-10%;
-  left:0%;
-  width: 100%;
-  height: 200%;
-  opacity:0.5;
-  background-color:#000000;
-  z-index:999;
-}
-
-/*全体の枠のdivタグの設定*/
-#Editform{
-  max-width: 90%;
-  max-height: 120%;
-  padding-bottom: 20px;
-  border-radius:10px;
-  background-color:#FFFFFF;
-  position:fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  z-index:1000;
-}
-
-/* 開始時間・終了時間のセレクトタグのラベル */
-label{
-  margin-left: 6px;
-}
-
-/* 開始時間・終了時間 */
-#selectTime1,#selectTime2{
-  width: 160px;
-  height: 40px;
-}
-
-/*タイトルの入力タグ*/
-#pre_title{
-  width: 100%;
-  padding:20px;
-}
-
-/*テキストエリア*/
-#EditPreviwe{
-  width: 100%;
-  height: 150px;
-  font-size:15px;
-  padding:20px;
-  resize: none;
-}
-
-/* 進捗選択 */
-#prog_select{
-  width: 100%;
-  height: 40px;
-}
-
-/*背景ラジオのチェックを非表示に*/
-#green[type=radio],#yellow[type=radio],#bule[type=radio],#purple[type=radio],#red[type=radio],#orange[type=radio],#white[type=radio]{
-display: none; /* ラジオボタンを非表示にする */
-}
-
-/*背景ラベルのスタイル設定*/
-#green,#yellow,#bule,#purple,#red,#orange,#white{
-display: block; /* ブロックレベル要素化する */
-float: left; /* 要素の左寄せ・回り込を指定する */
-margin: 5px; /* ボックス外側の余白を指定する */
-width: 30px; /* ボックスの横幅を指定する */
-height: 30px; /* ボックスの高さを指定する */
-cursor: pointer; /* マウスカーソルの形（リンクカーソル）を指定する */
-border: 1px solid #000000;/* ボックスの境界線を実線で指定する */
-border-radius: 3px; /* 角丸を指定する */
-}
-
-/*背景ラベルが選択された時のスタイル設定*/
-#EditTdColor input[type="radio"]:checked + label{
-border-radius: 20px;
-}
-
-/*背景カラーパレット*/
-#green{
-  background-color:#66FF66;
-}
-
-#yellow{
-  background-color:#FFFF88;
-}
-
-#bule{
-  background-color:#87CEFA;
-}
-
-#purple{
-  background-color:#C299FF;
-}
-
-#red{
-  background-color:#FA8072;
-}
-
-#orange{
-  background-color:#FFA500;
-}
-
-#white{
-  background-color:#FFFFFF;
-}
-
-/*モーダルフッター*/
-#editFormFoot{
-  clear: both;/*モーダルフッターの手前の要素でfloat: left;してるので解除*/
-  height: 50px;
 }
 
 

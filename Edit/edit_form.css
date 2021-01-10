@@ -1,0 +1,83 @@
+main{
+    padding: 20px;
+    margin: 20px;
+    border: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: gray;
+}
+
+h3{
+    text-align: center;
+}
+
+#color_radio{
+    width: 100%;
+    height: 43px;
+    border: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    border-color:#DDDDDD;
+}
+
+/*背景ラジオのチェックを非表示に*/
+#green[type=radio],#yellow[type=radio],#bule[type=radio],#purple[type=radio],#red[type=radio],#orange[type=radio],#white[type=radio]{
+    display: none; /* ラジオボタンを非表示にする */
+}
+
+/*背景ラベルのスタイル設定*/
+#green,#yellow,#bule,#purple,#red,#orange,#white{
+    display: block; /* ブロックレベル要素化する */
+    float: left; /* 要素の左寄せ・回り込を指定する */
+    margin: 5px; /* ボックス外側の余白を指定する */
+    width: 30px; /* ボックスの横幅を指定する */
+    height: 30px; /* ボックスの高さを指定する */
+    cursor: pointer; /* マウスカーソルの形（リンクカーソル）を指定する */
+    border: 1px solid #000000;/* ボックスの境界線を実線で指定する */
+    border-radius: 3px; /* 角丸を指定する */
+}
+
+/*背景ラベルが選択された時のスタイル設定*/
+#EditTdColor input[type="radio"]:checked + label{
+border-radius: 20px;
+}
+
+/*背景カラーパレット*/
+#green{
+    background-color:#66FF66;
+}
+
+#yellow{
+    background-color:#FFFF88;
+}
+
+#bule{
+    background-color:#87CEFA;
+}
+
+#purple{
+    background-color:#C299FF;
+}
+
+#red{
+    background-color:#FA8072;
+}
+
+#orange{
+    background-color:#FFA500;
+}
+
+#white{
+    background-color:#FFFFFF;
+}
+
+#cancelBtn{
+    background-color: #FFFFFF;
+    color: #000;
+}
+
+#sendBtn{
+    background-color: #000;
+    border-color: #000;
+}
+

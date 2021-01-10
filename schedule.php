@@ -102,39 +102,39 @@
 <body>
 
     <!--ヘッダー-->
-    <header class="fixed-top">
-        <div id="header">
-            <div id="top" class="row">
-                <div id="Htitle" class="col col-md-2"></div>
-                <div id="Htitle" class="col col-md-8">
-                <a id="TitleBackLink" href="calendar.php?year=<?php print($year) ?>&month=<?php print($month) ?>">
-                    <!-- ヘッダーのロゴ画像 -->
-                    <img src="./img/LOGO.png" alt="" id="logo">
-                </a>
-                </div>
-
-                <div id="Hlogin" class="col col-md-1">
-                    <p id=login>
-                        <i class="fas fa-user"></i><span id="username"><?php print($_SESSION['login']['name']); ?></span>さん
-                    </p>
-                </div>
-                <div id="Hlogout" class="col col-md-1"><a id="logout" href="logout.php">ログアウト</a></div>
+    <div id="header">
+        <div id="top" class="row">
+            <div id="Htitle" class="col col-md-2"></div>
+            <div id="Htitle" class="col col-md-8">
+            <a id="TitleBackLink" href="calendar.php?year=<?php print($year) ?>&month=<?php print($month) ?>">
+                <!-- ヘッダーのロゴ画像 -->
+                <img src="./img/LOGO.png" alt="" id="logo">
+            </a>
             </div>
-        </div> 
-        
+
+            <div id="Hlogin" class="col col-md-1">
+                <p id=login>
+                    <i class="fas fa-user"></i><span id="username"><?php print($_SESSION['login']['name']); ?></span>さん
+                </p>
+            </div>
+            <div id="Hlogout" class="col col-md-1"><a id="logout" href="logout.php">ログアウト</a></div>
+        </div>
+    </div> 
+    <header>
         <!-- フィルタ&検索機能 -->
         <div class="row" id="search">
 
             <div class="coll col-md-4">
-                <p id="dispSelectedDay"><i class="fas fa-tasks"></i>　<?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日 の予定
-                 <!-- 昨日　明日　ページ送り -->
-                <?php 
-                    $prev_day = $day - 1;
-                    print("<a id=\"prevDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$prev_day&view=$viewMode\"><i class=\"fas fa-angle-double-left\"></i>前日</a>");
-                    $next_day = $day + 1;
-                    print("<a id=\"nextDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$next_day&view=$viewMode\">翌日<i class=\"fas fa-angle-double-right\"></i></a>");
-                ?>
-                </p>
+                <p id="dispSelectedDay"><i class="fas fa-tasks"></i>　<?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日 の予定 </p>
+                <div>
+                    <!-- 昨日　明日　ページ送り -->
+                    <?php 
+                        $prev_day = $day - 1;
+                        print("<a id=\"prevDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$prev_day&view=$viewMode\"><i class=\"fas fa-angle-double-left\"></i>前日</a>");
+                        $next_day = $day + 1;
+                        print("<a id=\"nextDay\" href=\"schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$next_day&view=$viewMode\">翌日<i class=\"fas fa-angle-double-right\"></i></a>");
+                    ?>
+                </div>
             </div>
 
             <div id="disp_filter" class="coll col-md-4">
@@ -170,13 +170,13 @@
                 </form>
             </div>
         </div>
-
-        <!-- 表示モード切替機能 -->
-        <div id="dispTabs">
-            <a id="<?php print($tabStyle1); ?>" class="dispTab" href="<?php print($URL); ?>&view=list">簡易リスト表示</a>
-            <a id="<?php print($tabStyle2); ?>" class="dispTab" href="<?php print($URL); ?>&view=table">タイムテーブル表示</a>
-        </div>
     </header>
+
+    <!-- 表示モード切替機能 -->
+    <div id="dispTabs">
+        <a id="<?php print($tabStyle1); ?>" class="dispTab" href="<?php print($URL); ?>&view=list">簡易リスト表示</a>
+        <a id="<?php print($tabStyle2); ?>" class="dispTab" href="<?php print($URL); ?>&view=table">タイムテーブル表示</a>
+    </div>
 
     <main>
     <?php 
@@ -239,7 +239,7 @@
                                     <a data-toggle="modal" href="#memo{$id}" class="detail"><i id="operate1" class="fas fa-info-circle"></i></a>
                                 </span>
                                 <span data-toggle="tooltip" data-placement="bottom" title="内容を編集する">
-                                    <a href="$URL&ID={$id}&view=$viewMode" class="edit"><i id="operate2" class="fas fa-pen"></i></a>
+                                    <a href="./Edit/edit_form.php?ID={$id}&view=$viewMode" class="edit"><i id="operate2" class="fas fa-pen"></i></a>
                                 </span>
                                 <span data-toggle="tooltip" data-placement="bottom" title="この予定を削除する">
                                     <a data-toggle="modal" href="#delete" class="delete" id="{$id}"><i id="operate3" class="fas fa-trash-alt"></i></a>
@@ -384,149 +384,6 @@
     
 
     <!-- ここからはモーダルの表示内容 -->
-    <!-- 編集フォーム -->
-    <?php
-        if(isset($_GET['ID']) == true){
-            
-            $f_upper = <<<EOF
-            <div id="popback"></div>
-            <div id="Editform">
-            <form action="edit.php" method="post">
-                <div class="modal-header">
-                    <h4 class="modal-title">編集</h4>
-                    <button id="closeBtn" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-        
-                
-                    <!-- ページリダイレクトに必要なパラメータ -->
-                    <input type="hidden" name="userid" value="$userid">
-                    <input type="hidden" name="year" value="$year">
-                    <input type="hidden" name="month" value="$month">
-                    <input type="hidden" name="day" value="$day">
-                    <input type="hidden" name="view" value="$viewMode">
-                    <div class="modal-body">
-            EOF;
-            print($f_upper);
-
-
-            $ID = $_GET['ID'];
-            $sql = "SELECT * FROM Memo_tags WHERE id=?";
-            $stmt = $dbh->prepare($sql);
-            $stmt->execute([$ID]);
-
-            foreach($stmt as $row){
-                //<ID番号>
-                print("<input type=\"hidden\" id=\"selectId\" name=\"id\" value=\"$ID\">");
-
-                //<開始時刻>
-                print("<label for=\"start\">開始時刻</label>");
-                print("<select id=\"selectTime1\" name=\"start\" required>");
-                    print("<option value=\"\" disabled selected style=\"display:none;\">選択</option>");
-                    for($i=0;$i<=23;$i++){
-                        if($i < 10){
-                            $s_time = "0{$i}:00:00";
-                        }else{
-                            $s_time = "{$i}:00:00";
-                        }
-                            if($s_time == $row['start_time']){
-                                print("<option value=\"{$s_time}\" selected>{$i}:00</option>");
-                            }else{
-                                print("<option value=\"{$s_time}\">{$i}:00</option>");
-                            }
-                    }
-                print("</select>");
-
-                //<終了時刻>
-                print("<label for=\"start\">終了時刻</label>");
-                print("<select id=\"selectTime2\" name=\"end\" required>");
-                    print("<option value=\"\" disabled selected style=\"display:none;\">選択</option>");
-                    for($i=0;$i<=24;$i++){
-                        if($i < 10){
-                            $time = "0{$i}:00:00";
-                        }else{
-                            $time = "{$i}:00:00";
-                        }
-                            if($time == $row['end_time']){
-                                print("<option value=\"{$time}\" selected>{$i}:00</option>");
-                            }else{
-                                print("<option value=\"{$time}\">{$i}:00</option>");
-                            }
-                    }
-                print("</select>");
-
-                //<タイトル>
-                print("<p id=\"label_title\">タイトル</p>");
-                print("<div><input type=\"text\" id=\"pre_title\" name=\"title\" required value=\"{$row['title']}\"></div>");
-
-                //<メモ>
-                print("<p id=\"label_memo\">メモ</p>");
-                print("<div><textarea id=\"EditPreviwe\" name=\"memo\" cols=\"11\" rows=\"4\" value=\"\">{$row['memo']}</textarea></div>");
-
-                //<進捗ステータスのチェック判定>
-                if($row['progress'] == 0){
-                    $selected0 = "selected";
-                }else if($row['progress'] == 1){
-                    $selected1 = "selected";
-                }else if($row['progress'] == 2){
-                    $selected2 = "selected";
-                }
-
-                //<進捗ステータス>
-                $f_progress = <<<EOF
-                <p id="pre_progress">進捗</p>
-                <select id="prog_select" name="progress" required>
-                    <option value="" disabled selected style="display:none;">選択</option>
-                    <option value="0" $selected0>未了</option>
-                    <option value="1" $selected1>完了</option>
-                    <option value="2" $selected2>キャンセル</option>
-                </select>
-                EOF;
-                print($f_progress);
-
-                //<カラーのチェック判定>
-                if($row['color'] == "#66FF66"){
-                    $checked0 = "checked";
-                }else if($row['color'] == "#FFFF88"){
-                    $checked1 = "checked";
-                }else if($row['color'] == "#87CEFA"){
-                    $checked2 = "checked";
-                }else if($row['color'] == "#C299FF"){
-                    $checked3 = "checked";
-                }else if($row['color'] == "#FA8072"){
-                    $checked4 = "checked";
-                }else if($row['color'] == "#FFA500"){
-                    $checked5 = "checked";
-                }else if($row['color'] == "#FFFFFF"){
-                    $checked6 = "checked";
-                }
-
-                $f_color = <<<EOF
-                <p id="SelectTdColor">背景色をカスタム</p>
-                <div id="EditTdColor">
-                    <input type="radio" name="color" value="#66FF66" id="green" $checked0><label for="green" id="green"></label>
-                    <input type="radio" name="color" value="#FFFF88" id="yellow" $checked1><label for="yellow" id="yellow"></label>
-                    <input type="radio" name="color" value="#87CEFA" id="bule" $checked2><label for="bule" id="bule"></label>
-                    <input type="radio" name="color" value="#C299FF" id="purple" $checked3><label for="purple" id="purple"></label>
-                    <input type="radio" name="color" value="#FA8072" id="red" $checked4><label for="red" id="red"></label>
-                    <input type="radio" name="color" value="#FFA500" id="orange" $checked5><label for="orange" id="orange"></label>
-                    <input type="radio" name="color" value="#FFFFFF" id="white" $checked6><label for="white" id="white"></label>
-                </div>
-                EOF;
-                print($f_color);
-
-                $f_bottom = <<<EOF
-                    </div>
-                    <div class="modal-footer" id="editFormFoot">
-                        <button type="submit" class="btn btn-primary">編集</button>
-                    </div>
-                    </form>
-                </div>
-                EOF;
-                print($f_bottom);
-            }
-        }
-    ?>
-
     <!-- 削除 -->
     <div class="modal" id="delete">
         <form class="deleteform" action="delete.php" method="post">
@@ -647,12 +504,6 @@
                 //新規登録フォームの確認コメントに日付を書く
                 $("#s_text").text(val1);
                 $("#e_text").text(val2);
-            });
-
-            $("#closeBtn").click(function(){
-                //閉じるボタンを押したら編集フォーム隠す
-                $('#Editform').hide();
-                $('#popback').hide();
             });
 
             //ツールチップ
