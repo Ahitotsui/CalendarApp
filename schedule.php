@@ -174,8 +174,8 @@
 
     <!-- 表示モード切替機能 -->
     <div id="dispTabs">
-        <a id="<?php print($tabStyle1); ?>" class="dispTab" href="<?php print($URL); ?>&view=list">簡易リスト表示</a>
-        <a id="<?php print($tabStyle2); ?>" class="dispTab" href="<?php print($URL); ?>&view=table">タイムテーブル表示</a>
+        <a id="<?php print($tabStyle1); ?>" class="dispTab" href="<?php print($URL); ?>&view=list">リスト</a>
+        <a id="<?php print($tabStyle2); ?>" class="dispTab" href="<?php print($URL); ?>&view=table">タイムテーブル</a>
     </div>
 
     <main>
@@ -199,6 +199,11 @@
                 $E_time = preg_replace('/:00/','',$row['end_time'],1);
                 $title = htmlspecialchars($row['title']);
                 $memo = nl2br(htmlspecialchars($row['memo']));
+
+                // メモがない場合はメッセージ表示
+                if(strlen(trim($memo)) == 0){
+                    $memo = '詳細メモはありません。';
+                }
 
                 //進捗ステータス文字列に変換
                 if($row['progress'] == 0){
@@ -272,13 +277,13 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4>{$title}</h4>
+                                        <p class="list_titles" style=background-color:{$color}>{$title}</p>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                     </div>
                                     <div class="modal-body">
                                         <div id="Deleteform" class="deletepops">
-                                            <h5 class="modal-title">{$S_time}-{$E_time}</h5>
-                                            <p>{$memo}</p>                
+                                            <p class="modal-times"><i class="far fa-clock"></i>  {$S_time}〜{$E_time}</p>
+                                            <p class="modal_memo">{$memo}</p> 
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -306,7 +311,7 @@
                     //現在時刻の時は背景色つける
                     if($year == $TodayYear && $month == $TodayMonth && $day == $today && $todayTime == $i){
                         //時刻の文字がリンクになっていて、新規登録ページのモーダルを開く
-                        print("<th id=\"timesNow\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"クリックで予定追加\"><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add\" id=\"{$i}\">{$i}:00</a></th>");
+                        print("<th id=\"timesNow\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"クリックで予定追加\"><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add_now\" id=\"{$i}\">{$i}:00</a></th>");
                     }else{
                         //時刻の文字がリンクになっていて、新規登録ページのモーダルを開く
                         print("<th class=\"timesTh\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"クリックで予定追加\"><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add\" id=\"{$i}\">{$i}:00</a></th>");
