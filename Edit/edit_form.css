@@ -1,6 +1,6 @@
-main{
-    padding: 20px;
-    margin: 20px;
+form{
+    padding: 10px;
+    margin: 10px;
     border: solid;
     border-width: 1px;
     border-radius: 10px;
@@ -9,6 +9,10 @@ main{
 
 h3{
     text-align: center;
+}
+
+#EditPreviwe{
+    height: 180px;
 }
 
 #color_radio{

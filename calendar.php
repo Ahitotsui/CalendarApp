@@ -110,9 +110,9 @@
     }
   ?>
   <div id="topParts">
-    <h2 class="inlineParts"><?php print($TitleYear); ?>年 <?php print($Titlemonth); ?>月</h2>
-    <a href="calendar.php?year=<?php print($link_prevyear); ?>&month=<?php print($link_prevM); ?>">&lt;&lt;前月</a>
-    <a href="calendar.php?year=<?php print($link_nextyear); ?>&month=<?php print($link_nextM); ?>">翌月&gt;&gt;</a>
+    <p id="TodayDisp" class="inlineParts"><?php print($TitleYear); ?>年 <?php print($Titlemonth); ?>月</p>
+    <a href="calendar.php?year=<?php print($link_prevyear); ?>&month=<?php print($link_prevM); ?>" style=font-size:13px>&lt;&lt;前月</a>
+    <a href="calendar.php?year=<?php print($link_nextyear); ?>&month=<?php print($link_nextM); ?>" style=font-size:13px>翌月&gt;&gt;</a>
     <!-- <a href="schedule.php?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
       <button class="inlineParts" id="day_link">日</button>
     </a> -->

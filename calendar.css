@@ -2,11 +2,6 @@
   margin: 0;
   padding: 0;
 }
-
-body{
-  background-color:#D3D3D3;
-}
-
 /*------------------ヘッダー領域------------------*/
 /*ヘッダーの背景*/
 header{
@@ -75,13 +70,16 @@ header{
   display: inline-block;
 }
 
+#TodayDisp{
+  font-size: 22px;
+}
+
 #day_link{
   width: 50px;
 }
 
 /*予定追加後に表示するメッセージ*/
 #addMsg{
- 
   opacity: 0;                           /* アニメーション */
   animation-name: fadein-bottom;        /* アニメーション */
   animation-duration: 1.5s;             /* アニメーション */
@@ -130,14 +128,14 @@ main{
   width: 88%;
   border-collapse: collapse;
   border-color:#000000;
-  margin-top: 5px;
+  margin-top: -12px;
 }
 
 
 /* 月 -MON-	火 -TUE-	水 -WED-	木 -THU-	金 -FRI-	土 -SAT-	日 -SUN- 表記 */
 .tdtop{
   width:255px;
-  height:30px;
+  height:20px;
   font-family: 'Sriracha', cursive;
   font-size: 15px;
   color:#FFFFFF;
@@ -173,14 +171,6 @@ main{
   box-shadow: 0 0 6px #000;
 }
 
-/*日にちのtdタグ レスポンシブル対応*/
-@media screen and ( max-width:1000px )
-{
-	.tddays{
-    height: 250px;
-	}
-}
-
 /*前月の日にちの空白tdタグ*/
 .tdPreMon{
   width:255px;
@@ -202,6 +192,7 @@ main{
 
 /*今現在の日付には背景色つける*/
 #tdTodayStr{
+  font-size: 13px;
   width:22px;
   height:22px;
   background-color:#000000;
@@ -219,6 +210,7 @@ main{
   width:30px;
   height:30px;
   font-weight:bold;
+  font-size: 13px;
   margin-left:5px;
   margin-bottom: -20px;
   float: left;
@@ -233,24 +225,6 @@ main{
   border: none;
   cursor: pointer;
   float: left;
-}
-
-/*新規登録ボタン レスポンシブル対応*/
-@media screen and ( max-width:768px )
-{
-	.addbtns{
-    margin-top: -2px;
-    margin-left:3%;
-	}
-}
-
-/*新規登録ボタン レスポンシブル対応*/
-@media screen and ( min-width:768px ) and ( max-width:1600px )
-{
-	.addbtns{
-    margin-top: -1.5px;
-    margin-left:62%;
-	}
 }
 
 /*新規登録ボタン マウスオーバー*/
@@ -268,13 +242,6 @@ main{
   overflow-y: scroll;         /*はみ出す場合は縦スクロールで閲覧可能*/
 }
 
-/*日にちのtdタグ レスポンシブル対応*/
-@media screen and ( max-width:1000px )
-{
-	.memos{
-    height: 200px;
-	}
-}
 
 /*タグのスタイル*/
 .tags{
@@ -326,14 +293,6 @@ footer{
   display: block; 
 }
 
-/*前年のページネーション レスポンシブル対応*/
-@media screen and ( max-width:1000px )
-{
-	#PrevBtn{
-    padding-top: 4px;
-	}
-}
-
 #Dummy{
   height:50px;
   float:left;
@@ -344,14 +303,6 @@ footer{
   width: 600px;
   margin-left: auto;
   margin-right: auto;
-}
-
-/*月のボタンを囲むdiv レスポンシブル対応*/
-@media screen and ( max-width:1000px )
-{
-	#months{
-    width:480px;
-	}
 }
 
 /*月のページネーションが未選択の時のスタイル*/
@@ -373,16 +324,6 @@ footer{
   text-decoration: none;
 }
 
-/*月のページネーションが未選択の時のスタイル レスポンシブル対応*/
-@media screen and ( max-width:1000px )
-{
-	.monthsend{
-    width:40px;
-    padding-top: 8px;
-    font-size:25px;
-	}
-}
-
 /*月のページネーションが選択中の時のスタイル*/
 .Nowselect{
   width:40px;
@@ -398,18 +339,6 @@ footer{
   border-bottom-right-radius:10px;
 }
 
-/*月のページネーションが選択の時のスタイル レスポンシブル対応*/
-@media screen and ( max-width:1000px )
-{
-	.Nowselect{
-    width:40px;
-    padding-top: 8px;
-    border-bottom-left-radius:5px;
-    border-bottom-right-radius:5px;
-    font-size:25px;
-	}
-}
-
 /*翌年のページネーション*/
 #NextBtn{
   height:50px;
@@ -420,15 +349,6 @@ footer{
   display: block; 
   text-align: right;
 }
-
-/*翌年のページネーション レスポンシブル対応*/
-@media screen and ( max-width:1000px )
-{
-	#NextBtn{
-    padding-top: 4px;
-	}
-}
-
 /*----------------------フッター領域(END)---------------------*/
 
 
@@ -603,3 +523,84 @@ footer{
 /*----------------------新規登録のモーダルウィンドウ(END)---------------------*/
 
 
+
+
+/*----------------------ここからレスポンシブル記述(開始)---------------------*/
+/*日にちのtdタグ レスポンシブル対応*/
+@media screen and ( max-width:1000px )
+{
+	.tddays{
+    height: 250px;
+  }
+  
+  /*日にちのtdタグ レスポンシブル対応*/
+  .memos{
+    height: 200px;
+  }
+  
+  .addbtns{
+    margin-top: -12px;
+    margin-left:60%;
+  }
+}
+
+/*新規登録ボタン レスポンシブル対応*/
+@media screen and ( min-width:768px ) and ( max-width:1600px )
+{
+	.addbtns{
+    margin-top: -1.5px;
+    margin-left:69%;
+  }
+  
+  .memos{
+    height: 60px;
+	}
+}
+
+
+/*前年のページネーション レスポンシブル対応*/
+@media screen and ( max-width:1000px )
+{
+	#PrevBtn{
+    padding-top: 4px;
+	}
+}
+
+/*月のボタンを囲むdiv レスポンシブル対応*/
+@media screen and ( max-width:1000px )
+{
+	#months{
+    width:480px;
+	}
+}
+
+/*月のページネーションが未選択の時のスタイル レスポンシブル対応*/
+@media screen and ( max-width:1000px )
+{
+	.monthsend{
+    width:40px;
+    padding-top: 8px;
+    font-size:25px;
+	}
+}
+
+/*月のページネーションが選択の時のスタイル レスポンシブル対応*/
+@media screen and ( max-width:1000px )
+{
+	.Nowselect{
+    width:40px;
+    padding-top: 8px;
+    border-bottom-left-radius:5px;
+    border-bottom-right-radius:5px;
+    font-size:25px;
+	}
+}
+
+/*翌年のページネーション レスポンシブル対応*/
+@media screen and ( max-width:1000px )
+{
+	#NextBtn{
+    padding-top: 4px;
+	}
+}
+/*----------------------ここからレスポンシブル記述(終了)---------------------*/
