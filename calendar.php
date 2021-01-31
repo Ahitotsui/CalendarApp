@@ -83,7 +83,7 @@
       </div>
       <div id="Hlogout" class="col col-md-1"><a id="logout" href="logout.php">ログアウト</a></div>
   </div>
-</header>  
+</header>    
 <!--ヘッダー領域(END)--->
 <?php 
   if(isset($_COOKIE["add"])){
@@ -196,16 +196,25 @@
       //日にちを表示するtdタグ
       print("<td id=td{$day} class=\"tddays\">");
 
+      // 祝日を読み込む関数を外部から使用
       require_once('./csv/csv.php');
       $syuku = laod_csv($TitleYear,$Titlemonth,$day);
 
       //現在の日にちに背景色をつけるためのidをつけるため判別
       if($TitleYear == $TodayYear && $TodayMonth == $Titlemonth && $today == $day){
         print("<div id=\"tdToday\"><p id=\"tdTodayStr\">{$day}</p></div>");
-        print("<span class=\"eventDay\">{$syuku}</span>");
+        print("<div class=\"eventDiv\">");
+        if(strlen(trim($syuku)) != 0){
+          print("<span class=\"eventDay\">{$syuku}</span>");
+        }
+        print("</div>");
       }else{
         print("<p class=\"tdDays\">{$day}</p>");
-        print("<p class=\"eventDay\">{$syuku}</p>");
+        print("<div class=\"eventDiv\">");
+        if(strlen(trim($syuku)) != 0){
+          print("<span class=\"eventDay\">{$syuku}</span>");
+        }
+        print("</div>");
       }
 
       //新規登録ボタン

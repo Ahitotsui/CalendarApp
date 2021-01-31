@@ -216,25 +216,35 @@ main{
   float: left;
 }
 
-.eventDay{
+/* 祝日のspanタグ囲むdivタグ */
+.eventDiv{
   display: inline-block;
-  width: 20%;
-  color:red;
+  width: 74%;  
+}
+
+/* 祝日のspanタグ */
+.eventDay{
+  color:#fff;
   font-size:10px;
-  background-color: #66FF66;
-  /* position: relative;
-  top: -2px; */
+  font-weight: bold; 
+  position: relative;
+  top: -5px;
+  left: -5px;
+  background-color: red;
+  padding-left: 4px;
+  padding-right: 3px;
 }
 
 /*新規登録ボタン*/
 .addbtns{
-  margin-left:90%;
+  display: inline-block;
+  /* margin-left:90%; */
   margin-top: -10px;
   font-size: 17px;
   color:#777777;
   border: none;
   cursor: pointer;
-  float: left;
+  /* float: left; */
 }
 
 /*新規登録ボタン マウスオーバー*/
