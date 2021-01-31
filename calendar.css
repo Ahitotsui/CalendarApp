@@ -216,6 +216,16 @@ main{
   float: left;
 }
 
+.eventDay{
+  display: inline-block;
+  width: 20%;
+  color:red;
+  font-size:10px;
+  background-color: #66FF66;
+  /* position: relative;
+  top: -2px; */
+}
+
 /*新規登録ボタン*/
 .addbtns{
   margin-left:90%;

@@ -67,6 +67,6 @@ $dbh = null;
 
 //リダイレクト
 if(isset($view) == "true"){
-    header("location:schedule.php?userid=$userid&year=$year&month=$month&day=$day&view=$view");
+    header("location:./Day?userid=$userid&year=$year&month=$month&day=$day&view=$view");
 }
 

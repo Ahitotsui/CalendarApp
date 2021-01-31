@@ -1,0 +1,512 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/*------------------ヘッダー領域------------------*/
+
+header{
+  width:100%;
+  height: 100px;
+  background-color:#FFFFFF;
+}
+
+
+/*ヘッダー リストタイトル レスポンシブル対応*/
+@media screen and ( max-width:768px )
+{
+	header{
+    height: 160px;
+	}
+}
+  
+/*ヘッダーの中の３つの要素全てを囲んだdiv*/
+#top{
+  height:50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*タイトルを囲んだdiv*/
+#Htitle{
+  height:50px;
+  float:left;/*divの中のdivを横並びにするには全ての要素にfloat:leftがいる*/
+}
+
+
+/* 日付表示 */
+#dispSelectedDay{
+  font-size: 22px;
+}
+
+/* 昨日　明日　ページ送り */
+#prevDay,#nextDay{
+  padding-left: 3px;
+  font-size: 15px;
+}
+
+/* フィルタボタン・検索フォームを囲むdivタグ */
+#search{
+  width: 90%;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+}
+
+/* 表示切替ボタンを横並びに */
+.searchBtns{
+  float: left;
+}
+
+/* 全て */
+#filBtn1{
+  font-size: 13px;
+  width: 80px;
+  height: 35px;
+  border:solid;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-width: 1px;
+  border-color: #333333;
+}
+
+/* 未了 */
+#filBtn2{
+  font-size: 13px;
+  width: 80px;
+  height: 35px;
+  border:solid;
+  border-radius: 0px;
+  border-width: 1px;
+  border-color: #333333;
+}
+
+/* 完了 */
+#filBtn3{
+  font-size: 13px;
+  width: 80px;
+  height: 35px;
+  border:solid;
+  border-radius: 0px;
+  border-width: 1px;
+  border-color: #333333;
+}
+
+/* キャンセル */
+#filBtn4{
+  font-size: 13px;
+  width: 80px;
+  height: 35px;
+  border:solid;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-width: 1px;
+  border-color: #333333;
+}
+
+/* 表示切替ボタンの選択時のスタイル */
+.selectedType1,.selectedType2,.selectedType3,.selectedType4{
+  background-color: #666666;
+  color: #FFFFFF;
+}
+
+/*フィルタボタン レスポンシブル対応*/
+@media screen and ( max-width:768px )
+{
+	#filBtn1,#filBtn2,#filBtn3,#filBtn4{
+    width: 75px;
+    font-size: 14px;
+	}
+}
+
+/* リスト・タイムテーブル切替のタブのスタイル */
+#dispTabs{
+  width: 100%;
+  border-bottom: solid; 
+  border-bottom-color: gray;
+}
+
+/* リスト・タイムテーブル切替のタブ(未選択時)*/
+.dispTab{
+  display: inline-block;
+  text-align: center;
+  width: 150px;
+  height: 30px;
+  padding: 5px;
+  color: gray;
+  font-size: 15px;
+}
+
+.dispTab:hover{
+  text-decoration: none;
+  color: #000;
+}
+
+/* リスト・タイムテーブル切替のタブ(選択時)*/
+#tabStyle1,#tabStyle2{
+  background-color: gray;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  color: #FFFFFF;
+}
+
+main{
+  width: 90%;
+  height: 560px;
+  margin-left: auto;
+  margin-right: auto; 
+  /* background-color: #66FFCC; */
+}
+
+/* カレンダーテーブルヘッド */
+.tdtop{
+  font-size: 10px;
+  text-align: center;
+  width: 50px;
+}
+
+.daysTd{
+  height: 50px;
+  text-align: center;
+}
+
+#right_tags{
+  width: 100%;
+  height: 560px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 140px;
+  overflow-y: scroll;
+}
+
+/*スクロールバー全体*/
+#right_tags::-webkit-scrollbar {
+  width: 20px;
+}
+
+/*スクロールバーの軌道*/
+#right_tags::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, .1);
+}
+
+/*スクロールバーの動く部分*/
+#right_tags::-webkit-scrollbar-thumb {
+  background-color: #BBBBBB	;
+  box-shadow:0 0 0 1px rgba(255, 255, 255, .3);
+}
+
+/*------------------簡易リスト表示------------------*/
+/* リスト */
+.list_view{
+  width: 98%;
+  height:50px;
+  margin-left:auto;
+  margin-right:auto;
+  padding:10px;
+  margin-top:3px;
+  border-radius: 4px;
+  border:solid;
+  border-width:1px;
+  border-color: #808080;
+  color:#000;
+}
+
+.tagMenus{
+  display: inline-block;
+}
+
+/* リスト カーソル当てた時のエフェクト */
+.list_view:hover{
+  box-shadow: 0 0 6px #000;
+}
+
+/* 詳細　編集　削除 */
+.detail,.edit,.delete{
+  margin-left:5px;
+}
+
+/* 詳細<a>　編集<a>　削除<a> */
+#operate1,#operate2,#operate3{
+  color:#666666;
+}
+
+/* リストタイトル */
+.list_title{
+  width: 600px;
+  margin-top:-12px;
+  height:30px;
+  /* font-size: 10px; */
+}
+
+/*リストタイトル レスポンシブル対応*/
+@media screen and ( max-width:768px )
+{
+	.list_title{
+    width: 180px;
+	}
+}
+
+/* 進捗ステータスボタンのformタグ */
+.progBtn{
+  margin-top:-12px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* 進捗ステータスボタンのスタイル */
+/* 未了 */
+.unfinish{
+  font-size: 12px;
+  width:80px;
+  height:30px;
+  border-radius: 4px;
+  background-color: #FFFFFF;
+}
+
+/* 完了 */
+.finish{
+  font-size: 12px;
+  width:80px;
+  height:30px;
+  border-radius: 4px;
+  background-color: #66FFCC;
+}
+
+/* キャンセル */
+.cancel{
+  font-size: 12px;
+  width:80px;
+  height:30px;
+  border-radius: 4px;
+  background-color: #C0C0C0;
+}
+
+.list_titles{
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding-top:5px;
+  padding-left:5px;
+  font-size: 18px;
+  border: solid;
+  border-color: #fff;
+  border-width: 1px;
+  border-radius: 3px;
+  margin-bottom: -5px;
+}
+
+.modal-times{
+  width: 120px;
+  background-color:#808080;
+  color:#fff;
+  font-size: 12px;
+  border: solid;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  text-align: center;
+  margin-bottom: -4.5px;
+  margin-left: -3px;
+}
+
+.modal_memo{
+  font-size: 15px;
+  overflow-y: scroll;
+  height: 200px;
+  padding: 10px;
+  border-top: dashed;
+  border-bottom: dashed;
+  border-width: 1px;
+  border-color: gray;
+}
+
+/*スクロールバー全体*/
+.modal_memo::-webkit-scrollbar {
+  width: 20px;
+}
+
+/*スクロールバーの軌道*/
+.modal_memo::-webkit-scrollbar-track {
+box-shadow: inset 0 0 6px rgba(0, 0, 0, .1);
+}
+
+/*スクロールバーの動く部分*/
+.modal_memo::-webkit-scrollbar-thumb {
+background-color: #BBBBBB	;
+box-shadow:0 0 0 1px rgba(255, 255, 255, .3);
+}
+
+
+/*------------------タイムテーブル表示------------------*/
+#time_table{
+  width: 100%;
+  table-layout: fixed;
+  margin-top:10px;
+  margin-left:auto;
+  margin-right:auto;
+  margin-bottom: 30px;
+}
+
+.timesThead{
+  width:4%;
+  border-top-style:none; 
+  background-color: #000;
+}
+
+.timesTh{
+  width:4%;
+  height: 50px;
+  text-align: center;
+  border-top-style:none; 
+}
+
+/* 現在時刻のth */
+#timesNow{
+  width:4%;
+  height: 50px;
+  text-align: center;
+  background-color:#00FFFF;
+}
+
+.sub_add{
+  color:#fff;
+}
+
+.sub_add_now{
+  color:#000;
+}
+
+/* 現在時刻のtd */
+.timesNow{
+  width:4%;
+  height: 50px;
+  border: solid;
+  border-style: dotted;
+  border-width: 1px;
+  border-top-style:none; 
+  border-bottom-style:none; 
+  background-color:#00FFFF;
+  color:#fff;
+}
+
+.tdView{
+  width:4%;
+  border: solid;
+  border-style: dotted;
+  border-width: 1px;
+  border-top-style:none; 
+  border-bottom-style:none; 
+  background-color:#DDDDDD;
+}
+
+.tdSche{
+  border: solid;
+  border-style: dotted;
+  border-width: 1px;
+  border-top-style:none; 
+  border-bottom-style:none; 
+  background-color:#DDDDDD;
+  height: 40px;
+  table-layout: fixed;
+}
+
+/* 予定表示するdivタグ */
+.scheDiv{
+  padding-top: 5px;
+  padding-left: 5px;
+  border: solid;
+  border-width: 0.5px;
+  border-color: #DDDDDD;;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 14px;
+  height: 50px;
+  word-break : break-all;
+}
+
+
+.no_data{
+  font-size: 25px;
+  width: 50%;
+  margin-top: 40px;
+  text-align: center;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+
+footer{
+  width:100%;
+  height:60px;
+  background-color:#000000;
+}
+
+
+/*------------------新規登録フォーム------------------*/
+/*背景ラジオのチェックを非表示に*/
+#Addgreen[type=radio],#Addyellow[type=radio],#Addbule[type=radio],#Addpurple[type=radio],#Addred[type=radio],#Addorange[type=radio],#Addwhite[type=radio]{
+  display: none; /* ラジオボタンを非表示にする */
+}
+
+/*背景ラベルのスタイル設定*/
+#Addgreen,#Addyellow,#Addbule,#Addpurple,#Addred,#Addorange,#Addwhite{
+  display: block; /* ブロックレベル要素化する */
+  float: left; /* 要素の左寄せ・回り込を指定する */
+  margin: 5px; /* ボックス外側の余白を指定する */
+  width: 30px; /* ボックスの横幅を指定する */
+  height: 30px; /* ボックスの高さを指定する */
+  cursor: pointer; /* マウスカーソルの形（リンクカーソル）を指定する */
+  border: 1px solid #000000;/* ボックスの境界線を実線で指定する */
+  border-radius: 3px; /* 角丸を指定する */
+}
+
+/*背景ラベルが選択された時のスタイル設定*/
+#AddTdColor input[type="radio"]:checked + label{
+  border-radius: 20px;
+}
+
+/*背景カラーパレット*/
+#Addgreen{
+    background-color:#66FF66;
+}
+
+#Addyellow{
+    background-color:#FFFF88;
+}
+
+#Addbule{
+    background-color:#87CEFA;
+}
+
+#Addpurple{
+    background-color:#C299FF;
+}
+
+#Addred{
+    background-color:#FA8072;
+}
+
+#Addorange{
+    background-color:#FFA500;
+}
+
+#Addwhite{
+    background-color:#FFFFFF;
+}
+
+/* 予定のタイトル */
+#subAddTitle{
+  width: 100%;
+  padding-left: 10px;
+}
+
+/* 詳細なメモ */
+#subAddMemo{
+  width: 100%;
+  padding-left: 10px;
+  resize: none;
+}

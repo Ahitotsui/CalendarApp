@@ -196,18 +196,23 @@
       //日にちを表示するtdタグ
       print("<td id=td{$day} class=\"tddays\">");
 
+      require_once('./csv/csv.php');
+      $syuku = laod_csv($TitleYear,$Titlemonth,$day);
+
       //現在の日にちに背景色をつけるためのidをつけるため判別
       if($TitleYear == $TodayYear && $TodayMonth == $Titlemonth && $today == $day){
         print("<div id=\"tdToday\"><p id=\"tdTodayStr\">{$day}</p></div>");
+        print("<span class=\"eventDay\">{$syuku}</span>");
       }else{
         print("<p class=\"tdDays\">{$day}</p>");
+        print("<p class=\"eventDay\">{$syuku}</p>");
       }
 
       //新規登録ボタン
       print("<div class=\"addbtns\" id=\"{$day}\"><i class=\"fas fa-plus-circle\"></i></div>");
 
       //詳細画面に飛ばすためaタグ囲む
-      print("<a class=\"linkSche\" href=\"schedule.php?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list\">");
+      print("<a class=\"linkSche\" href=\"./Day?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list\">");
         //日にちごとにメモを表示
         print("<div id=\"memo{$day}\" class=\"memos\">");
           $stmt->execute([$_SESSION['login']['username'],$TitleYear,$Titlemonth,$day]);
