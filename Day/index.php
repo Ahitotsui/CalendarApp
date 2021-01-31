@@ -352,22 +352,22 @@
                             
 
                             $list_view = <<<EOF
+                            <form class="progBtn" action="../edit.php" method="post" name="form1">
+                                <input type="hidden" name="userid" value="$userid">
+                                <input type="hidden" name="year" value="$year">
+                                <input type="hidden" name="month" value="$month">
+                                <input type="hidden" name="day" value="$day">
+                                <input type="hidden" name="view" value="$viewMode">
+                                <input type="hidden" name="id" value="$id">
+                                <input type="hidden" name="progFlag" value="$toggle">
+                                <a href="$href"><button class="$class" $disabled>{$progress}</button></a>
+                            </form>
+
                             <a data-toggle="modal" href="#memo{$id}" style=text-decoration:none;color:#000;>
                                 <div class="list_view" style="background-color:{$color};">
 
-                                <div class="tagMenus" style="width:8%">
-                                    <form class="progBtn" action="../edit.php" method="post" name="form1">
-                                        <input type="hidden" name="userid" value="$userid">
-                                        <input type="hidden" name="year" value="$year">
-                                        <input type="hidden" name="month" value="$month">
-                                        <input type="hidden" name="day" value="$day">
-                                        <input type="hidden" name="view" value="$viewMode">
-                                        <input type="hidden" name="id" value="$id">
-                                        <input type="hidden" name="progFlag" value="$toggle">
-                                        <a href="$href"><button class="$class" $disabled>{$progress}</button></a>
-                                    </form>
-                                </div>
-
+                                    <div class="tagMenus" style="width:8%"></div>
+                                        
                                     <div class="tagMenus" style="width:10%;font-size:12px">
                                         <p class="list_time"><i class="far fa-clock"></i>{$S_time}〜{$E_time}</p>
                                     </div>
