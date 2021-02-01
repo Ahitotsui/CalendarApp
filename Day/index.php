@@ -85,6 +85,26 @@
     }else if($viewMode == "table"){
         $tabStyle2 = "tabStyle2";
     }
+
+    //月ごとの1日が何曜日から始まるかを取得
+    $yobi = date('D',strtotime("$year-$month-$day"));
+    //曜日を設定する
+    if($yobi == "Mon"){
+        $yobi = '月';
+    }else if($yobi == "Tue"){
+        $yobi = '火';
+    }else if($yobi == "Wed"){
+        $yobi = '水';
+    }else if($yobi == "Thu"){
+        $yobi = '木';
+    }else if($yobi == "Fri"){
+        $yobi = '金';
+    }else if($yobi == "Sat"){
+        $yobi = '土';
+    }else if($yobi == "Sun"){
+        $yobi = '日';
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -108,7 +128,7 @@
         <div class="row" id="search">
 
             <div class="coll col-md-4">
-                <p id="dispSelectedDay"><i class="fas fa-tasks"></i>　<?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日 の予定 </p>
+                <p id="dispSelectedDay"><i class="fas fa-tasks"></i>　<?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日(<?php print($yobi); ?>) の予定 </p>
             </div>
 
             <div id="disp_filter" class="coll col-md-4">
@@ -376,41 +396,43 @@
                                         <p class="list_title">{$title}</p>
                                     </div>
 
-                                    <div class="tagMenus" style="width:10%;text-align:right">
-                                        <!--<span data-toggle="tooltip" data-placement="bottom" title="詳細情報を見る">
-                                            <a data-toggle="modal" href="#memo{$id}" class="detail"><i id="operate1" class="fas fa-info-circle"></i></a>
-                                        </span>-->
-                                        <span data-toggle="tooltip" data-placement="bottom" title="内容を編集する">
-                                            <a href="../Edit/edit_form.php?ID={$id}&view=$viewMode" class="edit"><i id="operate2" class="fas fa-pen"></i></a>
-                                        </span>
-                                        <span data-toggle="tooltip" data-placement="bottom" title="この予定を削除する">
-                                            <a data-toggle="modal" href="#delete" class="delete" id="{$id}"><i id="operate3" class="fas fa-trash-alt"></i></a>
-                                        </span>
-                                    </div>
-                                    
-                                    <div class="modal" id="memo{$id}">
-                                    <form class="deleteform" action="delete.php" method="post">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <p class="list_titles" style=background-color:{$color}>{$title}</p>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div id="Deleteform" class="deletepops">
-                                                        <p class="modal-times"><i class="far fa-clock"></i>  {$S_time}〜{$E_time}</p>
-                                                        <p class="modal_memo">{$memo}</p> 
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                                    <div class="tagMenus" style="width:10%;text-align:right"></div>                                    
+                                        
+                                </div>    
+                            </a>
+
+                            <div class="icons">
+                                <span data-toggle="tooltip" data-placement="bottom" title="編集">
+                                    <a href="../Edit/edit_form.php?ID={$id}&view=$viewMode" class="edit"><i id="operate2" class="fas fa-pen"></i></a>
+                                </span>
+                                <span data-toggle="tooltip" data-placement="bottom" title="削除">
+                                    <a data-toggle="modal" href="#delete" class="delete" id="{$id}"><i id="operate3" class="fas fa-trash-alt"></i></a>
+                                </span>
+                            </div>  
+
+
+
+                            <div class="modal" id="memo{$id}">
+                                <form class="deleteform" action="delete.php" method="post">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style=background-color:{$color}>
+                                                <p class="list_titles"><i class="fas fa-calendar-alt"></i> {$title}</p>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div id="Deleteform" class="deletepops">
+                                                    <p class="modal-times"><i class="far fa-clock"></i>  {$S_time}〜{$E_time}</p>
+                                                    <p class="modal_memo">{$memo}</p> 
                                                 </div>
                                             </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                                            </div>
                                         </div>
-                                    </form>
                                     </div>
-                                </div>
-                            </a>
+                                </form>
+                            </div>
                             EOF;
 
                             if($viewMode == "list"){
@@ -470,10 +492,10 @@
                                         }
                                     }
 
-                                    //予定の出力文字数が15を超える場合は一部のみをカットして表示する処理を行う
-                                    if(mb_strlen($title) >= 15){
-                                        // 10文字まで抜き出し、語末に...をつける
-                                        $title = mb_substr($title,0,10) . '...';
+                                    //予定の出力文字数が9を超える場合は一部のみをカットして表示する処理を行う
+                                    if(mb_strlen($title) >= 9){
+                                        // 8文字まで抜き出し、語末に...をつける
+                                        $title = mb_substr($title,0,8) . '...';
                                     }
                                     //予定を出力
                                     print("<td class=\"tdSche\" colspan=\"{$during}\">");
