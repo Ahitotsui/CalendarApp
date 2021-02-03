@@ -515,6 +515,8 @@
                             }
                             print("</table>");
                         }
+
+
                     }else{
                         print("<div class=\"no_data\">該当する予定はありません</div>");
                     }
@@ -636,7 +638,7 @@
                 $("#selectId").val(id);
             });
 
-            $(".sub_add").click(function(){
+            $(".sub_add,.sub_add_now").click(function(){
                 
                 //対象のid番号を取得し変数idに代入
                 var id = $(this).attr('id');

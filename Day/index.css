@@ -369,7 +369,7 @@ box-shadow:0 0 0 1px rgba(255, 255, 255, .3);
 
 .timesTh{
   width:4%;
-  height: 50px;
+  height: 20px;
   text-align: center;
   border-top-style:none; 
 }
@@ -377,23 +377,25 @@ box-shadow:0 0 0 1px rgba(255, 255, 255, .3);
 /* 現在時刻のth */
 #timesNow{
   width:4%;
-  height: 50px;
+  height: 20px;
   text-align: center;
   background-color:#00FFFF;
 }
 
 .sub_add{
   color:#fff;
+  font-size: 10px;
 }
 
 .sub_add_now{
   color:#000;
+  font-size: 10px;
 }
 
 /* 現在時刻のtd */
 .timesNow{
   width:4%;
-  height: 50px;
+  /* height: 50px; */
   border: solid;
   border-style: dotted;
   border-width: 1px;
@@ -420,21 +422,21 @@ box-shadow:0 0 0 1px rgba(255, 255, 255, .3);
   border-top-style:none; 
   border-bottom-style:none; 
   background-color:#DDDDDD;
-  height: 40px;
+  /* height: 35px; */
   table-layout: fixed;
 }
 
 /* 予定表示するdivタグ */
 .scheDiv{
-  padding-top: 5px;
+  padding-top: 1px;
   padding-left: 5px;
   border: solid;
   border-width: 0.5px;
   border-color: #DDDDDD;;
-  border-radius: 8px;
-  font-size: 12px;
-  line-height: 14px;
-  height: 50px;
+  border-radius: 5px;
+  font-size: 3px;
+  line-height: 10px;
+  height: 35px;
   word-break : break-all;
 }
 

@@ -17,10 +17,12 @@ h3{
 
 #color_radio{
     width: 100%;
-    height: 43px;
+    height: 37px;
     border: solid;
     border-width: 1px;
     border-radius: 3px;
+    padding-top: 4px;
+    padding-left: 4px;
     border-color:#DDDDDD;
 }
 
@@ -33,9 +35,9 @@ h3{
 #green,#yellow,#bule,#purple,#red,#orange,#white{
     display: block; /* ブロックレベル要素化する */
     float: left; /* 要素の左寄せ・回り込を指定する */
-    margin: 5px; /* ボックス外側の余白を指定する */
-    width: 30px; /* ボックスの横幅を指定する */
-    height: 30px; /* ボックスの高さを指定する */
+    margin: 2px; /* ボックス外側の余白を指定する */
+    width: 22px; /* ボックスの横幅を指定する */
+    height: 22px; /* ボックスの高さを指定する */
     cursor: pointer; /* マウスカーソルの形（リンクカーソル）を指定する */
     border: 1px solid #000000;/* ボックスの境界線を実線で指定する */
     border-radius: 3px; /* 角丸を指定する */

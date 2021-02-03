@@ -140,8 +140,9 @@
                     <textarea id="EditPreviwe" class="form-control" name="memo" cols="11" rows="4" value=""><?php print($row['memo']) ?></textarea>
                 </div>
 
+                <div class="row">
                 <!-- カラー -->
-                <div id="EditTdColor" class="form-group">
+                <div id="EditTdColor" class="form-group col col-md-6">
                     <label>カラー</label>
                     <div id="color_radio">
                         <input type="radio" name="color" value="#66FF66" id="green" <?php print($checked0) ?>><label for="green" id="green"></label>
@@ -155,13 +156,14 @@
                 </div>
 
                 <!-- 進捗ステータス -->
-                <div class="form-group">
+                <div class="form-group col col-md-6">
                     <label>進捗</label>
                     <select id="prog_select" class="form-control" name="progress" required>
                         <option value="0" <?php print($selected0) ?>>未了</option>
                         <option value="1" <?php print($selected1) ?>>完了</option>
                         <option value="2" <?php print($selected2) ?>>キャンセル</option>
                     </select>
+                </div>
                 </div>
 
                 <div class="row form-group">
