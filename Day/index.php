@@ -32,8 +32,6 @@
             return false;
         }else if($day < 1 || $day > date( 't' , strtotime($year . "/" . $month . "/01")) || ctype_digit($day) == false){
             return false;
-        }else if($_GET['view'] != "list" && $_GET['view'] != "table"){
-            return false;
         }else{
             return true;
         }
@@ -44,7 +42,7 @@
         header("location:error.html");
     }else if(Security($userid,$year,$month,$day,$viewMode) == false){
         //セキュリティ対策でエラー検知したら、強制的にデフォルト表示にする
-        header("location:schedule.php?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$today&view=list");
+        header("location:./?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$today&view=list");
     }else{
         $userid = $_SESSION['login']['username'];
     }
@@ -56,18 +54,22 @@
     }else if(isset($_POST['unfini_disp']) == true && $_POST['unfini_disp'] != ""){
         $dispMode =  $_POST['unfini_disp'];
         $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? and progress=0 ORDER BY start_time";
+        $sql_t2 = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? and start_time=? and progress=0 ORDER BY start_time";
         $selectedType2 = 'selectedType2';
     }else if(isset($_POST['fini_disp']) == true && $_POST['fini_disp'] != ""){
         $dispMode =  $_POST['fini_disp'];
         $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? and progress=1 ORDER BY start_time";
+        $sql_t2 = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? and start_time=? and progress=1 ORDER BY start_time";
         $selectedType3 = 'selectedType3';
     }else if(isset($_POST['can_disp']) == true && $_POST['can_disp'] != ""){
         $dispMode =  $_POST['can_disp'];
         $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? and progress=2 ORDER BY start_time";
+        $sql_t2 = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? and start_time=? and progress=2 ORDER BY start_time";
         $selectedType4 = 'selectedType4';
     }else if(isset($_POST['keyword']) == true && $_POST['keyword'] != ""){
         $dispMode = "Keyword";
         $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? and title like '%{$_POST['keyword']}%' ORDER BY start_time";
+        $sql_t2 = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? and start_time=? and title like '%{$_POST['keyword']}%' ORDER BY start_time";
     }else{
         $dispMode = "All";
         $selectedType1 = 'selectedType1';
@@ -299,6 +301,7 @@
                 <div id="dispTabs">
                     <a class="dispTab" id="<?php print($tabStyle1); ?>" href="<?php print($URL); ?>&view=list">リスト</a>
                     <a class="dispTab" id="<?php print($tabStyle2); ?>" href="<?php print($URL); ?>&view=table">タイムテーブル</a>
+                    <a class="dispTab" id="<?php print($tabStyle3); ?>" href="<?php print($URL); ?>&view=table2">タイムテーブル2</a>
                 </div>
 
                 
@@ -514,6 +517,51 @@
                                 print("</tr>");
                             }
                             print("</table>");
+                        }
+
+                        //タイムテーブル縦表示
+                        if($viewMode == "table2"){
+                            print("<div id=\"out_frame\">");
+                            for($i=0;$i<=23;$i++){
+                                
+                                print("<div class=\"colum_td\">");
+                                print("<div class=\"time_td\">{$i}:00</div>");
+
+                                if($i < 10){
+                                    $time = '0' . $i .':00:00';
+                                }else{
+                                    $time = $i .':00:00';
+                                }
+
+                                if($dispMode ==  "All"){
+                                    $sql_t2 = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? and start_time=? ORDER BY start_time";
+                                }
+                                $stmt_t2 = $dbh->prepare($sql_t2);
+                                $stmt_t2->execute([$userid,$year,$month,$day,'false',$time]);
+                                // $stmt->execute([$userid,$year,$month,$day,'false']);
+                                foreach($stmt_t2 as $row){
+                                    $S_time = $row['start_time'];
+                                    $E_time = $row['end_time'];
+                                    $title = htmlspecialchars($row['title']);
+                                    $color = $row['color'];
+                                    $delete = $row['logic_delete'];
+                                    $id = $row['id'];
+
+                                    $ini_t = (int)str_replace(':00','',$S_time);
+                                    $end_t = (int)str_replace(':00','',$E_time);
+                                    $height = (int)(($end_t - $ini_t) * 50);
+
+                                    $width = (int)(88 / $stmt_t2->rowCount());
+
+                                    // print($stmt_t2->rowCount());
+                                    print("<div class=\"td2_list\" style=width:{$width}%;height:{$height}px;background:$color;><span style=font-size:12px>{$ini_t}:00~{$end_t}:00</span><br/>{$title}</div>");
+
+                                }
+                                print("</div>");
+                                
+                            }
+                            print("</div>");
+                            
                         }
 
 
