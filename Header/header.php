@@ -30,13 +30,14 @@
 
         /*ログインしたユーザー名のスタイル*/
         #login{
-        height:50px;
-        font-size: 13px;
+        /* height:50px;*/
+        font-size: 0.7em; 
         color:#FFFFFF;
+        background:#555555;
         /*-------------------上下左右の中央寄せ------------------------*/
-        display: flex;/*fFlexコンテナ化*/
-            align-items: center;/*f縦方向の位置を中央に*/
-        justify-content: center;/*横方向のアイテム位置を中央に*/
+        /* display: flex;fFlexコンテナ化 */
+        /* align-items: center;f縦方向の位置を中央に */
+        /* justify-content: center;横方向のアイテム位置を中央に */
         /*-------------------上下左右の中央寄せ------------------------*/
         }
 
@@ -57,6 +58,12 @@
         justify-content: center;/*横方向のアイテム位置を中央に*/
         /*-------------------上下左右の中央寄せ------------------------*/
         }
+
+        #userInfo{
+            margin-top: 10px;
+            margin-left: 45px;
+            width: 50px;
+        }
     </style>
 </head>
 <body>
@@ -70,12 +77,25 @@
             </a>
             </div>
 
-            <div id="Hlogin" class="col col-md-1">
+            <!-- <div id="Hlogin" class="col col-md-1">
                 <p id=login>
                     <i class="fas fa-user"></i><span id="username"><?php print($_SESSION['login']['name']); ?></span>さん
                 </p>
             </div>
-            <div id="Hlogout" class="col col-md-1"><a id="logout" href="logout.php">ログアウト</a></div>
+            <div id="Hlogout" class="col col-md-1"><a id="logout" href="logout.php">ログアウト</a></div> -->
+            <!-- <div class="col col-md-1"></div> -->
+            <div class="col col-md-2">
+                <div class="btn-group" id="userInfo">
+                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="login">
+                        <i class="fas fa-user"></i><span id="username"><?php print($_SESSION['login']['name']); ?></span>さん
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">ログイン中</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="logout.php">ログアウト</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div> 
 </body>

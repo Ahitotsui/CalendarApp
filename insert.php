@@ -44,6 +44,16 @@ try{
         if(validation($start,$end) == true){
             $stmt->execute([$userid,$year,$month,$day,$start,$end,$title,$memo,$progress,$color,$delete]);
             setcookie("add", 'add', time()+20); 
+
+            // 本文
+            $message = "shedule is added.";
+
+            // 1 行が 70 文字を超える場合のため、wordwrap() を用いる
+            $message = wordwrap($message, 70, "\r\n");
+
+            // 送信する
+            mail('atsushiabc1204@gmail.com', 'My Subject', $message);
+
             header("location:calendar.php?year={$year}&month={$month}");
         }else if(validation($start,$end) == false){
             print('<h3>入力にエラーがあります。</h3>');

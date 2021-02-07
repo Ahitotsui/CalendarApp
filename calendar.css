@@ -2,6 +2,12 @@
   margin: 0;
   padding: 0;
 }
+
+/* 横方向のスクロール無効化 */
+html,body{
+  overflow-x: hidden;
+  overflow-y: auto;
+}
 /*------------------ヘッダー領域------------------*/
 /*ヘッダーの背景*/
 header{

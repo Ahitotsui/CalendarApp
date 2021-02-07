@@ -125,6 +125,8 @@
 
     <!--ヘッダー-->
     <?php require_once('../Header/header.php'); ?>
+
+    <?php if($viewMode != "delete") : ?>
     <div>
         <!-- フィルタ&検索機能 -->
         <div class="row" id="search">
@@ -167,6 +169,7 @@
             </div>
         </div>
     </div>
+    <?php endif; ?>
 
     <main>
         <div class="row">
@@ -294,15 +297,22 @@
                 ?>
                 <hr style="width:100%; height:0.1px; background-color:gray;">
                 <button class="btn btn-primary btn-lg btn-block"><i class="fas fa-plus-circle"></i>　予定を追加</button>
+                <a href="<?php print($URL); ?>&view=delete">ゴミ箱</a>
             </div>
 
             <div class="coll col-md-9">
-                <!-- 表示モード切替機能 -->
-                <div id="dispTabs">
-                    <a class="dispTab" id="<?php print($tabStyle1); ?>" href="<?php print($URL); ?>&view=list">リスト</a>
-                    <a class="dispTab" id="<?php print($tabStyle2); ?>" href="<?php print($URL); ?>&view=table">タイムテーブル</a>
-                    <a class="dispTab" id="<?php print($tabStyle3); ?>" href="<?php print($URL); ?>&view=table2">タイムテーブル2</a>
-                </div>
+
+                <?php if($viewMode != "delete") : ?>
+                    <!-- 表示モード切替機能 -->
+                    <div id="dispTabs">
+                        <a class="dispTab" id="<?php print($tabStyle1); ?>" href="<?php print($URL); ?>&view=list">リスト</a>
+                        <a class="dispTab" id="<?php print($tabStyle2); ?>" href="<?php print($URL); ?>&view=table">タイムテーブル</a>
+                        <a class="dispTab" id="<?php print($tabStyle3); ?>" href="<?php print($URL); ?>&view=table2">タイムテーブル2</a>
+                    </div>
+                <?php elseif($viewMode == "delete") : ?>
+                    <a href="./?userid=<?php print($userid); ?>&year=<?php print($year); ?>&month=<?php print($month); ?>&day=<?php print($day); ?>&view=list">戻る</a>
+                    <p>ゴミ箱</p>
+                <?php endif; ?>
 
                 
                 <?php 
@@ -315,13 +325,51 @@
 
                     $stmt = $dbh->prepare($sql);
                     $stmt->execute([$userid,$year,$month,$day,'false']);
+
+                    //----ゴミ箱表示----
+                    $sql_del = "SELECT * FROM Memo_tags WHERE userid=? and logic_delete=? ORDER BY year DESC, month DESC, day DESC";
+                    $stmt_del = $dbh->prepare($sql_del);
+                    if($viewMode == "delete"){
+                        $stmt_del->execute([$userid,'true']);
+                    }
+                    //----ゴミ箱表示----
                 ?>
 
+                <?php if($viewMode != "delete") : ?>
                 <p style=text-align:center;padding-top:5px;height:15px>[全 <?php print($stmt->rowCount())?> 件]</p>
+                <?php elseif($viewMode == "delete") : ?>
+                <p style=text-align:center;padding-top:5px;height:15px>[全 <?php print($stmt_del->rowCount())?> 件]</p>
+                <?php endif; ?>
+
 
                 <div id="right_tags">
                 <?php
-                    if($stmt->rowCount() == 0 && $dispMode ==  "All"){
+                    if($viewMode == "delete"){
+                        //ゴミ箱表示
+                        print("<form action=\"../Delete/delete.php\" method=\"post\">");
+                        print("<button type=\"submit\">削除</button>");
+                        //※SQL文およびexecuteは、上の方で先立って処理している。
+                        foreach($stmt_del as $row){
+                            $id = $row['id'];
+                            $y = $row['year'];
+                            $m = $row['month'];
+                            $d = $row['day'];
+                            $title = htmlspecialchars($row['title']);
+                            print("<div>");
+                            
+                            print("<input type=\"checkbox\" name=\"id[]\" value=\"{$id}\">");
+                            print("<input type=\"hidden\" name=\"userid\" value=\"{$userid}\">");
+                            print("<input type=\"hidden\" name=\"year\" value=\"{$year}\">");
+                            print("<input type=\"hidden\" name=\"month\" value=\"{$month}\">");
+                            print("<input type=\"hidden\" name=\"day\" value=\"{$day}\">");
+                            
+                            print("<a href=../Delete/delete.php?userid=$userid&year=$year&month=$month&day=$day&id=$id>削除</a>");
+                            print("<p style=display:inline-block>{$y}/{$m}/{$d} {$title}</p>");
+                            print("</div>");
+                        }
+                        print("</form>");
+
+                    }else if($stmt->rowCount() == 0 && $dispMode ==  "All"){
                         print("<div class=\"no_data\">まだ予定はありません</div>");
                     }else if($stmt->rowCount() != 0){
                         // <!-- 簡易リスト表示 -->
@@ -538,7 +586,6 @@
                                 }
                                 $stmt_t2 = $dbh->prepare($sql_t2);
                                 $stmt_t2->execute([$userid,$year,$month,$day,'false',$time]);
-                                // $stmt->execute([$userid,$year,$month,$day,'false']);
                                 foreach($stmt_t2 as $row){
                                     $S_time = $row['start_time'];
                                     $E_time = $row['end_time'];
@@ -553,7 +600,6 @@
 
                                     $width = (int)(88 / $stmt_t2->rowCount());
 
-                                    // print($stmt_t2->rowCount());
                                     print("<div class=\"td2_list\" style=width:{$width}%;height:{$height}px;background:$color;><span style=font-size:12px>{$ini_t}:00~{$end_t}:00</span><br/>{$title}</div>");
 
                                 }
@@ -564,6 +610,32 @@
                             
                         }
 
+                        //ゴミ箱表示
+                        // if($viewMode == "delete"){
+                        //     print("<form action=\"../Delete/delete.php\" method=\"post\">");
+                        //     print("<button type=\"submit\">削除</button>");
+                        //     //※SQL文およびexecuteは、上の方で先立って処理している。
+                        //     foreach($stmt_del as $row){
+                        //         $id_count++;
+                        //         $id = $row['id'];
+                        //         $y = $row['year'];
+                        //         $m = $row['month'];
+                        //         $d = $row['day'];
+                        //         $title = htmlspecialchars($row['title']);
+                        //         print("<div>");
+                                
+                        //         print("<input type=\"checkbox\" name=\"id[]\" value=\"{$id}\">");
+                        //         print("<input type=\"hidden\" name=\"userid\" value=\"{$userid}\">");
+                        //         print("<input type=\"hidden\" name=\"year\" value=\"{$year}\">");
+                        //         print("<input type=\"hidden\" name=\"month\" value=\"{$month}\">");
+                        //         print("<input type=\"hidden\" name=\"day\" value=\"{$day}\">");
+                                
+                        //         print("<a href=../Delete/delete.php?userid=$userid&year=$year&month=$month&day=$day&view=delete&id=$id>削除</a>");
+                        //         print("<p style=display:inline-block>{$y}/{$m}/{$d} {$title}</p>");
+                        //         print("</div>");
+                        //     }
+                        // }
+                        // print("</form>");
 
                     }else{
                         print("<div class=\"no_data\">該当する予定はありません</div>");

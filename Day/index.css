@@ -3,6 +3,12 @@
     padding: 0;
 }
 
+/* 横方向のスクロール無効化 */
+html,body{
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 /*------------------ヘッダー領域------------------*/
 
 header{
@@ -61,9 +67,9 @@ header{
 
 /* 全て */
 #filBtn1{
-  font-size: 13px;
-  width: 80px;
-  height: 35px;
+  font-size: 0.5em;
+  width: 60px;
+  height: 25px;
   border:solid;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
@@ -75,9 +81,9 @@ header{
 
 /* 未了 */
 #filBtn2{
-  font-size: 13px;
-  width: 80px;
-  height: 35px;
+  font-size: 0.5em;
+  width: 60px;
+  height: 25px;
   border:solid;
   border-radius: 0px;
   border-width: 1px;
@@ -86,9 +92,9 @@ header{
 
 /* 完了 */
 #filBtn3{
-  font-size: 13px;
-  width: 80px;
-  height: 35px;
+  font-size: 0.5em;
+  width: 60px;
+  height: 25px;
   border:solid;
   border-radius: 0px;
   border-width: 1px;
@@ -97,9 +103,9 @@ header{
 
 /* キャンセル */
 #filBtn4{
-  font-size: 13px;
-  width: 80px;
-  height: 35px;
+  font-size: 0.5em;
+  width: 60px;
+  height: 25px;
   border:solid;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
