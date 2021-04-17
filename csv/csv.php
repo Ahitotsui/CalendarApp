@@ -4,7 +4,7 @@
 function laod_csv($year,$month,$day){
     
     // ファイルの読み込み
-    $f = fopen("./csv/syukujitsu.csv", "r");
+    $f = fopen("../csv/syukujitsu.csv", "r");
 
     $newAry = array();
 

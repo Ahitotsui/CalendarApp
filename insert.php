@@ -54,7 +54,7 @@ try{
             // 送信する
             mail('atsushiabc1204@gmail.com', 'My Subject', $message);
 
-            header("location:calendar.php?year={$year}&month={$month}");
+            header("location:Month/?year={$year}&month={$month}");
         }else if(validation($start,$end) == false){
             print('<h3>入力にエラーがあります。</h3>');
             print('<p>・終了時刻と開始時刻を同じ値で登録することはできません。</p>');
