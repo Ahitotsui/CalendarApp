@@ -30,10 +30,10 @@
     //セキュリティ対策
     if(ctype_digit($TitleYear) == false || $TitleYear < 2019){
       //月に数字以外の値または2019年より前の年が入力されたら現在日時のページに強制的に移動
-      header("location:calendar.php?year={$TodayYear}&month={$TodayMonth}");
+      header("location:./?year={$TodayYear}&month={$TodayMonth}");
     }else if(ctype_digit($Titlemonth) == false || $Titlemonth < 1 || $Titlemonth > 12){
       //日にちに数字以外の値または1以下、12以上の数字が入力されたら現在日時のページに強制的に移動
-      header("location:calendar.php?year={$TodayYear}&month={$TodayMonth}");
+      header("location:./?year={$TodayYear}&month={$TodayMonth}");
     }
 
   }else if(isset($_GET['year']) == false && isset($_GET['month']) == false){
@@ -41,10 +41,10 @@
     $TitleYear = $TodayYear;
     $Titlemonth = $TodayMonth;
     //画面下の月のボタンが押されていない場合は自動で現在の年月のページを表示
-    header("location:calendar.php?year={$TodayYear}&month={$TodayMonth}");
+    header("location:./?year={$TodayYear}&month={$TodayMonth}");
   }else{
     //上記以外の想定外のリクエストパラメータが送られて来たら現在日時のページに強制的に移動
-    header("location:calendar.php?year={$TodayYear}&month={$TodayMonth}");
+    header("location:./?year={$TodayYear}&month={$TodayMonth}");
   }
 ?>
 
@@ -111,9 +111,9 @@
     <p id="TodayDisp" class="inlineParts"><?php print($TitleYear); ?>年 <?php print($Titlemonth); ?>月</p>
     <a href="index.php?year=<?php print($link_prevyear); ?>&month=<?php print($link_prevM); ?>" style=font-size:13px>&lt;&lt;前月</a>
     <a href="index.php?year=<?php print($link_nextyear); ?>&month=<?php print($link_nextM); ?>" style=font-size:13px>翌月&gt;&gt;</a>
-    <!-- <a href="schedule.php?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
+    <a href="../Day/?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
       <button class="inlineParts" id="day_link">日</button>
-    </a> -->
+    </a>
     
   </div>
 
@@ -192,7 +192,7 @@
     $day++;
   
       //日にちを表示するtdタグ
-      print("<td id=td{$day} class=\"tddays\">");
+      print("<td id={$day} class=\"tddays\">");
 
       // 祝日を読み込む関数を外部から使用
       require_once('../csv/csv.php');
@@ -215,12 +215,6 @@
         print("</div>");
       }
 
-      //新規登録ボタン
-      print("<div class=\"addbtns\" id=\"{$day}\"><i class=\"fas fa-plus-circle\"></i></div>");
-
-      //詳細画面に飛ばすためaタグ囲む
-      print("<a class=\"linkSche\" href=\"../Day?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list\">");
-        //日にちごとにメモを表示
         print("<div id=\"memo{$day}\" class=\"memos\">");
           $stmt->execute([$_SESSION['login']['username'],$TitleYear,$Titlemonth,$day]);
           foreach($stmt as $row){
@@ -246,12 +240,10 @@
                 $title = mb_substr($title,0,$max_chara) . '...';
 
               }
-
               print("<p class=\"tags\" style=background-color:{$row['color']};>・{$title}</p>");
             }
           }
         print("</div>");
-      print("</a>");
 
       print("</td>");
 

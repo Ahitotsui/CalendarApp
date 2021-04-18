@@ -38,7 +38,7 @@ try{
 if(isset($_SESSION['login']) == true){
   /*$_SESSION['login']が存在する場合は(=sqlの検索がヒットし、$_SESSION['login']にデータが書き込まれたら)
   メインコンテンツのページへ移動*/
-  header("location:../calendar.php");
+  header("location:../Month");
 }else{
   /*$_SESSION['login']が存在しない場合は(=sqlの検索がヒットせず、$_SESSION['login']にデータが書き込まれない)
   エラーページへ移動*/
