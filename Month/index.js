@@ -33,6 +33,11 @@ $(function(){
 
   // 開始時刻
   document.getElementById("timeSelect1").onchange = function(){
+    // 終了時刻を自動設定
+    var checkRef = Number(document.getElementById("timeSelect1").value.replace(":00:00", ""));
+    var AutoEnd = checkRef + 1;
+    document.insertform.end.selectedIndex = AutoEnd;
+
     var input_value = document.getElementById("AddTitle").value;
     var select1 = Number(document.getElementById("timeSelect1").value.replace(":00:00", ""));
     var select2 = Number(document.getElementById("timeSelect2").value.replace(":00:00", ""));

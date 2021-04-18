@@ -261,7 +261,7 @@ print("</table>");
 
 <!--==============================================新規登録のポップアップウィンドウ====================================================-->
 <div id="Addform">
-  <form id="insertform" action="../insert.php" method="post">
+  <form id="insertform" action="../insert.php" method="post" name="insertform">
     <button id="AddClose" type="reset">&times;</button>
     <table>
 
