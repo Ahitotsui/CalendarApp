@@ -66,8 +66,8 @@ html,body{
 }
 
 main{
-  padding-left: 10px;
-  padding-right: 10px;
+  /* padding-left: 10px;
+  padding-right: 10px; */
   height:830px;
   background-color:#FFFFFF;
   margin-left: auto;
@@ -79,7 +79,7 @@ main{
 #mainTable{
   margin-left: auto;
   margin-right: auto;
-  width: 88%;
+  width: 98%;
   border-collapse: collapse;
   border-color:#000000;
   margin-top: -12px;
@@ -209,7 +209,7 @@ main{
 
 /*メモの領域*/
 .memos{
-  height:80px;                /*ここの値でカレンダーマスの高さが決まる*/
+  height:88px;                /*ここの値でカレンダーマスの高さが決まる*/
   padding: 10px 5px 0px 5px;
   font-size: 15px;
   clear: both;

@@ -39,7 +39,7 @@ h2{
   width: 400px;
   height:60px;
   margin-bottom: -3px;
-  background-color: black;
+  /* background-color: black; */
   text-align: center;
   font-size: 45px;
 }

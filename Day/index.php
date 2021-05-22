@@ -39,7 +39,7 @@
 
     if(isset($_SESSION['login']) == false){
         //このページのURLをコピーして他のブラウザで閲覧できないようにする
-        header("location:error.html");
+        header("location:../Error/");
     }else if(Security($userid,$year,$month,$day,$viewMode) == false){
         //セキュリティ対策でエラー検知したら、強制的にデフォルト表示にする
         header("location:./?userid=$userid&year=$TodayYear&month=$TodayMonth&day=$today&view=list");

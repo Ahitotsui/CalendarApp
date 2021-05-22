@@ -4,7 +4,7 @@
   session_start(); 
   if(isset($_SESSION['login']) == false){
     //このページのURLをコピーして他のブラウザで閲覧できないようにする
-    header("location:error.html");
+    header("location:../Error");
   }else{
     $userid = $_SESSION['login']['username'];
   }
@@ -112,7 +112,10 @@
     <a href="index.php?year=<?php print($link_prevyear); ?>&month=<?php print($link_prevM); ?>" style=font-size:13px>&lt;&lt;前月</a>
     <a href="index.php?year=<?php print($link_nextyear); ?>&month=<?php print($link_nextM); ?>" style=font-size:13px>翌月&gt;&gt;</a>
     <a href="../Day/?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
-      <button class="inlineParts" id="day_link">日</button>
+      <button class="btn btn-secondary btn-sm" id="day_link">日</button>
+    </a>
+    <a href="../Week/?year=$TitleYear&month=$Titlemonth">
+      <button class="btn btn-secondary btn-sm" id="day_link">週</button>
     </a>
     
   </div>

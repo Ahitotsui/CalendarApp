@@ -46,13 +46,13 @@ try{
             setcookie("add", 'add', time()+20); 
 
             // 本文
-            $message = "shedule is added.";
+            $message = $title;
 
             // 1 行が 70 文字を超える場合のため、wordwrap() を用いる
             $message = wordwrap($message, 70, "\r\n");
 
             // 送信する
-            mail('atsushiabc1204@gmail.com', 'My Subject', $message);
+            mail('atsushiabc1204@gmail.com', '新しい予定を追加しました', $message);
 
             header("location:Month/?year={$year}&month={$month}");
         }else if(validation($start,$end) == false){

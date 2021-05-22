@@ -92,7 +92,7 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#">ログイン中</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="logout.php">ログアウト</a>
+                        <a class="dropdown-item" href="../logout.php">ログアウト</a>
                     </div>
                 </div>
             </div>
