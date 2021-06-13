@@ -8,6 +8,8 @@ $view = $_POST['view'];
 
 //DBの内容を書き換えるパラメータ
 $id = $_POST['id'];
+$month_E = $_POST['month_edit'];
+$day_E = $_POST['day_edit'];
 $start = $_POST['start'];
 $end = $_POST['end'];
 $title = $_POST['title'];
@@ -46,10 +48,12 @@ try{
         
             //編集フォームでの処理
             if(isset($progFlag) == false){
-                $sql = "UPDATE Memo_tags SET start_time = ? , end_time = ? , title = ? , memo = ? , progress = ? , color = ? WHERE id = ?";
+                // $sql = "UPDATE Memo_tags SET start_time = ? , end_time = ? , title = ? , memo = ? , progress = ? , color = ? WHERE id = ?";
+                $sql = "UPDATE Memo_tags SET month = ? , day = ? , start_time = ? , end_time = ? , title = ? , memo = ? , progress = ? , color = ? WHERE id = ?";
                 $stmt = $dbh->prepare($sql);
                 if(validation($start,$end) == true){
-                    $stmt->execute([$start,$end,$title,$memo,$progress,$color,$id]);
+                    // $stmt->execute([$start,$end,$title,$memo,$progress,$color,$id]);
+                    $stmt->execute([$month_E,$day_E,$start,$end,$title,$memo,$progress,$color,$id]);
                     header("location:./Day?userid=$userid&year=$year&month=$month&day=$day&view=$view");
                 }else if(validation($start,$end) == false){
                     print('<h3>入力にエラーがあります。</h3>');

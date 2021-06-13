@@ -70,7 +70,37 @@
         <main class="container">
             
             <form action="../edit.php" method="post">
-                <h3><?php print($row['year']) ?>年<?php print($row['month']) ?>月<?php print($row['day']) ?>日の予定を編集</h3>
+                <h3>編集</h3>
+                <div>
+                    <?php print($row['year']) ?>年
+                    <select class="input_style0" name="month_edit" required>
+                    <?php
+                            for($i=1;$i<=12;$i++){
+                                if($i != $row['month']){
+                                    print("<option value=\"{$i}\">$i</option>");
+                                }else if($i == $row['month']){
+                                    print("<option value=\"{$i}\" selected>$i</option>");
+                                }
+                            }
+                    ?>
+                    </select>
+                    <label for="month_edit">月</label>
+
+                    <select class="input_style0" name="day_edit" required>
+                    <?php
+                    $finalDay = date( 't' , strtotime($row['year'] . "/" . $row['month'] . "/01"));  
+                            for($i=1;$i<=$finalDay;$i++){
+                                if($i != $row['day']){
+                                    print("<option value=\"{$i}\">$i</option>");
+                                }else if($i == $row['day']){
+                                    print("<option value=\"{$i}\" selected>$i</option>");
+                                }
+                            }
+                    ?>
+                    </select>
+                    <label for="day_edit">日</label>
+                </div>
+                   
                 <!-- ページリダイレクトに必要なパラメータ -->
                 <input type="hidden" name="userid" value="<?php print($row['userid']) ?>">
                 <input type="hidden" name="year" value="<?php print($row['year']) ?>">
@@ -142,7 +172,7 @@
 
                 <div class="row">
                 <!-- カラー -->
-                <div id="EditTdColor" class="form-group col col-md-6">
+                <div id="EditTdColor" class="form-group col col-md-8">
                     <label>カラー</label>
                     <div id="color_radio">
                         <input type="radio" name="color" value="#66FF66" id="green" <?php print($checked0) ?>><label for="green" id="green"></label>
@@ -156,7 +186,7 @@
                 </div>
 
                 <!-- 進捗ステータス -->
-                <div class="form-group col col-md-6">
+                <div class="form-group col col-md-4">
                     <label>進捗</label>
                     <select id="prog_select" class="form-control" name="progress" required>
                         <option value="0" <?php print($selected0) ?>>未了</option>

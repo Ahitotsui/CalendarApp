@@ -1,3 +1,14 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/* 横方向のスクロール無効化 */
+html,body{
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 form{
     padding: 10px;
     margin: 10px;
@@ -9,6 +20,17 @@ form{
 
 h3{
     text-align: center;
+}
+
+.input_style0{
+    width: 80px;
+    height: 37px;
+    border: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    padding-top: 4px;
+    padding-left: 4px;
+    border-color:#DDDDDD;
 }
 
 #EditPreviwe{
