@@ -5,7 +5,7 @@ $userid = $_GET['userid'];
 $year = $_GET['year'];
 $month = $_GET['month'];
 $day = $_GET['day'];
-$view = $_GET['view'];
+// $view = $_GET['view'];
 
 //DBの内容を書き換えるパラメータ
 $id = (int)$_GET['id'];
@@ -18,8 +18,10 @@ $userid = $_POST['userid'];
 $year = $_POST['year'];
 $month = $_POST['month'];
 $day = $_POST['day'];
-$view = $_POST['view'];
+// $view = $_POST['view'];
 // ----複数まとめて削除----
+
+$view = 'delete';
 
 
 //外部ファイル読み込み
@@ -49,11 +51,11 @@ try{
         }else{
             // 個別でデータを削除
             $stmt->execute(array($id));
-            header("location:../Day?userid=$userid&year=$year&month=$month&day=$day&view=delete");
+            // header("location:../Day?userid=$userid&year=$year&month=$month&day=$day&view=$view");
         }
     //コミットで、テーブルの書き換え処理を確定  
     $dbh->commit();
-    header("location:../Day?userid=$userid&year=$year&month=$month&day=$day&view=delete");
+    header("location:../Day?userid=$userid&year=$year&month=$month&day=$day&view=$view");
 }catch(Exception $e){
     //DBとの接続ができていて、かつトランザクション中であればロールバックする
     if(isset($dbh) == true && $dbh->inTransaction() == true){
