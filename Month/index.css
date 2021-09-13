@@ -11,14 +11,6 @@ html,body{
 
 
 /*----------------------メインコンテンツ領域---------------------*/
-
-/* テーブル上の日付表示などを囲むdiv */
-#topParts{
-  width: 88%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 /* #topPartsのdivの中の要素を横並びにする */
 .inlineParts{
   display: inline-block;
@@ -36,28 +28,39 @@ html,body{
 #addMsg{
   opacity: 0;                           /* アニメーション */
   animation-name: fadein-bottom;        /* アニメーション */
-  animation-duration: 1.5s;             /* アニメーション */
+  animation-duration: 10s;             /* アニメーション */
   animation-timing-function: ease-out;  /* アニメーション */
   animation-fill-mode: forwards;        /* アニメーション */
-  width: 100%;
+  width: 250px;
   padding: 10px;
   text-align: center;
-  background-color:#99FFCC;
+  color:#008800;
+  background-color:#fff;
+  border-radius:10px;
+  border:solid 1.5px #008800;
+  box-shadow: 0 0 8px gray;
   position:fixed;
-  top: 40%;
+  top: 30px;
+  left: 50%;
+  transform: translate(-50%,-50%);
   z-index:100;
 }
 
 /* 予定追加後に表示するメッセージ アニメーション */
 @keyframes fadein-bottom {
   0% {
-     opacity: 0;
+     opacity: 0.5;
      transform: translateY(20px);
+     transform: translateX(-50%);
   }
-  100% {
+  20% {
      opacity: 1;
      transform: translateY(0);
+     transform: translateX(-50%);
   }
+  100% {
+    display:none;
+ }
 }
 
 /* 予定追加後に表示するメッセージ button */
@@ -65,59 +68,28 @@ html,body{
   margin-left: 5px;
 }
 
-main{
-  /* padding-left: 10px;
-  padding-right: 10px; */
-  height:830px;
-  background-color:#FFFFFF;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 120px;
-  padding-top: 3px;
-}
 
 #mainTable{
-  margin-left: auto;
-  margin-right: auto;
-  width: 98%;
-  border-collapse: collapse;
-  border-color:#000000;
-  margin-top: -12px;
+  table-layout: fixed;
+  width: 100%;
+  border:solid 0.1px #888888;
+  border-collapse: collapse; 
 }
-
 
 /* 月 -MON-	火 -TUE-	水 -WED-	木 -THU-	金 -FRI-	土 -SAT-	日 -SUN- 表記 */
 .tdtop{
-  width:255px;
-  height:20px;
-  font-family: 'Sriracha', cursive;
-  font-size: 15px;
-  color:#FFFFFF;
-  background-color:#000000;
+  font-size: 10px;
+  /* color:#FFFFFF; */
+  background-color:#CCCCCC;
+  border:solid 0.1px #888888;
   text-align: center;
-  border-color: #FFFFFF;
-}
-
-/* 曜日英語表記 */
-.small{
-  font-size:14px;
-}
-
-/* 土 SAT */
-#sat{
-  color:#66FFFF	;
-}
-
-/* 日 SUN */
-#sun{
-  color:#FF66FF;
+  /* border-color: #FFFFFF; */
 }
 
 /*日にちのtdタグ*/
 .tddays{
-  width:255px;
-  height: 20px;
-  padding-bottom: 3px;
+  height: 120px;
+  padding:2px;
 }
 
 /*日にちのtdタグ　カーソル当てた時のエフェクト*/
@@ -127,118 +99,57 @@ main{
 
 /*前月の日にちの空白tdタグ*/
 .tdPreMon{
-  width:255px;
   background-color:#DDDDDD;
   padding-left: 2px;
-  font-size: 13px;
+  font-size: 12px;
   color: #333333;
-}
-
-/*今現在日付のpタグを囲むdiv*/
-#tdToday{
-  width:30px;
-  height:30px;
-  margin-top: 2px;
-  margin-left:5px;
-  margin-bottom: -20px;
-  float: left;
-}
-
-/*今現在の日付には背景色つける*/
-#tdTodayStr{
-  font-size: 13px;
-  width:22px;
-  height:22px;
-  background-color:#000000;
-  color:#FFFFFF;
-  border-radius: 11px;
-  /*-------------------上下左右の中央寄せ------------------------*/
-  display: flex;/*fFlexコンテナ化*/
-	align-items: center;/*f縦方向の位置を中央に*/
-  justify-content: center;/*横方向のアイテム位置を中央に*/
-  /*-------------------上下左右の中央寄せ------------------------*/
 }
 
 /*今現在ではない日付には背景色つけない*/
 .tdDays{
-  width:30px;
-  height:30px;
-  font-weight:bold;
-  font-size: 13px;
-  margin-left:5px;
-  margin-bottom: -20px;
-  float: left;
+  width:20px;
+  height:20px;
+  border-radius: 10px;
+  font-size: 12px;
+  color:#666666;
+  /*-------------------上下左右の中央寄せ------------------------*/
+  display: flex;/*fFlexコンテナ化*/
+  align-items: center;/*f縦方向の位置を中央に*/
+  justify-content: center;/*横方向のアイテム位置を中央に*/
+  /*-------------------上下左右の中央寄せ------------------------*/
 }
 
-/* 祝日のspanタグ囲むdivタグ */
-.eventDiv{
-  display: inline-block;
-  width: 74%;  
+/*今現在の日付には背景色つける*/
+#tdTodayStr{
+  background-color:#000000;
+  color:#FFFFFF;
 }
 
-/* 祝日のspanタグ */
+/* 祝日 */
 .eventDay{
-  color:#fff;
-  font-size:10px;
-  font-weight: bold; 
-  position: relative;
-  top: -5px;
-  left: -5px;
-  background-color: red;
-  padding-left: 4px;
-  padding-right: 3px;
+  width:100%;
+  height:15px;
+  color:red;
+  font-size:8px;
+  margin-top: 1px;
+  padding-top:0.5px;
 }
-
-/*新規登録ボタン*/
-.addbtns{
-  display: inline-block;
-  /* margin-left:90%; */
-  margin-top: -10px;
-  font-size: 17px;
-  color:#777777;
-  border: none;
-  cursor: pointer;
-  /* float: left; */
-}
-
-/*新規登録ボタン マウスオーバー*/
-.addbtns:hover{
-  color:#000000;
-}
-
 
 /*メモの領域*/
 .memos{
-  height:88px;                /*ここの値でカレンダーマスの高さが決まる*/
-  padding: 10px 5px 0px 5px;
-  font-size: 15px;
-  clear: both;
+  height:100px;                /*ここの値でカレンダーマスの高さが決まる*/
   overflow-y: scroll;         /*はみ出す場合は縦スクロールで閲覧可能*/
 }
-
 
 /*タグのスタイル*/
 .tags{
   width:100%;
-  height:20px;
+  height:15px;
   overflow: hidden;
-  font-size: 12px;
-  margin-bottom:4px;
-  padding-top: 2px;
+  font-size: 10px;
+  margin-bottom:2px;
+  padding-left:2px;
   border-radius: 2px;
-}
-
-/* 日にちスケジュールページのリンクのスタイル */
-.linkSche{
-  color:#000000;
-  text-decoration: none;
-  margin:0px;
-}
-/* 日にちスケジュールページのリンクのスタイル */
-.linkSche:hover{
-  color:#000000;
-  text-decoration: none;
-  margin:0px;
 }
 
 
@@ -343,10 +254,10 @@ footer{
 
 /*全体の枠のdivタグの設定*/
 #Addform{
-  width: 400px;
+  width: 350px;
   padding: 10px;
-  border-radius:20px;
-  background-color:#FFFFFF;
+  border-radius:10px;
+  background-color:#fff;
   display: none;
   position:fixed;
   top: 50%;
@@ -357,54 +268,179 @@ footer{
 
 /*閉じるボタンの設定*/
 #AddClose{
+  display:block;
   cursor: pointer;
   width:30px;
-  margin-left:340px;
-  margin-right: 0px;
-  font-size:30px;
-  color:#C0C0C0;
-  background-color:#FFFFFF;
+  line-height:25px;
+  margin: 0 0 0 auto;
+  background:#fff;
   border:none;
+}
+
+.cross {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 2px;
+  background: #888;
+  transform: rotate(45deg);
+  vertical-align: middle;
+}
+
+.cross::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #888;
+  transform: rotate(90deg);
+}
+
+#AddClose:focus{
+  outline:none;
 }
 
 /*内側の枠の設定*/
 #insertform{
-  width: 360px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   margin-top:0px;
-  margin-bottom:20px;
-  background-color:#FFFFFF;
+}
+
+.form_frame{
+  width:100%;
 }
 
 /*新規登録する年月日を表示するテキスト*/
 #AddConfirm{
-  font-size:30px;
+  font-size:25px;
   text-align: center;
 }
 
 /* 開始時刻・終了時刻 */
 #timeSelect1,#timeSelect2{
-  width: 109px;
+  -webkit-appearance:none; /* デフォルトスタイルをリセットする */
+  width: 100%;
   height: 40px;
-  margin-right: 2px;
+  padding-left:10px;
+  border:none;
+  border:solid 1px #A9A9A9;
+  border-radius: 3px;
+}
+
+/* 三角を入れる */
+.selct_allow{
+  display:inline;
+  width: 40%;
+  position:relative;
+}
+/* 三角を入れる */
+.selct_allow::before {
+  position: absolute;
+  top: 6px;
+  left: 85%;
+  width: 0;
+  height: 0;
+  padding: 0;
+  content: '';
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #555;
+  pointer-events: none;
+}
+
+#timeSelect1:focus{
+  outline:none;
+  border:solid 2px blue;
+}
+
+#timeSelect2:focus{
+  outline:none;
+  border:solid 2px blue;
+}
+
+.label{
+  border:solid 1px #555;
+  border-bottom:none;
+  border-radius: 0px;
+  padding-left:10px;
+  font-size:15px;
 }
 
 /*予定のタイトル入力*/
 #AddTitle{
+  -webkit-appearance:none; /* デフォルトスタイルをリセットする */
   width: 100%;
   height: 40px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 10px;
+  border:solid 1px #A9A9A9;
+  /* border-top:none; */
+  border-radius: 3px;
+  /* background:#EEEEEE; */
+}
+
+#AddTitle:focus{
+  outline:none;
+  border:solid 2px blue;
 }
 
 /*詳細なコメント入力*/
 #AddPreviwe{
+  -webkit-appearance:none; /* デフォルトスタイルをリセットする */
   width: 100%;
-  height: 100px;
-  padding:20px;
+  height: 40px;
+  padding: 10px;
   margin-top: 5px;
   resize: none;
+  border:none;
+  border:solid 1px #A9A9A9;
+  border-radius: 3px;
+  /* background:#EEEEEE; */
+  height: 150px;
+}
+
+#AddPreviwe:focus{
+  outline:none;
+  border:solid 2px blue;
+}
+
+
+.select_color{
+  -webkit-appearance:none; /* デフォルトスタイルをリセットする */
+  background:#fff;
+  width:100%;
+  height:40px;
+  border:solid 1px #A9A9A9;
+  border-radius: 3px;
+}
+
+.select_color:focus{
+  outline:none;
+  border:solid 2px blue;
+}
+
+/* 三角を入れる */
+.selct_color_allow{
+  display:inline;
+  /* width: 40%; */
+  position:relative;
+}
+/* 三角を入れる */
+.selct_color_allow::before {
+  position: absolute;
+  top: -5px;
+  left: 94%;
+  width: 0;
+  height: 0;
+  padding: 0;
+  content: '';
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #555;
+  pointer-events: none;
 }
 
 /*背景ラジオのチェックを非表示に*/
@@ -426,10 +462,13 @@ footer{
 
 /* カラーラベルを囲むdivタグ */
 #AddTdColor{
-  width: 300px;/*280?*/
+  width: 300px;
   margin-left: auto;
   margin-right: auto;
 }
+
+
+
 
 /*背景ラベルが選択された時のスタイル設定*/
 #AddTdColor input[type="radio"]:checked + label{
@@ -468,18 +507,22 @@ footer{
 
 /*新規メモ登録*/
 #AddBtn{
-  /* -webkit-appearance: none;スマホでの自動デザイン無効化 */
+  display:block;
   cursor: pointer;
-  width: 200px;
+  width: 150px;
   height: 30px;
   margin-top:10px;
-  margin-left:80px;
-  margin-left:80px;
+  margin-left:auto;
+  margin-right:auto;
   font-size:15px;
   color: #FFFFFF;
-  background-color:#000;
+  background-color:#0000EE;
   border:none;
   border-radius:20px;
+}
+
+#AddBtn:focus{
+  outline:none;
 }
 
 /*新規メモ登録 ボタン無効*/
@@ -497,84 +540,3 @@ footer{
 /*----------------------新規登録のモーダルウィンドウ(END)---------------------*/
 
 
-
-
-/*----------------------ここからレスポンシブル記述(開始)---------------------*/
-/*日にちのtdタグ レスポンシブル対応*/
-@media screen and ( max-width:1000px )
-{
-	.tddays{
-    height: 250px;
-  }
-  
-  /*日にちのtdタグ レスポンシブル対応*/
-  .memos{
-    height: 200px;
-  }
-  
-  .addbtns{
-    margin-top: -12px;
-    margin-left:60%;
-  }
-}
-
-/*新規登録ボタン レスポンシブル対応*/
-@media screen and ( min-width:768px ) and ( max-width:1600px )
-{
-	.addbtns{
-    margin-top: -1.5px;
-    margin-left:69%;
-  }
-  
-  .memos{
-    height: 60px;
-	}
-}
-
-
-/*前年のページネーション レスポンシブル対応*/
-@media screen and ( max-width:1000px )
-{
-	#PrevBtn{
-    padding-top: 4px;
-	}
-}
-
-/*月のボタンを囲むdiv レスポンシブル対応*/
-@media screen and ( max-width:1000px )
-{
-	#months{
-    width:480px;
-	}
-}
-
-/*月のページネーションが未選択の時のスタイル レスポンシブル対応*/
-@media screen and ( max-width:1000px )
-{
-	.monthsend{
-    width:40px;
-    padding-top: 8px;
-    font-size:25px;
-	}
-}
-
-/*月のページネーションが選択の時のスタイル レスポンシブル対応*/
-@media screen and ( max-width:1000px )
-{
-	.Nowselect{
-    width:40px;
-    padding-top: 8px;
-    border-bottom-left-radius:5px;
-    border-bottom-right-radius:5px;
-    font-size:25px;
-	}
-}
-
-/*翌年のページネーション レスポンシブル対応*/
-@media screen and ( max-width:1000px )
-{
-	#NextBtn{
-    padding-top: 4px;
-	}
-}
-/*----------------------ここからレスポンシブル記述(終了)---------------------*/

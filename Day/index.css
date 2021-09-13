@@ -250,7 +250,7 @@ main{
   width: 600px;
   margin-top:-12px;
   height:30px;
-  /* font-size: 10px; */
+  font-size: 0.8vw;
 }
 
 /*リストタイトル レスポンシブル対応*/

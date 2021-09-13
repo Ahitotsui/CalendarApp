@@ -8,9 +8,7 @@
   }else{
     $userid = $_SESSION['login']['username'];
   }
-?>
 
-<?php
   date_default_timezone_set('Japan');
   //今現在の年を取得
   $TodayYear = date("Y");
@@ -77,18 +75,18 @@
 <body>
 
 
+<?php if(isset($_COOKIE["add"])): ?>
+  <div id="addMsg">
+    <i class="fas fa-check-circle"></i>
+    <span>予定を追加しました</span>
+    <!-- <button id="checkMsg"><span class="cross"></span></button> -->
+  </div>
+  <?php setcookie("add", 'add', time()-1800);?>
+<?php endif; ?>
 
 
-<?php 
-  if(isset($_COOKIE["add"])){
-    print("<div id=\"addMsg\">");
-    print("<span>予定を追加しました</span>"); 
-    // print("<script>window.alert('予定を追加しました');</script>");
-    print("<button id=\"checkMsg\" class=\"btn btn-success btn-sm\">OK</button>");
-    print("</div>");
-  }
-  setcookie("add", 'add', time()-1800); 
-?>
+   
+
 
 <!--ヘッダー領域-->
 <?php require_once('../Header/header.php'); ?>
@@ -112,11 +110,19 @@
     <a href="index.php?year=<?php print($link_prevyear); ?>&month=<?php print($link_prevM); ?>" style=font-size:13px>&lt;&lt;前月</a>
     <a href="index.php?year=<?php print($link_nextyear); ?>&month=<?php print($link_nextM); ?>" style=font-size:13px>翌月&gt;&gt;</a>
     <a href="../Day/?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
-      <button class="btn btn-secondary btn-sm" id="day_link">日</button>
+      <button class="btn btn-sm" id="day_link">日</button>
     </a>
-    <a href="../Week/?year=$TitleYear&month=$Titlemonth">
-      <button class="btn btn-secondary btn-sm" id="day_link">週</button>
+    <a href="../Week/?year=<?= $TitleYear ?>&month=<?= $Titlemonth ?>&day=<?= date("j") ?>">
+      <button class="btn btn-sm" id="day_link">週</button>
     </a>
+    <a href="../Day/?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
+      <button class="btn btn-secondary btn-sm" id="day_link">月</button>
+    </a>
+    <a href="../Day/?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
+      <button class="btn btn-sm" id="day_link">年</button>
+    </a>
+
+
     
   </div>
 
@@ -126,19 +132,6 @@
   $dbh = new PDO(DBInfo::DSN,DBInfo::USER,DBInfo::PASSWORD);
   $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? ORDER BY start_time";
   $stmt = $dbh->prepare($sql);
-
-  /*-------------------------------------------カレンダー表示領域---------------------------------------------------*/
-  //テーブルヘッド
-  print("<table id=\"mainTable\" border=\"1\"　class=\"table\">");
-  print("<thead id=\"tbhead\">");
-  print("<td class=\"tdtop\">月 <span class=\"small\">-MON-</span></td>");
-  print("<td class=\"tdtop\">火 <span class=\"small\">-TUE-</span></td>");
-  print("<td class=\"tdtop\">水 <span class=\"small\">-WED-</span></td>");
-  print("<td class=\"tdtop\">木 <span class=\"small\">-THU-</span></td>");
-  print("<td class=\"tdtop\">金 <span class=\"small\">-FRI-</span></td>");
-  print("<td class=\"tdtop\" id=\"sat\">土 <span class=\"small\">-SAT-</span></td>");
-  print("<td class=\"tdtop\" id=\"sun\">日 <span class=\"small\">-SUN-</span></td>");
-  print("</thead>");
 
   //前月の空白マスの数を決めるため、$iniを定義
   @$ini = 0;
@@ -160,104 +153,110 @@
   }else if($iniweek == "Sun"){
     $ini = 6;
   }
-
-  //もし、1日が月曜からスタートでは無い場合は空白のtdタグを最初に作る
-  print("<tr>");
-    //前の月の最終日が何日かを取得し、$pervMonthLastに格納
-    $prevMonth = $Titlemonth - 1;
-    if($prevMonth == 0){
-      //1月は参照するのは前年なので　$refYear = $TitleYear - 1;　とする。
-      $refYear = $TitleYear - 1;
-      //1月は$prevMonth = 0になるので値を前月の12に直す
-      $prevMonth = 12;
-      $pervMonthLast = date( 't' , strtotime($refYear . "/" . $prevMonth . "/01"));
-    }else{
-      $pervMonthLast = date( 't' , strtotime($TitleYear . "/" . $prevMonth . "/01")); 
-    }
-    
-    for($i=0;$i<$ini;$i++){
-      //前の月の日付けを空白マスの数分算出し、$prevDayDispに格納
-      $prevDayDisp = ($pervMonthLast - ($ini - 1)) + $i;
-      print("<td class=\"tdPreMon\" valign=\"top\">$prevMonth / $prevDayDisp</td>");
-    }
-
-  //その月の日数を求める  
-  $lastday = date( 't' , strtotime($TitleYear . "/" . $Titlemonth . "/01"));  
-
-  //横に7個tdタグが並んだら改行するよう、$brを定義。また、初期値は前月の空白の数からスタートする    
-  $br = $ini;
-  //以下カレンダーの左上に表示する日付や、以下の日付マスの表示を構成するHTMLのタグのidやclassに用いるため$dayを定義 
-  $day = 0;
-
-  for($i=1;$i<=$lastday;$i++){
-
-    $br++;
-    $day++;
-  
-      //日にちを表示するtdタグ
-      print("<td id={$day} class=\"tddays\">");
-
-      // 祝日を読み込む関数を外部から使用
-      require_once('../csv/csv.php');
-      $syuku = laod_csv($TitleYear,$Titlemonth,$day);
-
-      //現在の日にちに背景色をつけるためのidをつけるため判別
-      if($TitleYear == $TodayYear && $TodayMonth == $Titlemonth && $today == $day){
-        print("<div id=\"tdToday\"><p id=\"tdTodayStr\">{$day}</p></div>");
-        print("<div class=\"eventDiv\">");
-        if(strlen(trim($syuku)) != 0){
-          print("<span class=\"eventDay\">{$syuku}</span>");
-        }
-        print("</div>");
-      }else{
-        print("<p class=\"tdDays\">{$day}</p>");
-        print("<div class=\"eventDiv\">");
-        if(strlen(trim($syuku)) != 0){
-          print("<span class=\"eventDay\">{$syuku}</span>");
-        }
-        print("</div>");
-      }
-
-        print("<div id=\"memo{$day}\" class=\"memos\">");
-          $stmt->execute([$_SESSION['login']['username'],$TitleYear,$Titlemonth,$day]);
-          foreach($stmt as $row){
-            if($row['logic_delete'] == "false"){
-              $title = htmlspecialchars($row['title']);
-
-              //予定の出力文字数が14を超える場合は一部のみをカットして表示する処理を行う
-              if(mb_strlen($title) >= 14){
-
-                $half_chara = 0;
-                $full_chara = 0;
-                for($j=0;$j<=12;$j++){
-                  $check_chara = mb_substr($title,$j,$j+1);
-                  if(strlen($check_chara) - mb_strlen($check_chara) == 0){
-                    $half_chara += 2;
-                  }else if(strlen($check_chara) - mb_strlen($check_chara) != 0){
-                    $full_chara += 1; 
-                  }
-                }
-                $max_chara = $half_chara + $full_chara;
-
-                // $max_chara文字まで抜き出し、語末に...をつける
-                $title = mb_substr($title,0,$max_chara) . '...';
-
-              }
-              print("<p class=\"tags\" style=background-color:{$row['color']};>・{$title}</p>");
-            }
-          }
-        print("</div>");
-
-      print("</td>");
-
-    //横に7個tdタグが並んだら改行
-    if($br%7 == 0){
-      print("</tr>");
-    }
-  }
-print("</table>");
-/*------------------------------------カレンダー表示領域(END)-------------------------------------*/
 ?>
+
+<table id="mainTable" border="1">
+
+  <thead>
+    <td class="tdtop">月</td>
+    <td class="tdtop">火</td>
+    <td class="tdtop">水</td>
+    <td class="tdtop">木</td>
+    <td class="tdtop">金</td>
+    <td class="tdtop">土</td>
+    <td class="tdtop">日</td>
+  </thead>
+
+  <tr>
+    <?php
+      //前の月の最終日が何日かを取得し、$pervMonthLastに格納
+      $prevMonth = $Titlemonth - 1;
+      if($prevMonth == 0){
+        //1月は参照するのは前年なので　$refYear = $TitleYear - 1;　とする。
+        $refYear = $TitleYear - 1;
+        //1月は$prevMonth = 0になるので値を前月の12に直す
+        $prevMonth = 12;
+        $pervMonthLast = date( 't' , strtotime($refYear . "/" . $prevMonth . "/01"));
+      }else{
+        $pervMonthLast = date( 't' , strtotime($TitleYear . "/" . $prevMonth . "/01")); 
+      }
+    ?>
+    <?php for($i=0;$i<$ini;$i++): ?>
+      <?php $prevDayDisp = ($pervMonthLast - ($ini - 1)) + $i;?>
+      <td class="tdPreMon"><?=$prevMonth?>/<?=$prevDayDisp?></td>
+    <?php endfor ; ?>
+
+    <?php 
+      //その月の日数を求める  
+      $lastday = date( 't' , strtotime($TitleYear . "/" . $Titlemonth . "/01"));  
+
+      //横に7個tdタグが並んだら改行するよう、$brを定義。また、初期値は前月の空白の数からスタートする    
+      $br = $ini;
+
+      //以下カレンダーの左上に表示する日付や、以下の日付マスの表示を構成するHTMLのタグのidやclassに用いるため$dayを定義 
+      $day = 0;
+    ?>
+
+    <?php for($i=1;$i<=$lastday;$i++): ?>
+      <?php
+        $day++; 
+        $br++;      
+        require_once('../csv/csv.php');
+        $syuku = laod_csv($TitleYear,$Titlemonth,$day);
+      ?>
+      <td id="<?=$day?>" class="tddays">
+        <div style="display:flex;">
+
+          <a href="../Day/?userid=<?=$userid?>&year=<?=$TitleYear?>&month=<?=$Titlemonth?>&day=<?=$day?>&view=list" style="z-index:90;">
+            <div class="tdDays" id="<?php if($TitleYear == $TodayYear && $TodayMonth == $Titlemonth && $today == $day) echo 'tdTodayStr'?>"><?=$day?></div>
+          </a>
+
+          <div>
+            <?php if(strlen(trim($syuku)) != 0): ?>
+              <div class="eventDay"><?= $syuku ?></div>
+            <?php endif; ?>
+          </div>
+
+        </div>
+        <div class="memos">
+
+          <?php $stmt->execute([$_SESSION['login']['username'],$TitleYear,$Titlemonth,$day]); ?>
+            
+          <?php foreach($stmt as $row) : ?>
+            <?php if($row['logic_delete'] == "false"): ?>
+              <?php 
+                $title = htmlspecialchars($row['title']);
+                //予定の出力文字数が14を超える場合は一部のみをカットして表示する処理を行う
+                if(mb_strlen($title) >= 14){
+
+                  $half_chara = 0;
+                  $full_chara = 0;
+                  for($j=0;$j<=12;$j++){
+                    $check_chara = mb_substr($title,$j,$j+1);
+                    if(strlen($check_chara) - mb_strlen($check_chara) == 0){
+                      $half_chara += 2;
+                    }else if(strlen($check_chara) - mb_strlen($check_chara) != 0){
+                      $full_chara += 1; 
+                    }
+                  }
+                  $max_chara = $half_chara + $full_chara;
+
+                  // $max_chara文字まで抜き出し、語末に...をつける
+                  $title = mb_substr($title,0,$max_chara) . '...';
+                }
+              ?>
+              <div class="tags" style="background:<?= $row['color'] ?>;">
+                <span style="color:<?= $row['color'] ?>;filter: invert(100%) grayscale(100%) contrast(100);"><?= $title ?></span>
+              </div>
+            <?php endif; ?>
+          <?php endforeach ; ?>
+        </div>
+      </td>
+      <?php if($br%7 == 0) echo '</tr>'; ?>   
+    <?php endfor ; ?>
+
+  </tr>
+</table>
 
 <!--ポップアップ時の背景-->
 <div id="popback"></div>
@@ -265,93 +264,103 @@ print("</table>");
 <!--==============================================新規登録のポップアップウィンドウ====================================================-->
 <div id="Addform">
   <form id="insertform" action="../insert.php" method="post" name="insertform">
-    <button id="AddClose" type="reset">&times;</button>
-    <table>
+    
+    <table class="form_frame">
 
       <!-- 登録する日時の表示 -->
       <tr>
-        <td  colspan="2">
-          <p id="AddConfirm"><?php print($TitleYear); ?>年<?php print($Titlemonth); ?>月<span id="AddDay"></span>日</p>
+        <td colspan="5">
+          <div style="display:flex;">
+              <div style="width:30px;"></div>
+              <div style="width:100%;">
+                <p id="AddConfirm"><?php print($TitleYear); ?>年<?php print($Titlemonth); ?>月<span id="AddDay"></span>日</p>
+              </div>
+              <div>
+                <button id="AddClose" type="reset">
+                  <!-- <i class="fas fa-times" style="font-size:30px;"></i> -->
+                  <span class="cross"></span>
+                </button>
+              </div>
+          </div>
         </td>
       </tr>
 
       <!-- 開始時刻・終了時刻 -->
       <tr>
-        <td>
-          <label for="timeSelect1">開始時刻</label>
-          <select id="timeSelect1" name="start" required>
-            <option value="999" disabled selected style="display:none;">選択</option>
-            <?php 
-              for($i=0;$i<=23;$i++){
-                print("<option value=\"{$i}:00:00\">{$i}:00</option>");
-              }
-            ?>
-          </select>
+        <td width=12.5% align="left">開始</td>
+        <td width=32.5% astyle="padding:2px;" align="right">
+          <div class="selct_allow">
+            <select id="timeSelect1" name="start" required>
+              <option value="999" disabled selected style="display:none;">選択</option>
+              <?php 
+                for($i=0;$i<=23;$i++){
+                  print("<option value=\"{$i}:00:00\">{$i}:00</option>");
+                }
+              ?>
+            </select>
+          </div>
         </td>
-
-        <td>
-          <label for="timeSelect2">終了時刻</label>
-          <select id="timeSelect2" name="end" required>
-            <option value="999" disabled selected style="display:none;">選択</option>
-            <?php 
-              for($i=1;$i<=24;$i++){
-                print("<option value=\"{$i}:00:00\">{$i}:00</option>");
-              }
-            ?>
-          </select>
+        <td width=10% align="center">〜</td>
+        <td width=12.5% align="left">終了</td>
+        <td width=32.5% astyle="padding:2px;" align="right">
+          <div class="selct_allow">
+            <select id="timeSelect2" name="end" required>
+              <option value="999" disabled selected style="display:none;">選択</option>
+              <?php 
+                for($i=1;$i<=24;$i++){
+                  print("<option value=\"{$i}:00:00\">{$i}:00</option>");
+                }
+              ?>
+            </select>
+          </div>
         </td>
-
-        
       </tr>
 
       <!-- バリデーション1 -->
       <tr>
-        <td colspan="2">
+        <td colspan="5" style="padding:2px;">
           <p id="atention1"></p>
         </td>
       </tr>
 
       <!-- 予定のタイトル入力 -->
       <tr>
-        <td colspan="2">
-          <label for="title">予定のタイトル入力</label>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <input id="AddTitle" type="text" name="title" value="" placeholder="入力必須です" required>
+        <td colspan="5" style="padding:2px;">
+          <div>タイトル</div>
+          <input id="AddTitle" type="text" name="title" value="" placeholder="" required>
         </td>
       </tr>
       <!-- バリデーション2 -->
       <tr>
-        <td colspan="2">
+        <td colspan="5" style="padding:2px;">
           <p id="atention2"></p>
         </td>
       </tr>
 
       <!-- 詳細なコメント入力 -->
       <tr>
-        <td colspan="2">
-          <label for="memo">詳細なコメント入力</label>
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <textarea id="AddPreviwe" name="memo" cols="11" rows="4" value="" placeholder="ご自由に書いてください"></textarea>
+        <td colspan="5" style="padding:2px;">
+          <div>詳細</div>
+          <textarea id="AddPreviwe" name="memo" cols="11" rows="4" value="" placeholder=""></textarea>
         </td>
       </tr>
       
       <!-- カラー選択  -->
-      <tr>
-        <td colspan="2">
+      <!-- <tr>
+        <td colspan="2" style="padding:2px;">
           <label>カラー選択</label>
         </td>
-      </tr>
+      </tr> -->
 
       <!-- カラー選択  -->
       <tr>
-        <td colspan="2">
-          <div id="AddTdColor">
+        <!-- <td colspan="2" style="">
+         
+        </td> -->
+
+        <td colspan="5" style="">
+          <div>カラー</div>
+          <!-- <div id="AddTdColor">
             <input type="radio" name="color" value="#66FF66" id="Addgreen"><label for="Addgreen" id="Addgreen"></label>
             <input type="radio" name="color" value="#FFFF88" id="Addyellow"><label for="Addyellow" id="Addyellow"></label>
             <input type="radio" name="color" value="#87CEFA" id="Addbule"><label for="Addbule" id="Addbule"></label>
@@ -359,7 +368,18 @@ print("</table>");
             <input type="radio" name="color" value="#FA8072" id="Addred"><label for="Addred" id="Addred"></label>
             <input type="radio" name="color" value="#FFA500" id="Addorange"><label for="Addorange" id="Addorange"></label>
             <input type="radio" name="color" value="#FFFFFF" id="Addwhite" checked><label for="Addwhite" id="Addwhite"></label>
+          </div> -->
+          <div class="selct_color_allow">
+          <input type="color" name="color" list="color-list" class="select_color" value="#B0C4DE">
           </div>
+          <datalist id="color-list">
+            <option value="#66FF66">
+            <option value="#FFFF88">
+            <option value="#87CEFA">
+            <option value="#C299FF">
+            <option value="#FA8072">
+            <option value="#FFA500">
+          </datalist>
         </td>
       </tr>
 
@@ -373,7 +393,7 @@ print("</table>");
 
       <!-- 新規登録ボタン -->
       <tr>
-        <td colspan="2">
+        <td colspan="5">
             <button id="AddBtn" type="submit">予定を追加</button>
         </td>
       </tr>

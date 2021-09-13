@@ -44,6 +44,7 @@ $(function(){
 
     if(select1 >= select2 && select2 != 999){
       document.getElementById("atention1").innerHTML = '※開始時刻に誤りがあります';
+      document.getElementById("timeSelect1").style.borderColor = 'red';
       document.getElementById("AddBtn").disabled = true;
     }else if(select2 == 999){
       document.getElementById("AddBtn").disabled = true;
@@ -64,6 +65,7 @@ $(function(){
 
     if(select1 >= select2 && select1 != 999){
         document.getElementById("atention1").innerHTML = '※終了時刻に誤りがあります';
+        document.getElementById("timeSelect2").style.borderColor = 'red';
         document.getElementById("AddBtn").disabled = true;
     }else if(select1 == 999){
       document.getElementById("AddBtn").disabled = true;
