@@ -127,527 +127,478 @@
     <!--ヘッダー-->
     <?php require_once('../Header/header.php'); ?>
 
-    <?php if($viewMode != "delete") : ?>
-    <div>
-        <!-- フィルタ&検索機能 -->
-        <div class="row" id="search">
+    <div id="topParts">
+        <button class="btn btn-sm" id="day_link">日</button>
+        </a>
+        <a href="../Week/?year=<?= $TitleYear ?>&month=<?= $Titlemonth ?>&day=<?= date("j") ?>">
+        <button class="btn btn-sm" id="day_link">週</button>
+        </a>
+        <a href="../Day/?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
+        <button class="btn btn-secondary btn-sm" id="day_link">月</button>
+        </a>
+        <a href="../Day/?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
+        <button class="btn btn-sm" id="day_link">年</button>
+        </a>
+    </div>
 
-            <div class="coll col-md-4">
-                <p id="dispSelectedDay"><i class="fas fa-tasks"></i>　<?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日(<?php print($yobi); ?>) の予定 </p>
-            </div>
+    <main class="main_contents_area">
 
-            <div id="disp_filter" class="coll col-md-4">
-                <!-- <div> -->
-                <form class="searchBtns" action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
-                    <input type="hidden" name="all_disp" value="All">
-                    <button type="submit" id="filBtn1" class="<?php print($selectedType1); ?>">全て</button>
-                </form>
-                <form class="searchBtns" action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
-                    <input type="hidden" name="unfini_disp" value="0">
-                    <button type="submit" id="filBtn2" class="<?php print($selectedType2); ?>">未了</button>
-                </form>
-                <form class="searchBtns" action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
-                    <input type="hidden" name="fini_disp" value="1">
-                    <button type="submit" id="filBtn3" class="<?php print($selectedType3); ?>">完了</button>
-                </form>
-                <form class="searchBtns" action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
-                    <input type="hidden" name="can_disp" value="2">
-                    <button type="submit" id="filBtn4" class="<?php print($selectedType4); ?>">キャンセル</button>
-                </form>
-                <!-- </div> -->
-            </div>
 
-            <div class="coll col-md-4">
-                <form action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
-                <div class="input-group">
-                    <span class="input-group">
+        <div class="left_contents">
                         
-                        <input class="form-control" type="text" placeholder="予定のタイトルでさがす" name="keyword" value="">
-                        <button class="btn btn-secondary" type="submit"><i class="fas fa-search"></i></button>
-                    </span>
+            <div style="width:100%;">
+                <p class="dispSelectedDay"><?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日(<?php print($yobi); ?>) の予定 </p>
+            </div>
+
+            <div class="pc_only_disp">
+                <?php 
+                    $link_prevM = $month - 1;
+                    $link_nextM = $month + 1;
+                    $link_prevyear = $year;
+                    $link_nextyear = $year;
+                    if($link_prevM == 0){
+                        $link_prevM = 12;
+                        $link_prevyear = $year - 1;
+                    }else if($link_nextM == 13){
+                        $link_nextM = 1;
+                        $link_nextyear = $year + 1;
+                    }
+                    print("<a id=\"prevDay\" href=\"?userid=$userid&year=$link_prevyear&month=$link_prevM&day=1&view=$viewMode\"><i class=\"fas fa-angle-double-left\"></i>前月</a>");
+                    
+                    print("<a id=\"nextDay\" href=\"?userid=$userid&year=$link_nextyear&month=$link_nextM&day=1&view=$viewMode\">翌月<i class=\"fas fa-angle-double-right\"></i></a>");
+                ?>
+
+
+                <table border="1" class="left_calendar">
+                    <thead>
+                        <td class="tdtop">月</td>
+                        <td class="tdtop">火</td>
+                        <td class="tdtop">水</td>
+                        <td class="tdtop">木</td>
+                        <td class="tdtop">金</td>
+                        <td class="tdtop">土</td>
+                        <td class="tdtop">日</td>
+                    </thead>
+
+                    <?php
+                        //DB接続
+                        require_once('../DBInfo.php');
+                        $dbh = new PDO(DBInfo::DSN,DBInfo::USER,DBInfo::PASSWORD);
+                        $sql_1 = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? ORDER BY start_time";
+                        $stmt = $dbh->prepare($sql_1);
+
+                        //前月の空白マスの数を決めるため、$iniを定義
+                        @$ini = 0;
+                        //月ごとの1日が何曜日から始まるかを取得
+                        $iniweek = date('D',strtotime("$year-$month-01"));
+                        //曜日ごとに、前月の空白マスを設定する
+                        if($iniweek == "Mon"){
+                            $ini = 0;
+                        }else if($iniweek == "Tue"){
+                            $ini = 1;
+                        }else if($iniweek == "Wed"){
+                            $ini = 2;
+                        }else if($iniweek == "Thu"){
+                            $ini = 3;
+                        }else if($iniweek == "Fri"){
+                            $ini = 4;
+                        }else if($iniweek == "Sat"){
+                            $ini = 5;
+                        }else if($iniweek == "Sun"){
+                            $ini = 6;
+                        }
+
+                        //もし、1日が月曜からスタートでは無い場合は空白のtdタグを最初に作る
+                        print("<tr>");
+                            //前の月の最終日が何日かを取得し、$pervMonthLastに格納
+                            $prevMonth = $month - 1;
+                            if($prevMonth == 0){
+                            //1月は参照するのは前年なので　$refYear = $TitleYear - 1;　とする。
+                            $refYear = $year - 1;
+                            //1月は$prevMonth = 0になるので値を前月の12に直す
+                            $prevMonth = 12;
+                            $pervMonthLast = date( 't' , strtotime($refYear . "/" . $prevMonth . "/01"));
+                            }else{
+                            $pervMonthLast = date( 't' , strtotime($TitleYear . "/" . $prevMonth . "/01")); 
+                            }
+                            
+                            for($i=0;$i<$ini;$i++){
+                                //前の月の日付けを空白マスの数分算出し、$prevDayDispに格納
+                                $prevDayDisp = ($pervMonthLast - ($ini - 1)) + $i;
+                                // print("<td class=\"tdPreMon\" valign=\"top\" style=font-size:10px;text-align:center>$prevMonth / $prevDayDisp</td>");
+                                print("<td></td>");
+                            }
+
+                        //その月の日数を求める  
+                        $lastday = date( 't' , strtotime($year . "/" . $month . "/01"));  
+
+                        //横に7個tdタグが並んだら改行するよう、$brを定義。また、初期値は前月の空白の数からスタートする    
+                        $br = $ini;
+                        //以下カレンダーの左上に表示する日付や、以下の日付マスの表示を構成するHTMLのタグのidやclassに用いるため$dayを定義 
+                        $day_chara = 0;
+
+                        for($i=1;$i<=$lastday;$i++){
+
+                            $br++;
+                            $day_chara++;
+                        
+                            //日にちを表示するtdタグ
+                            if($year == $TodayYear && $month == $TodayMonth && $day_chara == $today){
+                                //現在の日にちに背景色をつけるためのidをつけるため判別
+                                // print("<td class=\"daysTd\" bgcolor=#DDDDDD>");
+                                print("<td class=\"daysTd\" style=border:solid;border-width:1px;>");
+                            }else{
+                                print("<td class=\"daysTd\">");
+                            }
+
+                            $stmt->execute([$_SESSION['login']['username'],$year,$month,$day_chara,"false"]);
+                            if($stmt->rowCount() > 0){
+                                print("<a href=\"?userid=$userid&year=$year&month=$month&day=$day_chara&view=list\">{$day_chara}</a>");
+                            }else{
+                                print("<p style=display:inline>{$day_chara}</p>");
+                            }
+
+                            print("</td>");
+
+                            //横に7個tdタグが並んだら改行
+                            if($br%7 == 0){
+                            print("</tr>");
+                            }
+                        }
+                        print("</table>");
+
+                        $dbh = null;
+                    ?>
+
+                    <div style="margin-top:20px;">
+                        <button class="btn btn-primary btn-lg btn-block"><i class="fas fa-plus-circle"></i>　予定を追加</button>
+                        <a href="<?php print($URL); ?>&view=delete" type="button" class="btn btn-secondary btn-lg btn-block">ゴミ箱</a>
+                    </div>
+                    
                 </div>
-                </form>
+
+                    <?php 
+                        //DB接続
+                        require_once('../DBInfo.php');
+                        $dbh = new PDO(DBInfo::DSN,DBInfo::USER,DBInfo::PASSWORD);
+                        if($dispMode ==  "All"){
+                            $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? ORDER BY start_time";
+                        }
+
+                        $stmt = $dbh->prepare($sql);
+                        $stmt->execute([$userid,$year,$month,$day,'false']);
+
+                        //----ゴミ箱表示----
+                        $sql_del = "SELECT * FROM Memo_tags WHERE userid=? and logic_delete=? ORDER BY year DESC, month DESC, day DESC";
+                        $stmt_del = $dbh->prepare($sql_del);
+                        if($viewMode == "delete"){
+                            $stmt_del->execute([$userid,'true']);
+                        }
+                        //----ゴミ箱表示----
+                    ?>
             </div>
         </div>
-    </div>
-    <?php endif; ?>
 
-    <main>
-        <div class="row">
-            <div class="coll col-md-3">
-            <?php 
-                $link_prevM = $month - 1;
-                $link_nextM = $month + 1;
-                $link_prevyear = $year;
-                $link_nextyear = $year;
-                if($link_prevM == 0){
-                    $link_prevM = 12;
-                    $link_prevyear = $year - 1;
-                }else if($link_nextM == 13){
-                    $link_nextM = 1;
-                    $link_nextyear = $year + 1;
-                }
-                print("<a id=\"prevDay\" href=\"?userid=$userid&year=$link_prevyear&month=$link_prevM&day=1&view=$viewMode\"><i class=\"fas fa-angle-double-left\"></i>前月</a>");
-                
-                print("<a id=\"nextDay\" href=\"?userid=$userid&year=$link_nextyear&month=$link_nextM&day=1&view=$viewMode\">翌月<i class=\"fas fa-angle-double-right\"></i></a>");
-            ?>
+        <div class="right_contents">
+            <?php if($viewMode != "delete") : ?>
+                <div>
+                    <!-- フィルタ&検索機能 -->
+                    <div class="top_controller">
 
-            <hr style="width:100%; height:0.1px; background-color:gray;">
+                        <div style="width:100%;" class="controller_inner1">
+                            <div style="display:flex;">
+                            <form class="searchBtns" action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
+                                <input type="hidden" name="all_disp" value="All">
+                                <button type="submit" class="filBtn1 <?php print($selectedType1); ?>">全て</button>
+                            </form>
+                            <form class="searchBtns" action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
+                                <input type="hidden" name="unfini_disp" value="0">
+                                <button type="submit" class="filBtn2 <?php print($selectedType2); ?>">未了</button>
+                            </form>
+                            <form class="searchBtns" action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
+                                <input type="hidden" name="fini_disp" value="1">
+                                <button type="submit" class="filBtn3 <?php print($selectedType3); ?>">完了</button>
+                            </form>
+                            <form class="searchBtns" action="<?php print($URL ."&view=". $viewMode); ?>" method="post">
+                                <input type="hidden" name="can_disp" value="2">
+                                <button type="submit" class="filBtn4 <?php print($selectedType4); ?>">キャンセル</button>
+                            </form>
+                            </div> 
+                        </div>
+
+                        <div style="width:100%;" class="controller_inner2">
+                            <form action="<?php print($URL ."&view=". $viewMode); ?>" class="serch_form" method="post">
+                                <input type="text" class="serch_input" placeholder="予定のタイトルでさがす" name="keyword" value="">
+                                <button class="serch_btn"><i class="fas fa-search"></i></button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <?php if($viewMode != "delete") : ?>
+                <!-- 表示モード切替機能 -->
+                <div id="dispTabs">
+                    <a class="dispTab" id="<?php print($tabStyle1); ?>" href="<?php print($URL); ?>&view=list" name="リスト"><i class="fas fa-tasks"></i></a>
+                    <a class="dispTab" id="<?php print($tabStyle2); ?>" href="<?php print($URL); ?>&view=table" name="ガントチャート"><i class="fas fa-arrows-alt-h"></i></a>
+                    <a class="dispTab" id="<?php print($tabStyle3); ?>" href="<?php print($URL); ?>&view=table2" name="タイムテーブル"><i class="fas fa-table"></i></a>
+                </div>
+            <?php elseif($viewMode == "delete") : ?>
+                <a href="./?userid=<?php print($userid); ?>&year=<?php print($year); ?>&month=<?php print($month); ?>&day=<?php print($day); ?>&view=list">戻る</a>
+                <p>ゴミ箱</p>
+            <?php endif; ?>
+
+
+            <?php if($viewMode != "delete") : ?>
+                <p style=text-align:center;padding-top:5px;height:15px>[全 <?php print($stmt->rowCount())?> 件]</p>
+            <?php elseif($viewMode == "delete") : ?>
+                <p style=text-align:center;padding-top:5px;height:15px>[全 <?php print($stmt_del->rowCount())?> 件]</p>
+            <?php endif; ?>
+
 
             <?php
                 //DB接続
                 require_once('../DBInfo.php');
                 $dbh = new PDO(DBInfo::DSN,DBInfo::USER,DBInfo::PASSWORD);
-                $sql_1 = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? ORDER BY start_time";
-                $stmt = $dbh->prepare($sql_1);
-
-                /*-------------------------------------------カレンダー表示領域---------------------------------------------------*/
-                //テーブルヘッド
-                print("<table id=\"mainTable\" border=\"0\">");
-                print("<thead id=\"tbhead\">");
-                print("<td class=\"tdtop\">月 <br/><span class=\"small\">-MON-</span></td>");
-                print("<td class=\"tdtop\">火 <br/><span class=\"small\">-TUE-</span></td>");
-                print("<td class=\"tdtop\">水 <br/><span class=\"small\">-WED-</span></td>");
-                print("<td class=\"tdtop\">木 <br/><span class=\"small\">-THU-</span></td>");
-                print("<td class=\"tdtop\">金 <br/><span class=\"small\">-FRI-</span></td>");
-                print("<td class=\"tdtop\" id=\"sat\">土 <br/><span class=\"small\">-SAT-</span></td>");
-                print("<td class=\"tdtop\" id=\"sun\">日 <br/><span class=\"small\">-SUN-</span></td>");
-                print("</thead>");
-
-                //前月の空白マスの数を決めるため、$iniを定義
-                @$ini = 0;
-                //月ごとの1日が何曜日から始まるかを取得
-                $iniweek = date('D',strtotime("$year-$month-01"));
-                //曜日ごとに、前月の空白マスを設定する
-                if($iniweek == "Mon"){
-                    $ini = 0;
-                }else if($iniweek == "Tue"){
-                    $ini = 1;
-                }else if($iniweek == "Wed"){
-                    $ini = 2;
-                }else if($iniweek == "Thu"){
-                    $ini = 3;
-                }else if($iniweek == "Fri"){
-                    $ini = 4;
-                }else if($iniweek == "Sat"){
-                    $ini = 5;
-                }else if($iniweek == "Sun"){
-                    $ini = 6;
+                if($dispMode ==  "All"){
+                    $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? ORDER BY start_time";
                 }
 
-                //もし、1日が月曜からスタートでは無い場合は空白のtdタグを最初に作る
-                print("<tr>");
-                    //前の月の最終日が何日かを取得し、$pervMonthLastに格納
-                    $prevMonth = $month - 1;
-                    if($prevMonth == 0){
-                    //1月は参照するのは前年なので　$refYear = $TitleYear - 1;　とする。
-                    $refYear = $year - 1;
-                    //1月は$prevMonth = 0になるので値を前月の12に直す
-                    $prevMonth = 12;
-                    $pervMonthLast = date( 't' , strtotime($refYear . "/" . $prevMonth . "/01"));
-                    }else{
-                    $pervMonthLast = date( 't' , strtotime($TitleYear . "/" . $prevMonth . "/01")); 
-                    }
-                    
-                    for($i=0;$i<$ini;$i++){
-                        //前の月の日付けを空白マスの数分算出し、$prevDayDispに格納
-                        $prevDayDisp = ($pervMonthLast - ($ini - 1)) + $i;
-                        // print("<td class=\"tdPreMon\" valign=\"top\" style=font-size:10px;text-align:center>$prevMonth / $prevDayDisp</td>");
-                        print("<td></td>");
-                    }
+                $stmt = $dbh->prepare($sql);
+                $stmt->execute([$userid,$year,$month,$day,'false']);
+            ?>
+            <?php if($viewMode != "delete") : ?>
+                <?php if($stmt->rowCount() == 0 && $dispMode ==  "All") :?>
+                    <div>予定はありません</div>
+                    <?php if($_POST['keyword']): ?>
+                        <div>"<?=$_POST['keyword']?>"の検索結果</div>
+                    <?php endif; ?>
+                <?php elseif($stmt->rowCount() != 0 ):?>
+                    <?php if($_POST['keyword']): ?>
+                        <div>"<?=$_POST['keyword']?>"の検索結果</div>
+                    <?php endif; ?>
+                    <?php if($viewMode == "list"): ?>
+                        <?php foreach($stmt as $row) : ?>
+                            <?php
+                                //進捗ステータス文字列に変換
+                                // if($row['progress'] == 0){
+                                //     $row['progress'] = "未了";
+                                // }else if($row['progress'] == 1){
+                                //     $row['progress'] = "完了";
+                                // }else if($row['progress'] == 2){
+                                //     $row['progress'] = "キャンセル";
+                                // }
+                                $row['start_time'] = preg_replace('/:00/','',$row['start_time'],1);
+                                $row['end_time'] = preg_replace('/:00/','',$row['end_time'],1);
+                                $title = htmlspecialchars($row['title']);
+                                $memo = nl2br(htmlspecialchars($row['memo'])); 
+                                
+                                // メモがない場合はメッセージ表示
+                                if(strlen(trim($memo)) == 0){
+                                    $memo = '詳細メモはありません。';
+                                }
 
-                //その月の日数を求める  
-                $lastday = date( 't' , strtotime($year . "/" . $month . "/01"));  
+                                //進捗ステータス文字列に変換
+                                if($row['progress'] == 0){
+                                    $progress = "未了";
+                                }else if($row['progress'] == 1){
+                                    $progress = "完了";
+                                }else if($row['progress'] == 2){
+                                    $progress = "キャンセル";
+                                }
 
-                //横に7個tdタグが並んだら改行するよう、$brを定義。また、初期値は前月の空白の数からスタートする    
-                $br = $ini;
-                //以下カレンダーの左上に表示する日付や、以下の日付マスの表示を構成するHTMLのタグのidやclassに用いるため$dayを定義 
-                $day_chara = 0;
+                                //未了・完了のボタンの切替で使用
+                                if($row['progress'] == 0){
+                                    $toggle = 1;
+                                    $disabled = "";
+                                    $class = "unfinish";
+                                }else if($row['progress'] == 1){
+                                    $toggle = 0;
+                                    $disabled = "";
+                                    $class = "finish";
+                                }else if($row['progress'] == 2){
+                                    $disabled = "disabled";
+                                    $class = "cancel";
+                                }
 
-                for($i=1;$i<=$lastday;$i++){
+                                $color = $row['color'];
+                                $id = $row['id'];
 
-                    $br++;
-                    $day_chara++;
-                
-                    //日にちを表示するtdタグ
-                    if($year == $TodayYear && $month == $TodayMonth && $day_chara == $today){
-                        //現在の日にちに背景色をつけるためのidをつけるため判別
-                        // print("<td class=\"daysTd\" bgcolor=#DDDDDD>");
-                        print("<td class=\"daysTd\" style=border:solid;border-width:1px;>");
-                    }else{
-                        print("<td class=\"daysTd\">");
-                    }
+                                //予定の数が１つの時とそうで無い時でpostで送るaタグのhrefを変える
+                                if($stmt->rowCount() == 1){
+                                    //１つの時は、配列にするとpostできなかった
+                                    $href = "javascript:form1.submit()";
+                                }else{
+                                    $href = "javascript:form1[{$num}].submit()";
+                                }
+                            ?>
 
-                    $stmt->execute([$_SESSION['login']['username'],$year,$month,$day_chara,"false"]);
-                    if($stmt->rowCount() > 0){
-                        print("<a href=\"?userid=$userid&year=$year&month=$month&day=$day_chara&view=list\">{$day_chara}</a>");
-                    }else{
-                        print("<p style=display:inline>{$day_chara}</p>");
-                    }
+                            <div style="display:flex;background:<?= $row['color'] ?>;" class="list_style_tags">
+                                <form action="../edit.php" style="width:30px;" method="post" name="form1">
+                                    <input type="hidden" name="userid" value="<?=$userid?>">
+                                    <input type="hidden" name="year" value="<?=$year?>">
+                                    <input type="hidden" name="month" value="<?=$month?>">
+                                    <input type="hidden" name="day" value="<?=$day?>">
+                                    <input type="hidden" name="view" value="<?=$viewMode?>">
+                                    <input type="hidden" name="id" value="<?=$id?>">
+                                    <input type="hidden" name="progFlag" value="<?=$toggle?>">
+                                    <?php if($row['progress'] == 0): ?>
+                                        <a href="<?=$href?>"><button class="progress_btns"></button></a>
+                                    <?php elseif($row['progress'] == 1): ?>
+                                        <div class="done_check"><button class="progress_btns">✔️</button></div>
+                                    <?php elseif($row['progress'] == 2): ?>
+                                        <button class="progress_btns">X</button>
+                                    <?php endif; ?>
+                                </form>
+                                <div class="times_disp" style="width:80px;">
+                                    <div><i class="far fa-clock"></i><?= $row['start_time'] ?></div>
+                                    <div>〜<?= $row['end_time'] ?></div>
+                                </div>
+                                <div style="width:100%;" class="list_style_tags_titles" data-toggle="modal" href="#memo<?=$row['id']?>"><?= $row['title'] ?></div>
+                                <div class="operate_icons" style="display:flex;">
+                                    <span data-toggle="tooltip" data-placement="bottom" title="編集">
+                                        <a href="../Edit/edit_form.php?ID=<?=$id?>&view=<?=$viewMode?>" class="edit"><i id="operate2" class="fas fa-pen"></i></a>
+                                    </span>
+                                    <span data-toggle="tooltip" data-placement="bottom" title="削除">
+                                        <a data-toggle="modal" href="#delete" class="delete" id="<?=$id?>"><i id="operate3" class="fas fa-trash-alt"></i></a>
+                                    </span>
+                                </div>
+                            </div>
 
-                    print("</td>");
+                            <div class="modal" id="memo<?=$row['id']?>">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style=background-color:{$color}>
+                                            <p class="list_titles"><i class="fas fa-calendar-alt"></i>　<?= $row['title'] ?></p>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div id="Deleteform" class="deletepops">
+                                                <p class="modal-times"><i class="far fa-clock"></i><?= $row['start_time'] ?>〜<?= $row['end_time'] ?></p>
+                                                <p class="modal_memo"><?= $memo ?></p> 
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                    //横に7個tdタグが並んだら改行
-                    if($br%7 == 0){
-                    print("</tr>");
-                    }
-                }
-                print("</table>");
+                        <?php endforeach; ?>
+                    <?php elseif($viewMode == "table"):?>
+                        <?php
+                            $stmt = $dbh->prepare($sql);
+                            $stmt->execute([$userid,$year,$month,$day,'false']);
+                            
+                        ?>
+                        <?php 
+                            $stmt->execute([$userid,$year,$month,$day,'false']); 
+                        ?>
+                        <table class="guntt_chart_table">
 
-                $dbh = null;
-                ?>
-                <hr style="width:100%; height:0.1px; background-color:gray;">
-                <button class="btn btn-primary btn-lg btn-block"><i class="fas fa-plus-circle"></i>　予定を追加</button>
-                <a href="<?php print($URL); ?>&view=delete">ゴミ箱</a>
-            </div>
+                            <thead>
+                                <?php for($i=0;$i<=24;$i++) : ?>
+                                    <th style="font-size:10px;"><?=$i?>:00</th>
+                                <?php endfor; ?>
+                            </thead>
 
-            <div class="coll col-md-9">
+                            <?php foreach($stmt as $row) : ?>
 
-                <?php if($viewMode != "delete") : ?>
-                    <!-- 表示モード切替機能 -->
-                    <div id="dispTabs">
-                        <a class="dispTab" id="<?php print($tabStyle1); ?>" href="<?php print($URL); ?>&view=list">リスト</a>
-                        <a class="dispTab" id="<?php print($tabStyle2); ?>" href="<?php print($URL); ?>&view=table">タイムテーブル</a>
-                        <a class="dispTab" id="<?php print($tabStyle3); ?>" href="<?php print($URL); ?>&view=table2">タイムテーブル2</a>
-                    </div>
-                <?php elseif($viewMode == "delete") : ?>
-                    <a href="./?userid=<?php print($userid); ?>&year=<?php print($year); ?>&month=<?php print($month); ?>&day=<?php print($day); ?>&view=list">戻る</a>
-                    <p>ゴミ箱</p>
-                <?php endif; ?>
+                                <tr>                                        
+                                    <?php 
+                                        $ini_t = (int)str_replace(':00','',$row['start_time']);
+                                        $end_t = (int)str_replace(':00','',$row['end_time']);
+                                        $width = (int)($end_t - $ini_t);
+                                        $pre_td = $ini_t;
+                                        $aft_td = 24 - ($pre_td + $width);
+                                    ?>
 
-                
-                <?php 
-                    //DB接続
-                    require_once('../DBInfo.php');
-                    $dbh = new PDO(DBInfo::DSN,DBInfo::USER,DBInfo::PASSWORD);
-                    if($dispMode ==  "All"){
-                        $sql = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? ORDER BY start_time";
-                    }
+                                    <?php for($i=1;$i<=$pre_td;$i++) : ?>
+                                        <td class="guntt_chart_td"></td>                             
+                                    <?php endfor; ?>
 
-                    $stmt = $dbh->prepare($sql);
-                    $stmt->execute([$userid,$year,$month,$day,'false']);
+                                    <td colspan="<?=$width?>" class="guntt_chart_td has_items_td">
+                                        <div style="background:<?= $row['color'] ?>;" class="gantt_cahrt_items">
+                                            <div><?= $row['title'] ?></div>
+                                        </div>
+                                    </td>    
 
-                    //----ゴミ箱表示----
-                    $sql_del = "SELECT * FROM Memo_tags WHERE userid=? and logic_delete=? ORDER BY year DESC, month DESC, day DESC";
-                    $stmt_del = $dbh->prepare($sql_del);
-                    if($viewMode == "delete"){
-                        $stmt_del->execute([$userid,'true']);
-                    }
-                    //----ゴミ箱表示----
-                ?>
+                                    <?php for($i=0;$i<=$aft_td;$i++) : ?>
+                                        <td class="guntt_chart_td"></td>                    
+                                    <?php endfor; ?>
 
-                <?php if($viewMode != "delete") : ?>
-                <p style=text-align:center;padding-top:5px;height:15px>[全 <?php print($stmt->rowCount())?> 件]</p>
-                <?php elseif($viewMode == "delete") : ?>
-                <p style=text-align:center;padding-top:5px;height:15px>[全 <?php print($stmt_del->rowCount())?> 件]</p>
-                <?php endif; ?>
+                                </tr>
 
+                            <?php endforeach; ?>
 
-                <div id="right_tags">
-                <?php
-                    if($viewMode == "delete"){
-                        //ゴミ箱表示
-                        print("<form action=\"../Delete/delete.php\" method=\"post\">");
-                        print("<button type=\"submit\">削除</button>");
-                        //※SQL文およびexecuteは、上の方で先立って処理している。
-                        foreach($stmt_del as $row){
+                        </table>
+                    <?php elseif($viewMode == "table2"):?>
+                        <?php 
+                            //DB接続
+                            require_once('../DBInfo.php');
+                            $dbh = new PDO(DBInfo::DSN,DBInfo::USER,DBInfo::PASSWORD);
+                            // 
+                            if($dispMode ==  "All"){
+                                $sql_t2 = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? and start_time=? ORDER BY start_time";
+                            }
+            
+                            $stmt_t2 = $dbh->prepare($sql_t2);
+                        ?>
+                        <?php for($i=0;$i<=24;$i++) : ?>
+                            <div style="display:flex;" class="time_lines">
+                                <div class="left_time_disps"><?= $i ?>:00</div>
+                                <div style="display:flex;width:100%;">
+                                    <?php 
+                                        if($i < 10){
+                                            $time = '0' . $i .':00:00';
+                                        }else{
+                                            $time = $i .':00:00';
+                                        }
+                                        $stmt_t2->execute([$userid,$year,$month,$day,'false',$time]); 
+                                    ?>
+                                    <?php foreach($stmt_t2 as $row) : ?>
+                                        <?php 
+                                            $ini_t = (int)str_replace(':00','',$row['start_time']);
+                                            $end_t = (int)str_replace(':00','',$row['end_time']);
+                                            $height = (int)(($end_t - $ini_t) * 60);
+                                        ?>
+                                        <div style="height:<?=$height?>px;background:<?= $row['color'] ?>;" class="time_line_items"><?= $row['title'] ?></div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        <?php endfor; ?>
+                    <?php endif;?>
+                <?php else:?>
+                    <div>There is no fill term.</div>
+                <?php endif;?>
+            <?php elseif($viewMode == "delete"):?>
+                <h1>nnnnnnnn</h1>
+                <form action="../Delete/delete.php" method="post">
+                    <button type="submit">削除</button>
+                    <?php foreach($stmt_del as $row) : ?>
+                        <?php
                             $id = $row['id'];
                             $y = $row['year'];
                             $m = $row['month'];
                             $d = $row['day'];
                             $title = htmlspecialchars($row['title']);
                             print("<div>");
-                            
-                            print("<input type=\"checkbox\" name=\"id[]\" value=\"{$id}\">");
-                            print("<input type=\"hidden\" name=\"userid\" value=\"{$userid}\">");
-                            print("<input type=\"hidden\" name=\"year\" value=\"{$year}\">");
-                            print("<input type=\"hidden\" name=\"month\" value=\"{$month}\">");
-                            print("<input type=\"hidden\" name=\"day\" value=\"{$day}\">");
-                            
-                            print("<a href=../Delete/delete.php?userid=$userid&year=$year&month=$month&day=$day&id=$id>削除</a>");
-                            print("<p style=display:inline-block>{$y}/{$m}/{$d} {$title}</p>");
-                            print("</div>");
-                        }
-                        print("</form>");
-
-                    }else if($stmt->rowCount() == 0 && $dispMode ==  "All"){
-                        print("<div class=\"no_data\">まだ予定はありません</div>");
-                    }else if($stmt->rowCount() != 0){
-                        // <!-- 簡易リスト表示 -->
-                        $num = -1;
-                        foreach($stmt as $row){
-                            $num++;
-                            $S_time = preg_replace('/:00/','',$row['start_time'],1);
-                            $E_time = preg_replace('/:00/','',$row['end_time'],1);
-                            $title = htmlspecialchars($row['title']);
-                            $memo = nl2br(htmlspecialchars($row['memo']));
-
-                            // メモがない場合はメッセージ表示
-                            if(strlen(trim($memo)) == 0){
-                                $memo = '詳細メモはありません。';
-                            }
-
-                            //進捗ステータス文字列に変換
-                            if($row['progress'] == 0){
-                                $progress = "未了";
-                            }else if($row['progress'] == 1){
-                                $progress = "完了";
-                            }else if($row['progress'] == 2){
-                                $progress = "キャンセル";
-                            }
-
-                            //未了・完了のボタンの切替で使用
-                            if($row['progress'] == 0){
-                                $toggle = 1;
-                                $disabled = "";
-                                $class = "unfinish";
-                            }else if($row['progress'] == 1){
-                                $toggle = 0;
-                                $disabled = "";
-                                $class = "finish";
-                            }else if($row['progress'] == 2){
-                                $disabled = "disabled";
-                                $class = "cancel";
-                            }
-
-                            $color = $row['color'];
-                            $id = $row['id'];
-
-                            //予定の数が１つの時とそうで無い時でpostで送るaタグのhrefを変える
-                            if($stmt->rowCount() == 1){
-                                //１つの時は、配列にするとpostできなかった
-                                $href = "javascript:form1.submit()";
-                            }else{
-                                $href = "javascript:form1[{$num}].submit()";
-                            }
-
-                            
-
-                            $list_view = <<<EOF
-                            <form class="progBtn" action="../edit.php" method="post" name="form1">
-                                <input type="hidden" name="userid" value="$userid">
-                                <input type="hidden" name="year" value="$year">
-                                <input type="hidden" name="month" value="$month">
-                                <input type="hidden" name="day" value="$day">
-                                <input type="hidden" name="view" value="$viewMode">
-                                <input type="hidden" name="id" value="$id">
-                                <input type="hidden" name="progFlag" value="$toggle">
-                                <a href="$href"><button class="$class" $disabled>{$progress}</button></a>
-                            </form>
-
-                            <input type="hidden" id="progID" name="id" value="$id">
-                            <button id="state">{$progress}</button>
-
-                            <a data-toggle="modal" href="#memo{$id}" style=text-decoration:none;color:#000;>
-                                <div class="list_view" style="background-color:{$color};">
-
-                                    <div class="tagMenus" style="width:8%"></div>
-                                        
-                                    <div class="tagMenus" style="width:10%;font-size:12px">
-                                        <p class="list_time"><i class="far fa-clock"></i>{$S_time}〜{$E_time}</p>
-                                    </div>
-
-                                    <div class="tagMenus" style="width:70%">
-                                        <p class="list_title">{$title}</p>
-                                    </div>
-
-                                    <div class="tagMenus" style="width:10%;text-align:right"></div>                                    
-                                        
-                                </div>    
-                            </a>
-
-                            <div class="icons">
-                                <span data-toggle="tooltip" data-placement="bottom" title="編集">
-                                    <a href="../Edit/edit_form.php?ID={$id}&view=$viewMode" class="edit"><i id="operate2" class="fas fa-pen"></i></a>
-                                </span>
-                                <span data-toggle="tooltip" data-placement="bottom" title="削除">
-                                    <a data-toggle="modal" href="#delete" class="delete" id="{$id}"><i id="operate3" class="fas fa-trash-alt"></i></a>
-                                </span>
-                            </div>  
-
-
-
-                            <div class="modal" id="memo{$id}">
-                                <form class="deleteform" action="delete.php" method="post">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header" style=background-color:{$color}>
-                                                <p class="list_titles"><i class="fas fa-calendar-alt"></i> {$title}</p>
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div id="Deleteform" class="deletepops">
-                                                    <p class="modal-times"><i class="far fa-clock"></i>  {$S_time}〜{$E_time}</p>
-                                                    <p class="modal_memo">{$memo}</p> 
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            EOF;
-
-                            if($viewMode == "list"){
-                                print($list_view);
-                            }
-                        }
-
-
-                        // <!-- タイムテーブル表示 -->
-                        if($viewMode == "table"){
-                            print("<table id=\"time_table\" border=1>");
-                            print("<thead class=\"timesThead\">");
-                            for($i=0;$i<=23;$i++){
-                                
-                                //現在時刻の時は背景色つける
-                                if($year == $TodayYear && $month == $TodayMonth && $day == $today && $todayTime == $i){
-                                    //時刻の文字がリンクになっていて、新規登録ページのモーダルを開く
-                                    print("<th id=\"timesNow\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"クリックで予定追加\"><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add_now\" id=\"{$i}\">{$i}:00</a></th>");
-                                }else{
-                                    //時刻の文字がリンクになっていて、新規登録ページのモーダルを開く
-                                    print("<th class=\"timesTh\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"クリックで予定追加\"><a data-toggle=\"modal\" href=\"#add\" class=\"sub_add\" id=\"{$i}\">{$i}:00</a></th>");
-                                }
-                            }
-                            print("</thead>");
-
-                            $stmt->execute([$userid,$year,$month,$day,'false']);
-                            foreach($stmt as $row){
-                                $S_time = $row['start_time'];
-                                $E_time = $row['end_time'];
-                                $title = htmlspecialchars($row['title']);
-                                $color = $row['color'];
-                                $delete = $row['logic_delete'];
-                                $id = $row['id'];
-
-                                //開始時刻の前の空白マスを算出
-                                $prev = (int)str_replace(':00','',$S_time);
-
-                                //予定の期間を算出
-                                $during = (int)str_replace(':00','',$E_time) - $prev;
-
-                                //終了時刻の後の空白マスを算出
-                                $back = 24 - ($prev + $during);
-                                if($prev + $during < $todayTime){
-                                    $nowMaker2 =  "";
-                                }else if($prev + $during > $todayTime){
-                                    $nowMaker2 =  $todayTime - ($prev + $during);
-                                }
-
-                                print("<tr>");
-                                    //開始時刻の前の空白マス
-                                    for($i=1;$i<=$prev;$i++){
-                                        //現在時刻の時は背景色つける
-                                        if($year == $TodayYear && $month == $TodayMonth && $day == $today && ($i-1)  == $todayTime){
-                                            print("<td class=\"timesNow\"></td>");
-                                        }else{
-                                            print("<td class=\"tdView\"></td>");
-                                        }
-                                    }
-
-                                    //予定の出力文字数が9を超える場合は一部のみをカットして表示する処理を行う
-                                    if(mb_strlen($title) >= 9){
-                                        // 8文字まで抜き出し、語末に...をつける
-                                        $title = mb_substr($title,0,8) . '...';
-                                    }
-                                    //予定を出力
-                                    print("<td class=\"tdSche\" colspan=\"{$during}\">");
-                                    print("<div class=\"scheDiv\" style=\"background-color:{$color}\">{$title}</div>");
-                                    print("</td>");
-
-                                    //終了時刻の後の空白マス
-                                    for($i=1;$i<=$back;$i++){
-                                        //現在時刻の時は背景色つける
-                                        if($year == $TodayYear && $month == $TodayMonth && $day == $today && ($i-1) == $todayTime - ($prev + $during)){
-                                            print("<td class=\"timesNow\"></td>");
-                                        }else{
-                                            print("<td class=\"tdView\"></td>");
-                                        }
-                                    }
-                                print("</tr>");
-                            }
-                            print("</table>");
-                        }
-
-                        //タイムテーブル縦表示
-                        if($viewMode == "table2"){
-                            print("<div id=\"out_frame\">");
-                            for($i=0;$i<=23;$i++){
-                                
-                                print("<div class=\"colum_td\">");
-                                print("<div class=\"time_td\">{$i}:00</div>");
-
-                                if($i < 10){
-                                    $time = '0' . $i .':00:00';
-                                }else{
-                                    $time = $i .':00:00';
-                                }
-
-                                if($dispMode ==  "All"){
-                                    $sql_t2 = "SELECT * FROM Memo_tags WHERE userid=? and year=? and month=? and day=? and logic_delete=? and start_time=? ORDER BY start_time";
-                                }
-                                $stmt_t2 = $dbh->prepare($sql_t2);
-                                $stmt_t2->execute([$userid,$year,$month,$day,'false',$time]);
-                                foreach($stmt_t2 as $row){
-                                    $S_time = $row['start_time'];
-                                    $E_time = $row['end_time'];
-                                    $title = htmlspecialchars($row['title']);
-                                    $color = $row['color'];
-                                    $delete = $row['logic_delete'];
-                                    $id = $row['id'];
-
-                                    $ini_t = (int)str_replace(':00','',$S_time);
-                                    $end_t = (int)str_replace(':00','',$E_time);
-                                    $height = (int)(($end_t - $ini_t) * 50);
-
-                                    $width = (int)(88 / $stmt_t2->rowCount());
-
-                                    print("<div class=\"td2_list\" style=width:{$width}%;height:{$height}px;background:$color;><span style=font-size:12px>{$ini_t}:00~{$end_t}:00</span><br/>{$title}</div>");
-
-                                }
-                                print("</div>");
-                                
-                            }
-                            print("</div>");
-                            
-                        }
-
-                        //ゴミ箱表示
-                        // if($viewMode == "delete"){
-                        //     print("<form action=\"../Delete/delete.php\" method=\"post\">");
-                        //     print("<button type=\"submit\">削除</button>");
-                        //     //※SQL文およびexecuteは、上の方で先立って処理している。
-                        //     foreach($stmt_del as $row){
-                        //         $id_count++;
-                        //         $id = $row['id'];
-                        //         $y = $row['year'];
-                        //         $m = $row['month'];
-                        //         $d = $row['day'];
-                        //         $title = htmlspecialchars($row['title']);
-                        //         print("<div>");
-                                
-                        //         print("<input type=\"checkbox\" name=\"id[]\" value=\"{$id}\">");
-                        //         print("<input type=\"hidden\" name=\"userid\" value=\"{$userid}\">");
-                        //         print("<input type=\"hidden\" name=\"year\" value=\"{$year}\">");
-                        //         print("<input type=\"hidden\" name=\"month\" value=\"{$month}\">");
-                        //         print("<input type=\"hidden\" name=\"day\" value=\"{$day}\">");
-                                
-                        //         print("<a href=../Delete/delete.php?userid=$userid&year=$year&month=$month&day=$day&view=delete&id=$id>削除</a>");
-                        //         print("<p style=display:inline-block>{$y}/{$m}/{$d} {$title}</p>");
-                        //         print("</div>");
-                        //     }
-                        // }
-                        // print("</form>");
-
-                    }else{
-                        print("<div class=\"no_data\">該当する予定はありません</div>");
-                    }
-                    
-                ?>
-                </div>
-            </div>
+                        ?>
+                        
+                        <input type="checkbox" name="id[]" value="<?=$id?>">
+                        <input type="hidden" name="userid" value="<?=$userid?>">
+                        <input type="hidden" name="year" value="<?=$year?>">
+                        <input type="hidden" name="month" value="<?=$month?>">
+                        <input type="hidden" name="day" value="<?=$day?>">
+                        
+                        <a href=../Delete/delete.php?userid=$userid&year=$year&month=$month&day=$day&id=$id>削除</a>
+                        <p style=display:inline-block><?=$y?>/<?=$m?>/<?=$d?> <?=$title?></p>
+                        </div>
+                    <?php endforeach; ?>
+                </form>
+            <?php endif;?>
         </div>
     </main>
 

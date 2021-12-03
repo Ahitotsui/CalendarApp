@@ -106,20 +106,24 @@
     }
   ?>
   <div id="topParts">
-    <p id="TodayDisp" class="inlineParts"><?php print($TitleYear); ?>年 <?php print($Titlemonth); ?>月</p>
-    <a href="index.php?year=<?php print($link_prevyear); ?>&month=<?php print($link_prevM); ?>" style=font-size:13px>&lt;&lt;前月</a>
-    <a href="index.php?year=<?php print($link_nextyear); ?>&month=<?php print($link_nextM); ?>" style=font-size:13px>翌月&gt;&gt;</a>
+
+    <p id="TodayDisp" class="inlineParts">
+      <a href="index.php?year=<?php print($link_prevyear); ?>&month=<?php print($link_prevM); ?>" style=font-size:22px;color:#555;><i class="fas fa-chevron-left"></i></a>
+      <?php print($TitleYear); ?>年 <?php print($Titlemonth); ?>月
+      <a href="index.php?year=<?php print($link_nextyear); ?>&month=<?php print($link_nextM); ?>" style=font-size:22px;color:#555;><i class="fas fa-chevron-right"></i></a>
+    </p>
+   
     <a href="../Day/?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
-      <button class="btn btn-sm" id="day_link">日</button>
+      <button class="page_select_btn" id="day_link">日</button>
     </a>
     <a href="../Week/?year=<?= $TitleYear ?>&month=<?= $Titlemonth ?>&day=<?= date("j") ?>">
-      <button class="btn btn-sm" id="day_link">週</button>
+      <button class="page_select_btn" id="day_link">週</button>
     </a>
     <a href="../Day/?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
-      <button class="btn btn-secondary btn-sm" id="day_link">月</button>
+      <button class="page_selected_now_btn" id="day_link">月</button>
     </a>
     <a href="../Day/?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
-      <button class="btn btn-sm" id="day_link">年</button>
+      <button class="page_select_btn" id="day_link">年</button>
     </a>
 
 
@@ -204,7 +208,7 @@
         require_once('../csv/csv.php');
         $syuku = laod_csv($TitleYear,$Titlemonth,$day);
       ?>
-      <td id="<?=$day?>" class="tddays">
+      <td id="<?=$day?>" class="tddays"> 
         <div style="display:flex;">
 
           <a href="../Day/?userid=<?=$userid?>&year=<?=$TitleYear?>&month=<?=$Titlemonth?>&day=<?=$day?>&view=list" style="z-index:90;">
@@ -394,7 +398,7 @@
       <!-- 新規登録ボタン -->
       <tr>
         <td colspan="5">
-            <button id="AddBtn" type="submit">予定を追加</button>
+            <button id="AddBtn" type="submit">保存</button>
         </td>
       </tr>
       
