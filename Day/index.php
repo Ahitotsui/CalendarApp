@@ -435,22 +435,17 @@
                             ?>
 
                             <div style="display:flex;background:<?= $row['color'] ?>;" class="list_style_tags">
-                                <form action="../edit.php" style="width:30px;" method="post" name="form1">
-                                    <input type="hidden" name="userid" value="<?=$userid?>">
-                                    <input type="hidden" name="year" value="<?=$year?>">
-                                    <input type="hidden" name="month" value="<?=$month?>">
-                                    <input type="hidden" name="day" value="<?=$day?>">
-                                    <input type="hidden" name="view" value="<?=$viewMode?>">
-                                    <input type="hidden" name="id" value="<?=$id?>">
-                                    <input type="hidden" name="progFlag" value="<?=$toggle?>">
-                                    <?php if($row['progress'] == 0): ?>
-                                        <a href="<?=$href?>"><button class="progress_btns"></button></a>
-                                    <?php elseif($row['progress'] == 1): ?>
-                                        <div class="done_check"><button class="progress_btns">✔️</button></div>
-                                    <?php elseif($row['progress'] == 2): ?>
-                                        <button class="progress_btns">X</button>
-                                    <?php endif; ?>
-                                </form>
+
+                                    <div style="width:30px;">
+                                        <?php if($row['progress'] == 0): ?>
+                                            <button class="ajax_change_progress change_style<?=$id?> unfinish_btn_style" data-flag="<?=$toggle?>" data-id="<?=$id?>"></button>
+                                        <?php elseif($row['progress'] == 1): ?>
+                                            <button class="ajax_change_progress change_style<?=$id?> finish_btn_style" data-flag="<?=$toggle?>" data-id="<?=$id?>"></button>
+                                        <?php elseif($row['progress'] == 2): ?>
+                                            <button class="ajax_change_progress cancel_btn_style"></button>
+                                        <?php endif; ?>
+                                    </div>
+                                   
                                 <div class="times_disp" style="width:80px;">
                                     <div><i class="far fa-clock"></i><?= $row['start_time'] ?></div>
                                     <div>〜<?= $row['end_time'] ?></div>
@@ -696,12 +691,6 @@
         </form>
     </div>
 
-    <!-- bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <!-- bootstrap -->
-    <script src="./ajax.js"></script>
     <script>
         $(function(){
 
@@ -734,22 +723,55 @@
             $('[data-toggle="tooltip"]').tooltip();
 
             //Ajax
-            $("#state").on("click", function(event){
-                alert('asd');
-                let id = $("#progID").val();
+            $(".ajax_change_progress").click(function(){
+
+                // alert('confirm');
+                var Flag = $(this).data('flag');
+                var id = $(this).data('id');
+                var changeStyle = '.change_style' + id ;
+
                 $.ajax({
-                type: "POST",
-                url: "ajax.php",
-                data: { "id" : id },
-                dataType : "json"
+                    type: "POST",
+                    url:'../edit.php',
+                    data: { "progFlag" : Flag ,
+                            "id" : id ,
+                          },
                 }).done(function(data){
-                    $("#state").text(data.id);
-                }).fail(function(XMLHttpRequest, status, e){
-                    alert(e);
+                    /* 通信成功時 */
+                    // $(changeStyle).addClass("finish_btn_style");
+
+
+
+                    if(Flag == 1){
+                        $(changeStyle).removeClass("unfinish_btn_style");
+                        $(changeStyle).addClass("finish_btn_style");
+                        
+                        $(changeStyle).data('flag','0');
+                    }else if(Flag == 0){
+                        $(changeStyle).removeClass("finish_btn_style");
+                        $(changeStyle).addClass("unfinish_btn_style");
+                        
+                        $(changeStyle).data('flag','1');
+                    }
+                    
+                    // alert('ajax_succes');
+                    
+                }).fail(function(data){
+                    /* 通信失敗時 */
+                    alert('ajax_fail');
                 });
+
             });
 
         });
     </script>
+
+        <!-- bootstrap -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <!-- bootstrap -->
+
 </body>
 </html>

@@ -195,14 +195,60 @@ html,body{
   margin-bottom:3px;
 }
 
-.progress_btns{
+
+
+.ajax_change_progress{
   display:block;
-  width:25px;
-  height:25px;
-  font-size:0.7em;
-  border:solid 1px #555;
+  width:30px;
+  height:30px;
+  /* padding-top:-50px; */
+  font-size:30px;
+
+  border:solid 2px #C0C0C0;
   border-radius:3px;
   background:#fff;
+  pointer:cursor;
+}
+
+.ajax_change_progress:focus{
+  outline:none;
+}
+
+/* Ajax 完了ボタンスタイル */
+.finish_btn_style{
+  background:#00CC00;
+  color:#fff;
+  /* background-image: url(../img/completed.png);
+  background-size:cover; */
+  position:relative;
+}
+
+
+.finish_btn_style:after{
+  content:'✓';
+  font-size:20px;
+  color:#fff;
+  position:absolute;
+  left:4px;
+  top:-1px;
+  /* background:#CCFFCC; */
+}
+
+.unfinish_btn_style{
+  background:#fff;
+}
+
+.cancel_btn_style{
+  background:#AAAAAA;
+  position:relative;
+}
+
+.cancel_btn_style:after{
+  content:'×';
+  color:#fff;
+  position:absolute;
+  left:4px;
+  top:-11px;
 }
 
 .times_disp{
