@@ -381,14 +381,6 @@
                     <?php if($viewMode == "list"): ?>
                         <?php foreach($stmt as $row) : ?>
                             <?php
-                                //進捗ステータス文字列に変換
-                                // if($row['progress'] == 0){
-                                //     $row['progress'] = "未了";
-                                // }else if($row['progress'] == 1){
-                                //     $row['progress'] = "完了";
-                                // }else if($row['progress'] == 2){
-                                //     $row['progress'] = "キャンセル";
-                                // }
                                 $row['start_time'] = preg_replace('/:00/','',$row['start_time'],1);
                                 $row['end_time'] = preg_replace('/:00/','',$row['end_time'],1);
                                 $title = htmlspecialchars($row['title']);
@@ -692,7 +684,7 @@
     </div>
 
     <script>
-        $(function(){
+        $(document).ready(function(){
 
             $(".delete").click(function(){
                 
@@ -732,10 +724,11 @@
 
                 $.ajax({
                     type: "POST",
-                    url:'../edit.php',
+                    url:'../DB/progress_ajax.php',
                     data: { "progFlag" : Flag ,
                             "id" : id ,
                           },
+                    timeout: 500,
                 }).done(function(data){
                     /* 通信成功時 */
                     // $(changeStyle).addClass("finish_btn_style");
@@ -758,7 +751,12 @@
                     
                 }).fail(function(data){
                     /* 通信失敗時 */
-                    alert('ajax_fail');
+                    
+                    if(Flag == 1){
+                        alert('予定を完了にできませんでした');
+                    }else if(Flag == 0){
+                        alert('予定を未了に戻せませんでした');
+                    }
                 });
 
             });
