@@ -12,6 +12,12 @@
     <!-- bootstrap -->
     <link href="../css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
 
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300&display=swap" rel="stylesheet">
+
+
     <title>Document</title>
     <style>
 
@@ -19,7 +25,16 @@
             display: flex;
             width:100%;
             height:40px;
-            background-color:#000000;
+            /* background-color:#000000; */
+            border-bottom:solid 1px #DDDDDD;
+        }
+
+        .logo_text{
+            display: block;
+            font-family: 'Corinthia', cursive;
+            color:#444444;
+            font-size:30px;
+            padding-top:-10px;
         }
 
         .right{
@@ -47,12 +62,12 @@
         /*ログインしたユーザー名のスタイル*/
         #login{
             font-size: 0.7em; 
-            color:#FFFFFF;
+            /* color:#FFFFFF; */
         }
 
         /*ログインしたユーザー名を強調*/
         #username{
-            color:#AEFFBD;
+            /* color:#AEFFBD; */
             margin-left:2px;
             margin-right:2px;
         }
@@ -68,13 +83,32 @@
     <header>
 
         <div class="right">
-
+            <a href="../Month/?year=<?php print($year) ?>&month=<?php print($month) ?>" class="logo_text">
+                <!-- ヘッダーのロゴ画像 -->
+                <!-- <img src="../img/LOGO.png" alt="" id="logo"> -->
+                Calendar
+            </a>
         </div>
 
         <div class="middle">
-            <a href="../Month/?year=<?php print($year) ?>&month=<?php print($month) ?>">
+            <a href="../Month/?year=<?php print($year) ?>&month=<?php print($month) ?>" class="logo_text">
                 <!-- ヘッダーのロゴ画像 -->
-                <img src="../img/LOGO.png" alt="" id="logo">
+                <!-- <img src="../img/LOGO.png" alt="" id="logo"> -->
+                <!-- Calendar -->
+
+              
+                <!-- <a href="../Day/?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
+                <button class="page_select_btn" id="day_link">日</button>
+                </a>
+                <a href="../Week/?year=<?= $TitleYear ?>&month=<?= $Titlemonth ?>&day=<?= date("j") ?>">
+                <button class="page_select_btn" id="day_link">週</button>
+                </a>
+                <a href="../Day/?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
+                <button class="page_selected_now_btn" id="day_link">月</button>
+                </a>
+                <a href="../Day/?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
+                <button class="page_select_btn" id="day_link">年</button>
+                </a> -->
             </a>
         </div>
 

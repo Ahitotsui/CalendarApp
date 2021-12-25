@@ -2,30 +2,32 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="index.css">
 <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.ico" />
+    <!-- bootstrap -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- bootstrap -->
+    <link href="../css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
 <title>エラー</title>
 </head>
 
 <body>
 
-<!--ヘッダー領域-->
-<header>
-  <h1>Calender</h1>
-</header>
-<!--ヘッダー領域(END)--->
+  <main class="container" style="margin-top:50px;">
 
-<main>
-  <div>
-    <h2>ログインに失敗しました</h2>
-    <p id="msg">ユーザー名またはパスワードに誤りがあります。</p>
-    <p><a href="../Login/">ログイン画面に戻る</a></p>
-  </div>
-</main>
+    <div class="card">
+      <div class="card-header bg-danger text-white">
+        ログインに失敗しました
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">下記原因が考えられます</h5>
+        <p class="card-text">・ユーザー名またはパスワードに誤りがあります。</p>
+        <p class="card-text">・ログインセッションの有効時間が過ぎました。</p>
+        <a href="../Login/" class="btn btn-primary">ログイン画面に戻る</a>
+      </div>
+    </div>
 
-<footer>
-  
-</footer>
+  </main>
 
 </body>
 </html>

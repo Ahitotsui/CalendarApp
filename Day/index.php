@@ -169,8 +169,8 @@
                 ?>
 
 
-                <table border="1" class="left_calendar">
-                    <thead>
+                <table class="left_calendar">
+                    <thead class="left_calendar_thead">
                         <td class="tdtop">月</td>
                         <td class="tdtop">火</td>
                         <td class="tdtop">水</td>
@@ -271,11 +271,36 @@
                     ?>
 
                     <div style="margin-top:20px;">
-                        <button class="btn btn-primary btn-lg btn-block"><i class="fas fa-plus-circle"></i>　予定を追加</button>
+                        <button class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus-circle"></i>　予定を追加</button>
                         <a href="<?php print($URL); ?>&view=delete" type="button" class="btn btn-secondary btn-lg btn-block">ゴミ箱</a>
                     </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+
+                                <h5 class="modal-title" id="exampleModalLabel">
+                                    <?php print($year); ?>年<?php print($month); ?>月<?php print($day); ?>日(<?php print($yobi); ?>) の予定
+                                </h5>
+
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
                     
-                </div>
+                <!-- </div> -->
 
                     <?php 
                         //DB接続
@@ -439,16 +464,22 @@
                                     </div>
                                    
                                 <div class="times_disp" style="width:80px;">
-                                    <div><i class="far fa-clock"></i><?= $row['start_time'] ?></div>
-                                    <div>〜<?= $row['end_time'] ?></div>
+                                    <div style="color:<?= $row['color'] ?>;filter: invert(100%) grayscale(100%) contrast(100);"><i class="far fa-clock"></i><?= $row['start_time'] ?></div>
+                                    <div style="color:<?= $row['color'] ?>;filter: invert(100%) grayscale(100%) contrast(100);">〜<?= $row['end_time'] ?></div>
                                 </div>
-                                <div style="width:100%;" class="list_style_tags_titles" data-toggle="modal" href="#memo<?=$row['id']?>"><?= $row['title'] ?></div>
+
+                                <div style="width:100%;" class="list_style_tags_titles" data-toggle="modal" href="#memo<?=$row['id']?>">
+                                    <span style="color:<?= $row['color'] ?>;filter: invert(100%) grayscale(100%) contrast(100);">
+                                        <?= $row['title'] ?>
+                                    </span>
+                                </div>
+
                                 <div class="operate_icons" style="display:flex;">
                                     <span data-toggle="tooltip" data-placement="bottom" title="編集">
-                                        <a href="../Edit/edit_form.php?ID=<?=$id?>&view=<?=$viewMode?>" class="edit"><i id="operate2" class="fas fa-pen"></i></a>
+                                        <a href="../Edit/edit_form.php?ID=<?=$id?>&view=<?=$viewMode?>" class="edit"><i class="fas fa-pen operate2" style="color:<?= $row['color'] ?>;filter: invert(100%) grayscale(100%) contrast(100);"></i></a>
                                     </span>
                                     <span data-toggle="tooltip" data-placement="bottom" title="削除">
-                                        <a data-toggle="modal" href="#delete" class="delete" id="<?=$id?>"><i id="operate3" class="fas fa-trash-alt"></i></a>
+                                        <a data-toggle="modal" href="#delete" class="delete" id="<?=$id?>"><i class="fas fa-trash-alt operate3" style="color:<?= $row['color'] ?>;filter: invert(100%) grayscale(100%) contrast(100);"></i></a>
                                     </span>
                                 </div>
                             </div>

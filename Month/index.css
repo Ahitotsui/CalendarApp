@@ -103,7 +103,8 @@ html,body{
 /* 月 -MON-	火 -TUE-	水 -WED-	木 -THU-	金 -FRI-	土 -SAT-	日 -SUN- 表記 */
 .tdtop{
   font-size: 10px;
-  background-color:#CCCCCC;
+  font-weight:bold;
+  /* background-color:#CCCCCC; */
   border:solid 0.1px #888888;
   text-align: center;
 }
@@ -338,8 +339,9 @@ footer{
 
 /*新規登録する年月日を表示するテキスト*/
 #AddConfirm{
-  font-size:25px;
+  font-size:22px;
   text-align: center;
+  margin-bottom:20px;
 }
 
 /* 開始時刻・終了時刻 */

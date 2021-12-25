@@ -3,13 +3,27 @@ $(function(){
 
 
   /*------------------------------------------新規登録フォーム---------------------------------------------*/
-  $(".tddays").click(function(){
+  $(".add_form_triger").click(function(){
     
-    //日付を取得し変数idに代入
-    var id = $(this).attr('id');
+    //日付を取得し変数SelecteDayに代入
+    var SelecteDay = $(this).data('selectday');
+
     //編集フォームのspanタグと<input type=hidden>タグのvalueに日付を書く
-    $("#AddDay").text(id);
-    $("#AddHiddenday").val(id);
+    $("#AddDay").text(SelecteDay);
+    $("#AddHiddenday").val(SelecteDay);
+
+    var year = $("#AddConfirm").data('year');
+    var month = $("#AddConfirm").data('month');
+
+    var getToday = year + '/' + month + '/' + SelecteDay;
+
+    
+    // 新規フォームに曜日を書く
+    var today = new Date( getToday ) ;
+    var weekday = [ "日", "月", "火", "水", "木", "金", "土" ] ;
+    var wday = weekday[ today.getDay() ];
+    $("#yobi").text(wday);
+
 
     //新規登録ボタン押したらポップアップ開く
     $("#Addform").fadeIn("fast");

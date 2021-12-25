@@ -174,28 +174,37 @@ html,body{
 
 /* 左カレンダー */
 .left_calendar{
-  table-layout: fixed;
+  /* table-layout: fixed; */
   width: 100%;
-  border:solid 0.1px #888888;
-  border-collapse: collapse; 
+  /* border:solid 0.1px #888888; */
+  /* border-collapse: collapse;  */
+  border-radius:10px;
   text-align:center;
+}
+
+.left_calendar_thead{
+  font-weight:bold;
 }
 
 
 .daysTd{
-  height:60px;
+  /* height:60px; */
+  padding:10px;
+  color:#AAAAAA;
 }
 
 .list_style_tags{
   width:100%;
   height:40px;
-  border:solid 1px #555;
+  border:solid 1px #888;
   border-radius:3px;
-  padding:5px;
-  margin-bottom:3px;
+  padding:4px;
+  margin-bottom:10px;
 }
 
-
+.list_style_tags:hover{
+  box-shadow: 0 0 8px gray;
+}
 
 .ajax_change_progress{
   display:block;
@@ -259,11 +268,19 @@ html,body{
 
 .list_style_tags_titles{
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top:2px;
+  padding-right:5px;
 }
 
 .operate_icons{
   margin-left: auto;
   margin-right: 0;
+}
+
+.operate2,.operate3{
+  margin-right:10px;
 }
 
 .guntt_chart_table{

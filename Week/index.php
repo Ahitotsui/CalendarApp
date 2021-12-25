@@ -129,60 +129,29 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    table{
-      /* width:100%;
-      table-layout: fixed;
-      margin-top:30px; */
-    }
 
-    thead th{
-      color:#555555;
-    }
+  <!-- 曜日のフォント -->
+  <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet">
 
+  <link rel="stylesheet" href="index.css">
 
-    td{
-      height:600px;
-    }
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">
 
-    .gray_scale{
-      background: #DDDDDD;
-    }
+  <!-- bootstrap -->
+  <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
 
-    .shcedule_wrap{
-      height:580px;
-    }
+  <!-- bootstrap -->
+  <link href="../css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+  
+  <!-- CNDでオンラインでjquery読み込み -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="./index.js"></script>
+  
+  <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico" />
 
-    .date{
-      font-size:20px;
-      text-align:center;
-      color:#555555;
-      font-weight: normal;
-    }
-
-    .week{
-      font-size:12px;
-      color:#999999;
-    }
-
-    .tags{
-      width:100%;
-      border:solid 1px #555555;
-      border-radius:5px;
-      margin-bottom:5px;
-      color:#555555;
-      padding-left:5px;
-      padding-right:5px;
-    }
-
-    .time{
-      font-size:10px
-    }
-
-  </style>
   <title>week</title>
 </head>
 <body>
@@ -249,18 +218,18 @@
   
   ?>
 
-  <div class="text-center">
-      <a class="text-2xl text-gray-700" href="./?year=<?= $link_year_prev ?>&month=<?= $link_month_prev ?>&day=<?= $link_day_prev ?>">←</a>
-      <h1 class="text-2xl text-gray-700 text-center inline-block"><?= $start_year ?>年<?= $start_month ?>月<?= $start_day ?>日〜<?= $end_year ?>年<?= $end_month ?>月<?= $end_day ?>日</h1>
-      <a class="text-2xl text-gray-700" href="./?year=<?= $link_year_next ?>&month=<?= $link_month_next ?>&day=<?= $link_day_next ?>">→</a>
+  <div class="////text-center">
+      <a class="" href="./?year=<?= $link_year_prev ?>&month=<?= $link_month_prev ?>&day=<?= $link_day_prev ?>">←</a>
+      <h1 class="week_during_diplay"><?= $start_year ?>年<?= $start_month ?>月<?= $start_day ?>日〜<?= $end_year ?>年<?= $end_month ?>月<?= $end_day ?>日</h1>
+      <a class="" href="./?year=<?= $link_year_next ?>&month=<?= $link_month_next ?>&day=<?= $link_day_next ?>">→</a>
   </div>
 
-  <table border="1" class="table-fixed w-full mt-10">
+  <table border="1">
 
     <thead align="center">
       <?php for($b=$bef_start_day;$b<=$bef_max;$b++) : ?>
         <?php $count++ ?>
-        <th class="<?php if($b <= 0) echo 'gray_scale'; ?> border border-gray-900 px-4 py-2 text-gray-500" > 
+        <th class="<?php if($b <= 0) echo 'gray_scale'; ?>" > 
           <?php if($b <= 0) : ?>
             <?php $preday = $pre_day_count + $b ?>
               <div class="date"><?= $pre_month ?>/<?= $preday ?></div>
@@ -274,7 +243,7 @@
 
       <?php for($i=$today;$i<=$aft_max;$i++) : ?>
         <?php $count++ ?>
-        <th class="<?php if($i > $now_day_count) echo 'gray_scale'; ?> border border-gray-800 px-4 py-2 text-gray-500">
+        <th class="<?php if($i > $now_day_count) echo 'gray_scale'; ?>">
           <?php if($i <= $now_day_count) : ?>
               <div class="date"><?= $i ?></div>
           <?php elseif($i > $now_day_count) : ?>

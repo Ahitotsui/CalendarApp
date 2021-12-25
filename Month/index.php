@@ -208,7 +208,7 @@
         require_once('../csv/csv.php');
         $syuku = laod_csv($TitleYear,$Titlemonth,$day);
       ?>
-      <td id="<?=$day?>" class="tddays"> 
+      <td class="tddays"> 
         <div style="display:flex;">
 
           <a href="../Day/?userid=<?=$userid?>&year=<?=$TitleYear?>&month=<?=$Titlemonth?>&day=<?=$day?>&view=list" style="z-index:90;">
@@ -222,7 +222,7 @@
           </div>
 
         </div>
-        <div class="memos">
+        <div class="memos add_form_triger" data-selectday="<?=$day?>">
 
           <?php $stmt->execute([$_SESSION['login']['username'],$TitleYear,$Titlemonth,$day]); ?>
             
@@ -277,7 +277,9 @@
           <div style="display:flex;">
               <div style="width:30px;"></div>
               <div style="width:100%;">
-                <p id="AddConfirm"><?php print($TitleYear); ?>年<?php print($Titlemonth); ?>月<span id="AddDay"></span>日</p>
+                <div id="AddConfirm" data-year="<?php print($TitleYear); ?>" data-month="<?php print($Titlemonth); ?>">
+                  <?php print($TitleYear); ?>年<?php print($Titlemonth); ?>月<span id="AddDay"></span>日(<span id="yobi"></span>)
+                </div>
               </div>
               <div>
                 <button id="AddClose" type="reset">
