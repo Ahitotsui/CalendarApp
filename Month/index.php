@@ -105,7 +105,7 @@
       $link_nextyear = $TitleYear + 1;
     }
   ?>
-  <div id="topParts">
+  <div class="topParts">
 
     <p id="TodayDisp" class="inlineParts">
       <a href="index.php?year=<?php print($link_prevyear); ?>&month=<?php print($link_prevM); ?>" style=font-size:22px;color:#555;><i class="fas fa-chevron-left"></i></a>
@@ -157,18 +157,20 @@
   }else if($iniweek == "Sun"){
     $ini = 6;
   }
+
+  $all_td_count = $ini + date( 't' , strtotime($_GET['year'] . "/" . $_GET['month'] . "/01"));  
 ?>
 
-<table id="mainTable" border="1">
+<table id="main_table" border="1" data-td="<?= $all_td_count ?>">
 
-  <thead>
-    <td class="tdtop">月</td>
-    <td class="tdtop">火</td>
-    <td class="tdtop">水</td>
-    <td class="tdtop">木</td>
-    <td class="tdtop">金</td>
-    <td class="tdtop">土</td>
-    <td class="tdtop">日</td>
+  <thead class="yobi_thead">
+    <th class="thead_th">月</th>
+    <th class="thead_th">火</th>
+    <th class="thead_th">水</th>
+    <th class="thead_th">木</th>
+    <th class="thead_th">金</th>
+    <th class="thead_th">土</th>
+    <th class="thead_th">日</th>
   </thead>
 
   <tr>
@@ -208,8 +210,8 @@
         require_once('../csv/csv.php');
         $syuku = laod_csv($TitleYear,$Titlemonth,$day);
       ?>
-      <td class="tddays"> 
-        <div style="display:flex;">
+      <td class="day_td_tags"> 
+        <div style="display:flex;" class="day_and_syuku_disp_area">
 
           <a href="../Day/?userid=<?=$userid?>&year=<?=$TitleYear?>&month=<?=$Titlemonth?>&day=<?=$day?>&view=list" style="z-index:90;">
             <div class="tdDays" id="<?php if($TitleYear == $TodayYear && $TodayMonth == $Titlemonth && $today == $day) echo 'tdTodayStr'?>"><?=$day?></div>
@@ -411,7 +413,7 @@
 
 </main>
 
-<footer class="fixed-bottom">
+<footer class="footer">
   <div id="top" class="row">
   <!--前年のページネーション(月は12月に選択)-->
     <div class="col col-md-2">

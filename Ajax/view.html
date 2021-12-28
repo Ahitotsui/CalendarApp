@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- jQueryの読み込み (これがないと動かないよ) -->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <style>
+      html,body{
+        margin:0;
+        padding:0;
+      }
+
+      #output{
+          width: 80%;
+          margin-left: auto;
+          margin-right: auto;
+      }
+
+      .tags{
+          width: 100%;
+          line-height: 50px;
+          border:solid 1px #555;
+          margin-bottom:5px;
+      }
+  </style>
+  <title>Ajax Sample1</title>
+</head>
+<body>
+
+  <div id="output">戻り値が表示される</div>
+
+    <script>
+        $(function(){
+            id = $("#id").val();
+            $.ajax({
+            type: "POST",
+            url: "json.php",
+            dataType : "json"
+            }).done(function(data){
+                console.log(data);
+                for(var i in data){
+                    $("#output").append("<div class=tags style=background:" + data[i].color + ">" + data[i].yaer +  data[i].title + "</div>");
+                }
+            }).fail(function(XMLHttpRequest, textStatus, error){
+                alert(error);
+            });
+        });
+
+
+    </script>
+
+</body>
+</html>

@@ -42,5 +42,5 @@ if(isset($_SESSION['login']) == true){
 }else{
   /*$_SESSION['login']が存在しない場合は(=sqlの検索がヒットせず、$_SESSION['login']にデータが書き込まれない)
   エラーページへ移動*/
-  header("location:../error.html");
+  header("location:../Error");
 }

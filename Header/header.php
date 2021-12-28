@@ -21,7 +21,7 @@
     <title>Document</title>
     <style>
 
-        header{
+        .common_header{
             display: flex;
             width:100%;
             height:40px;
@@ -80,7 +80,7 @@
 </head>
 <body>
 
-    <header>
+    <header class="common_header">
 
         <div class="right">
             <a href="../Month/?year=<?php print($year) ?>&month=<?php print($month) ?>" class="logo_text">

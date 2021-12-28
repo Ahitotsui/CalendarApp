@@ -1,38 +1,159 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet"><!-- googleフォント -->
-<link rel="stylesheet" href="index.css">
-<script src="jquery-3.4.1.min.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"><!-- Font Awesome -->
-<link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico" />
-<title>ログイン</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300&display=swap" rel="stylesheet">
+    <style>
+        body{
+            margin:0;
+            padding:0;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        .form_wrap{
+            display: block;
+            width: 350px;
+            margin-top:20px;
+            margin-left:auto;
+            margin-right:auto;
+            padding:20px;
+            border:solid 1px #DDDDDD;
+            border-radius:3px;
+            box-shadow: 0px 2px 7px #3338;
+            background:#fcfcfa;
+            border:none;
+        }
+
+        .form_items{
+            margin-top:30px;
+        }
+
+        .label_titles{
+            font-weight:bold;
+        }
+
+        .input_style{
+            -moz-box-sizing: border-box;/* inputタグのはみ出し防止 */
+            -webkit-box-sizing: border-box;/* inputタグのはみ出し防止 */
+            box-sizing: border-box;/* inputタグのはみ出し防止 */
+            width: 100%;
+            height:40px;
+            border:solid 1px #DDDDDD;
+            border-radius:3px;
+            font-size:20px;
+            margin-top:10px;
+        }
+
+        .input_style:focus{
+            outline:none;
+            border:solid 1px #000;
+            padding-left:10px;
+        }
+
+        .login_btn{
+            width: 100%;
+            height:40px;
+            border:none;
+            border-radius:3px;
+            background:#000;
+            color:#fff;
+            font-size:15px;
+            margin-top:30px;
+        }
+
+        .text_center{
+            text-align:center;
+        }
+
+        .forgot_password{
+            display: block;
+            text-align:center;
+            text-decoration:none;
+            color:#AAAAAA;
+        }
+
+        .error{
+            color:red;
+        }
+
+        /* PC表示 */
+        @media (min-width:800px) {
+            .login{
+                text-align:center;
+                font-size:30px;
+                padding:30px;
+            }
+
+            .logo_img{
+                display: block;
+                width: 200px;
+                margin-left:auto;
+                margin-right:auto;
+            }
+
+        }
+
+        /* スマホ表示 */
+        @media (max-width:800px) {
+
+            .form_wrap{
+                width: 90%;
+            }
+
+            .logo_img{
+                display: block;
+                width: 200px;
+                margin-left:auto;
+                margin-right:auto;
+            }
+        }
+        
+    </style>
+    <title>ログイン</title>
 </head>
-
 <body>
+    
+    <main>
+    
+        <form method="POST" action="./login.php" class="form_wrap">
+            <!-- <img src="/images/LOGO.png" width=100% class="logo_img"> -->
+            <div class="text_center" style="font-size:30px;">Calendar</div>
+            <div class="form_items">
+                <label for="email" class="label_titles">ユーザーID</label>
 
-<main>
-  <form class="container" action="./login.php" method="post">
-    <img src="../img/LOGO.png" alt="">
-    <div class="form-group">
-      <label for="exampleInputEmail1">ユーザーID</label>
-      <input type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="ユーザーID" required>
-    </div>
-    <div class="form-group">
-      <label for="exampleInputPassword1">パスワード</label>
-      <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="パスワード" required>
-    </div>
-    <input id="btn" type="submit" value="ログイン">
-  </form>
-</main>
-  
- <!-- bootstrap -->
- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
- <!-- bootstrap -->
+                <div>
+                    <input type="text" class="input_style @error('email') is-invalid @enderror" name="username" value="" required>
+
+                    <!-- <span class="error" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span> -->
+                </div>
+            </div>
+
+            <div class="form_items">
+                <label for="password" class="label_titles">パスワード</label>
+
+                <div class="col-md-6">
+                    <input type="password" class="input_style @error('password') is-invalid @enderror" name="password" required>
+
+                    <!-- <span class="error" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span> -->
+                </div>
+            </div>
+
+            <button type="submit" class="login_btn">
+              ログイン
+            </button>
+
+        </form>
+
+    </main>
+
 </body>
 </html>
