@@ -59,10 +59,10 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">
 
   <!-- bootstrap -->
-  <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <!-- <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen"> -->
 
   <!-- bootstrap -->
-  <link href="../css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+  <!-- <link href="../css/bootstrap-theme.min.css" rel="stylesheet" media="screen"> -->
   
   <!-- CNDでオンラインでjquery読み込み -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -353,30 +353,9 @@
         </td>
       </tr>
       
-      <!-- カラー選択  -->
-      <!-- <tr>
-        <td colspan="2" style="padding:2px;">
-          <label>カラー選択</label>
-        </td>
-      </tr> -->
-
-      <!-- カラー選択  -->
       <tr>
-        <!-- <td colspan="2" style="">
-         
-        </td> -->
-
         <td colspan="5" style="">
           <div>カラー</div>
-          <!-- <div id="AddTdColor">
-            <input type="radio" name="color" value="#66FF66" id="Addgreen"><label for="Addgreen" id="Addgreen"></label>
-            <input type="radio" name="color" value="#FFFF88" id="Addyellow"><label for="Addyellow" id="Addyellow"></label>
-            <input type="radio" name="color" value="#87CEFA" id="Addbule"><label for="Addbule" id="Addbule"></label>
-            <input type="radio" name="color" value="#C299FF" id="Addpurple"><label for="Addpurple" id="Addpurple"></label>
-            <input type="radio" name="color" value="#FA8072" id="Addred"><label for="Addred" id="Addred"></label>
-            <input type="radio" name="color" value="#FFA500" id="Addorange"><label for="Addorange" id="Addorange"></label>
-            <input type="radio" name="color" value="#FFFFFF" id="Addwhite" checked><label for="Addwhite" id="Addwhite"></label>
-          </div> -->
           <div class="selct_color_allow">
           <input type="color" name="color" list="color-list" class="select_color" value="#B0C4DE">
           </div>
@@ -414,42 +393,24 @@
 </main>
 
 <footer class="footer">
-  <div id="top" class="row">
   <!--前年のページネーション(月は12月に選択)-->
-    <div class="col col-md-2">
-    <?php
-      $prev = $TitleYear - 1;
-      if($prev >= 2019){
-        print("<a id=\"PrevBtn\" href=\"?year={$prev}&month=12\">&lt;&lt;{$prev}</a>");
-      }else{
-        print("<div id=\"Dummy\"></div>");
-      }
-    ?>  
+    <div style="width:10%;" class="left_year_block">
+      <a class="PrevBtn" href="?year=<?php print($TitleYear - 1); ?>&month=12">&lt;&lt;<?php print($TitleYear - 1); ?></a>
     </div>
 
   <!--12ヶ月のページネーション-->
-    <div class="col col-md-8">
-      <div id="months">  
-      <?php
-      for($i=1;$i<13;$i++){
-        if($i == $_GET['month']){
-          print("<p id=\"SelectBtn\" class=\"Nowselect\">{$i}</p>");
-        }else{
-          print("<a href=\"?year={$TitleYear}&month={$i}\" class=\"monthsend\">{$i}</a>");
-        }
-      }
-      ?>
+    <div class="middle_month_block">
+      <div class="inner_months_wrap">
+        <?php for($i=1;$i<13;$i++): ?>
+          <a href="?year=<?= $TitleYear ?>&month=<?= $i ?>" class="month_links <?php if($i == $_GET['month']) echo 'now_select';?>"><?= $i ?></a>
+        <?php endfor ;?>
       </div>
     </div>
 
   <!--翌年のページネーション(月は1月に選択)-->
-    <div class="col col-md-2">
-    <?php
-      $next = $TitleYear + 1;
-      print("<a id=\"NextBtn\" href=\"?year={$next}&month=1\">{$next}&gt;&gt;</a>");
-    ?>  
+    <div style="width:10%;" class="right_year_block">
+      <a class="NextBtn" href="?year=<?php print($TitleYear + 1); ?>&month=1"><?php print($TitleYear + 1); ?>&gt;&gt;</a>
     </div>
-  </div>
 </footer>
 
   <!-- bootstrap -->
