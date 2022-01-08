@@ -29,23 +29,6 @@
             $selected2 = "selected";
         }
 
-        //<カラーのチェック判定>
-        if($row['color'] == "#66FF66"){
-            $checked0 = "checked";
-        }else if($row['color'] == "#FFFF88"){
-            $checked1 = "checked";
-        }else if($row['color'] == "#87CEFA"){
-            $checked2 = "checked";
-        }else if($row['color'] == "#C299FF"){
-            $checked3 = "checked";
-        }else if($row['color'] == "#FA8072"){
-            $checked4 = "checked";
-        }else if($row['color'] == "#FFA500"){
-            $checked5 = "checked";
-        }else if($row['color'] == "#FFFFFF"){
-            $checked6 = "checked";
-        }
-
     }
 
 ?>
@@ -68,6 +51,12 @@
         <?php require_once('../Header/header.php'); ?>  
 
         <main class="container">
+
+            <div>
+                <a href="javascript:history.back()" role="button" id="cancelBtn" class="btn-block btn-sm">
+                    <button><i class="fas fa-arrow-left"></i> キャンセル</button>
+                </a>
+            </div>
             
             <form action="../edit.php" method="post">
                 <h3>編集</h3>
@@ -172,21 +161,15 @@
 
                 <div class="row">
                 <!-- カラー -->
-                <div id="EditTdColor" class="form-group col col-md-8">
+                <div id="EditTdColor" class="form-group col col-md-6">
                     <label>カラー</label>
-                    <div id="color_radio">
-                        <input type="radio" name="color" value="#66FF66" id="green" <?php print($checked0) ?>><label for="green" id="green"></label>
-                        <input type="radio" name="color" value="#FFFF88" id="yellow" <?php print($checked1) ?>><label for="yellow" id="yellow"></label>
-                        <input type="radio" name="color" value="#87CEFA" id="bule" <?php print($checked2) ?>><label for="bule" id="bule"></label>
-                        <input type="radio" name="color" value="#C299FF" id="purple" <?php print($checked3) ?>><label for="purple" id="purple"></label>
-                        <input type="radio" name="color" value="#FA8072" id="red" <?php print($checked4) ?>><label for="red" id="red"></label>
-                        <input type="radio" name="color" value="#FFA500" id="orange" <?php print($checked5) ?>><label for="orange" id="orange"></label>
-                        <input type="radio" name="color" value="#FFFFFF" id="white" <?php print($checked6) ?>><label for="white" id="white"></label>
+                    <div class="color_radio_wrap">
+                        <input type="color" name="color" value="<?= $row['color'] ?>" style="width:100%;height:100%;">
                     </div>
                 </div>
 
                 <!-- 進捗ステータス -->
-                <div class="form-group col col-md-4">
+                <div class="form-group col col-md-6">
                     <label>進捗</label>
                     <select id="prog_select" class="form-control" name="progress" required>
                         <option value="0" <?php print($selected0) ?>>未了</option>
@@ -197,23 +180,12 @@
                 </div>
 
                 <div class="row form-group">
-                    <!-- <div class="col col-md-6">
-                        <a href="javascript:history.back()" role="button" class="btn btn-dark btn-lg btn-block" id="cancelBtn">キャンセル</a>
-                    </div> -->
                     <div class="col col-md-6 mx-auto">
                         <button type="submit" class="btn btn-primary btn-lg btn-block" id="sendBtn">編集</button>
                     </div>
                 </div>
             </form>
         </maim>
-
-        <footer>
-        <div>
-            <a href="javascript:history.back()" role="button" id="cancelBtn" class="btn-block btn-sm">
-                <button><i class="fas fa-arrow-left"></i> キャンセル</button>
-            </a>
-        </div>
-        </footer>
 
 
         <!-- bootstrap -->

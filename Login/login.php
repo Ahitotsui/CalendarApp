@@ -24,6 +24,7 @@ try{
   foreach($stmt as $row){
     /*$sqlの検索で一致するものがあればユーザー名&パスワードをセッションデータにする
     (一致するものが無ければセッションデータは作成されない)*/
+    $_SESSION['login']['id'] = $row['id'];
     $_SESSION['login']['username'] = $row['username'];
     $_SESSION['login']['password'] = $row['password'];
     $_SESSION['login']['name'] = $row['name'];

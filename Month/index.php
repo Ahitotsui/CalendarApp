@@ -72,7 +72,7 @@
   <title>Calendar</title>
 </head>
 
-<body>
+<body id="display_mode_target">
 
 
 <?php if(isset($_COOKIE["add"])): ?>
@@ -113,18 +113,21 @@
       <a href="index.php?year=<?php print($link_nextyear); ?>&month=<?php print($link_nextM); ?>" style=font-size:22px;color:#555;><i class="fas fa-chevron-right"></i></a>
     </p>
    
-    <a href="../Day/?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
-      <button class="page_select_btn" id="day_link">日</button>
-    </a>
-    <a href="../Week/?year=<?= $TitleYear ?>&month=<?= $Titlemonth ?>&day=<?= date("j") ?>">
-      <button class="page_select_btn" id="day_link">週</button>
-    </a>
-    <a href="../Day/?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
-      <button class="page_selected_now_btn" id="day_link">月</button>
-    </a>
-    <a href="../Day/?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
-      <button class="page_select_btn" id="day_link">年</button>
-    </a>
+    <div style="display:none;">
+      <a href="../Day/?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
+        <button class="page_select_btn" id="day_link">日</button>
+      </a>
+      <a href="../Week/?year=<?= $TitleYear ?>&month=<?= $Titlemonth ?>&day=<?= date("j") ?>">
+        <button class="page_select_btn" id="day_link">週</button>
+      </a>
+      <a href="../Day/?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
+        <button class="page_selected_now_btn" id="day_link">月</button>
+      </a>
+      <a href="../Day/?userid=$userid&year=$TitleYear&month=$Titlemonth&day=$day&view=list">
+        <button class="page_select_btn" id="day_link">年</button>
+      </a>
+    </div>
+    
 
 
     
