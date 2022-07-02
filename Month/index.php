@@ -192,7 +192,11 @@
     ?>
     <?php for($i=0;$i<$ini;$i++): ?>
       <?php $prevDayDisp = ($pervMonthLast - ($ini - 1)) + $i;?>
-      <td class="tdPreMon"><?=$prevMonth?>/<?=$prevDayDisp?></td>
+      <td class="tdPreMon">
+        <div class="Pre_date_style">
+          <?=$prevMonth?>/<?=$prevDayDisp?>
+        </div>
+      </td>
     <?php endfor ; ?>
 
     <?php 

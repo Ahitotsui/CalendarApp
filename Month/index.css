@@ -129,9 +129,22 @@ html,body{
 /*前月の日にちの空白tdタグ*/
 .tdPreMon{
   background-color:#DDDDDD;
-  padding-left: 2px;
+  padding-left:8px;
   font-size: 12px;
   color: #333333;
+  vertical-align:top;
+}
+
+.Pre_date_style{
+  width:20px;
+  height:20px;
+  font-size:12px;
+  color:#666666;
+  /*-------------------上下左右の中央寄せ------------------------*/
+  display: flex;/*fFlexコンテナ化*/
+  align-items: center;/*f縦方向の位置を中央に*/
+  justify-content: center;/*横方向のアイテム位置を中央に*/
+  /*-------------------上下左右の中央寄せ------------------------*/
 }
 
 /*今現在ではない日付には背景色つけない*/
